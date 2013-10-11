@@ -963,7 +963,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					NO_PASSWORD,
 				);
 				INFOPLIST_FILE = "ImageManager copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;

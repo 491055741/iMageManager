@@ -1,29 +1,22 @@
-
 ./configure \
 --disable-doc \
 --disable-ffmpeg \
 --disable-ffplay \
 --disable-ffserver \
+--disable-ffprobe \
 --enable-cross-compile \
 --arch=arm \
 --target-os=darwin \
---cc=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/llvm-gcc-4.2/bin/arm-apple-darwin10-llvm-gcc-4.2 \
---as='gas-preprocessor/gas-preprocessor.pl /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/llvm-gcc-4.2/bin/arm-apple-darwin10-llvm-gcc-4.2' \
---sysroot=/applications/xcode.app/contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk \
+--cc=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang \
+--sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk \
+--extra-cflags='-arch armv7' \
+--extra-ldflags='-arch armv7 -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/system' \
 --disable-asm \
 --prefix=compiled/armv7 \
 --cpu=cortex-a8 \
---extra-ldflags='-arch=armv7 -isysroot /applications/xcode.app/contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk' \
---enable-pic \
---disable-bzlib \
---disable-gpl \
---disable-shared \
---enable-static \
---disable-mmx \
+--disable-logging \
 --disable-debug \
---enable-neon \
---enable-decoder=h264 \
---extra-cflags='-mfpu=neon -pipe -Os -gdwarf-2 -isysroot /applications/xcode.app/contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk -m${thumb_opt:-no-thumb} -mthumb-interwork'
+--enable-shared
 
 
 make clean
