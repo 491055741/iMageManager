@@ -32,6 +32,7 @@
 
     NSString *imageName = IPHONE5 ? @"Default-568h.png" : @"Default.png";
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    backgroundImageView.frame = self.view.bounds;
     [self.view insertSubview:backgroundImageView atIndex:0];
 
     SPLockScreen *lockView = [[SPLockScreen alloc] init];
