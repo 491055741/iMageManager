@@ -305,7 +305,6 @@
 		E8F0214B173276B600357277 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		E8F021511732775C00357277 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E8F6FA8117B4812C00702A14 /* ImageManager-iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ImageManager-iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8F6FA9D17B4812D00702A14 /* ImageManager copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ImageManager copy-Info.plist"; path = "/Users/lipeng/workspace/test/ImageManager/ImageManager copy-Info.plist"; sourceTree = "<absolute>"; };
 		E8FA2A6417C5BEF00031F96C /* playButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playButton@2x.png"; sourceTree = "<group>"; };
 		E8FA2A6717C5BEFE0031F96C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E8FC1A341734936800E5A78B /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -673,7 +672,6 @@
 		E8FE058C1730A40D00B6A39B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E8F6FA9D17B4812D00702A14 /* ImageManager copy-Info.plist */,
 				E8FE058D1730A40D00B6A39B /* ImageManager-Info.plist */,
 				E8FE058E1730A40D00B6A39B /* InfoPlist.strings */,
 				E8FE05911730A40D00B6A39B /* main.m */,
@@ -971,7 +969,7 @@
 					"\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib\"",
 				);
 				PRODUCT_NAME = "ImageManager-iPad";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -988,7 +986,7 @@
 					"\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib\"",
 				);
 				PRODUCT_NAME = "ImageManager-iPad";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

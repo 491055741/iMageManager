@@ -7,10 +7,11 @@
 //
 
 #import "PasswordViewController.h"
+#import "UIImage+Ext.h"
 
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 #define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
-#define IPHONE5 (SCREEN_HEIGHT > 480)
+#define IPHONE5 (SCREEN_HEIGHT == 568)
 
 @interface PasswordViewController ()
 @end
@@ -31,8 +32,11 @@
     [super viewDidLoad];
 
     NSString *imageName = IPHONE5 ? @"Default-568h.png" : @"Default.png";
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    backgroundImageView.frame = self.view.bounds;
+    UIImage *image = [UIImage imageNamed:imageName];
+    [image resizeToSize:[UIScreen mainScreen].bounds.size keepAspectRatio:YES];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:image];
+    backgroundImageView.frame = [UIScreen mainScreen].bounds;
+    backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view insertSubview:backgroundImageView atIndex:0];
 
     SPLockScreen *lockView = [[SPLockScreen alloc] init];
