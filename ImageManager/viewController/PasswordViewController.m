@@ -48,7 +48,8 @@
 - (void)lockScreen:(SPLockScreen *)lockScreen didEndWithPattern:(NSNumber *)patternNumber
 {
     if ([patternNumber compare:@(654)] != NSOrderedSame) {
-        exit(0);
+//        exit(0);
+        self.view.hidden = YES;
     } else {
         [self dismissViewControllerAnimated:YES completion:^{ }];
     }

@@ -61,9 +61,9 @@
     [self showLoginView];
     _navController.topViewController.navigationController.navigationBar.hidden = NO;
     _navController.topViewController.view.hidden = NO;
-    if (![_navController.topViewController.presentedViewController isKindOfClass:NSClassFromString(@"PasswordViewController")]) {
+//    if (![_navController.topViewController.presentedViewController isKindOfClass:NSClassFromString(@"PasswordViewController")]) {
         _navController.topViewController.presentedViewController.view.hidden = NO;
-    }
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -85,13 +85,11 @@
 #ifndef NO_PASSWORD
     UIViewController *viewController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
 
-    if (_navController.topViewController.presentedViewController != nil
-        && ![_navController.topViewController.presentedViewController isKindOfClass:NSClassFromString(@"PasswordViewController")]) {
-        [_navController.topViewController.presentedViewController presentViewController:viewController animated:NO completion:NULL];
-    } else {
+    if (_navController.topViewController.presentedViewController == nil) {
         [_navController.topViewController presentViewController:viewController animated:NO completion:NULL];
+    } else if (![_navController.topViewController.presentedViewController isKindOfClass:NSClassFromString(@"PasswordViewController")]) {
+        [_navController.topViewController.presentedViewController presentViewController:viewController animated:NO completion:NULL];
     }
-
 #endif
 }
 
