@@ -1,12 +1,12 @@
 iMageManager
 ============
 
-Manager your pictures and videos on iPhone and iPad.
+Manager your pictures and videos on iPhone and iPad.</br>
+Use: kxmovie (ffmpeg 1.2), SCGIFImageView, SPLockScreen, ZipArchive, CocoaWebResource, RegexKitLite</br>
 
-
-Build:
-$ cd kxmovie
-$ git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+Build:</br>
+</br>
+put ffmpeg 1.2 under kxmovie folder;</br>
 $ cp BuildFFmpeg/* ffmpeg
 $ cd ffmpeg
 $ sudo cp gas-preprocessor.pl /usr/local/bin
