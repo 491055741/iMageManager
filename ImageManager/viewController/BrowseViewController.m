@@ -21,6 +21,8 @@
 #import "UINavigationBar+Ext.h"
 #import "UIImage+Ext.h"
 
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 #define kImageTableCellHeight 74
 #define kThumbnailCellHeight 170
 
@@ -134,7 +136,9 @@
     // Do any additional setup after loading the view from its nib.
     [_tableView registerNib:[UINib nibWithNibName:@"AssetsGroupsTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"AssetsCell"];
     _tableView.tableFooterView = [[UIView alloc] init];
-
+    if (!SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
+    }
     [self configActionButtonsStatus];
 }
 
@@ -200,7 +204,6 @@
         [self.navigationController.navigationBar setBackButtonTitle:[_rootPath lastPathComponent] target:self action:@selector(backToParentFolder)];
     }
 }
-
 
 - (IBAction)switchListMode:(id)sender
 {

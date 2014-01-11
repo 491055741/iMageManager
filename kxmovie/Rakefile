@@ -15,8 +15,8 @@ GCC_PATH='/Developer/usr/bin/gcc'
 LIB_PATH='/usr/lib/system'
 PLATOFRM_PATH_SIM ='/iPhoneSimulator.platform'
 PLATOFRM_PATH_IOS ='/iPhoneOS.platform'
-SDK_PATH_SIM ='/Developer/SDKs/iPhoneSimulator6.1.sdk'
-SDK_PATH_IOS='/Developer/SDKs/iPhoneOS6.1.sdk'
+SDK_PATH_SIM ='/Developer/SDKs/iPhoneSimulator7.0.sdk'
+SDK_PATH_IOS='/Developer/SDKs/iPhoneOS7.0.sdk'
 
 
 FFMPEG_BUILD_ARGS_SIM = [
@@ -85,7 +85,7 @@ FFMPEG_LIBS = [
 
 def mkArgs(platformPath, sdkPath, platformArgs)
 	
-	cc = '--cc=' + XCODE_PATH + platformPath + GCC_PATH
+	cc = '--cc=/Applications/Xcode.app/Contents/Developer/usr/bin/gcc'  #'--cc=' + XCODE_PATH + platformPath + GCC_PATH
 	as = "--as='" + 'gas-preprocessor.pl ' + XCODE_PATH + platformPath + GCC_PATH + "'"
 	sysroot = '--sysroot=' + XCODE_PATH + platformPath + sdkPath
 	extra = '--extra-ldflags=-L' + XCODE_PATH + platformPath + sdkPath + LIB_PATH
