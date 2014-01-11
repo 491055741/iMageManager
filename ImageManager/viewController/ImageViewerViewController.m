@@ -132,7 +132,7 @@
     [self layoutImage:imageView];
     imageView.alpha = 0;
     UIView *oldView = [self.view viewWithTag:999];
-    
+
     self.view.userInteractionEnabled = NO;
     [self.view insertSubview:imageView atIndex:0];
 
@@ -148,18 +148,10 @@
 
 - (void)cacheImage:(NSInteger)idx
 {
-//    NSLog(@"%s %d", __FUNCTION__, idx);
-
-    if (idx == _currentIndex) {
-//        NSLog(@"%s Save current image to cache.", __FUNCTION__);
-        _cacheDict[@(idx)] = [self.view viewWithTag:999];
-        return;
-    }
-
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _cacheDict[@(idx)] = [NSNull null]; // it is loading flag
-        UIImageView *image = [self loadImage:idx];// maybe slow
-        _cacheDict[@(idx)] = image;
+        NSString *filePath = [_path stringByAppendingPathComponent:_fileArray[idx]];
+        _cacheDict[@(idx)] = [NSData dataWithContentsOfFile:filePath];
     });
 }
 
@@ -173,7 +165,7 @@
     if (_cacheDict[@(idx)] == [NSNull null]) {  // loading
         _isAllowGesture = NO;
 //        NSLog(@"%s wait loading...", __FUNCTION__);
-        while (_cacheDict[@(idx)] == [NSNull null]) {
+        while (_cacheDict[@(idx)] == [NSNull null]) { // wait until loading done
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
         }
 //        NSLog(@"%s loading done", __FUNCTION__);
@@ -182,21 +174,27 @@
     } else if (_cacheDict[@(idx)] != nil) {
         return [self getImageFromCache:idx];
     } else {
-        return [self loadImage:idx];
+        return [self loadImageView:idx];
     }
 }
 
 - (UIImageView *)getImageFromCache:(NSInteger)idx
 {
     if (_cacheDict[@(idx)] != nil) {
-        UIImageView *imageView = _cacheDict[@(idx)];
+        NSData *data = _cacheDict[@(idx)];
         [_cacheDict removeObjectForKey:@(idx)];
+        UIImageView *imageView;
+        if ([SCGIFImageView isGifImage:data]) {
+            imageView = [[SCGIFImageView alloc] initWithGIFData:data];
+        } else {
+            imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:data]];
+        }
         return imageView;
     }
     return nil;
 }
 
-- (UIImageView *)loadImage:(NSInteger)idx
+- (UIImageView *)loadImageView:(NSInteger)idx
 {
 //    NSLog(@"%s begin-- [%d]", __FUNCTION__, idx);
 //    if ([NSThread isMainThread]) {
@@ -213,11 +211,20 @@
         imageView = [[SCGIFImageView alloc] initWithGIFFile:filePath];
     } else {
         UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+        NSAssert(image != nil, @"image is nil!");
         CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
         imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:size keepAspectRatio:YES]];
     }
 //    NSLog(@"%s --end [%d] fileName:[%@].", __func__, idx, fileName);
     return imageView;
+}
+
+- (NSData *)loadFile:(NSInteger)idx
+{
+    NSString *fileName = _fileArray[idx];
+    NSString *filePath = [_path stringByAppendingPathComponent:fileName];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    return data;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
