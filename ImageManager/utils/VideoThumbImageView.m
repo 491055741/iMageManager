@@ -88,7 +88,7 @@ static BOOL cacheDirtyFlag;
             return;
         [decoder closeAudioStream]; // only get video stream
 
-        if (decoder.duration == MAXFLOAT || decoder.duration) {
+        if (decoder.duration == MAXFLOAT || decoder.duration == 0) {
             decoder.position = 0;
         } else {
             decoder.position = arc4random() % (int)(decoder.duration);
