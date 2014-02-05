@@ -47,7 +47,7 @@
 
 - (void)lockScreen:(SPLockScreen *)lockScreen didEndWithPattern:(NSNumber *)patternNumber
 {
-    if ([patternNumber compare:@(654)] != NSOrderedSame) {
+    if ([patternNumber compare:@(12357)] != NSOrderedSame) {
 //        exit(0);
         self.view.hidden = YES;
     } else {

@@ -227,8 +227,15 @@
     return data;
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:interfaceOrientation duration:duration];
+    self.navigationController.navigationBar.alpha = _isToolBarShowing ? 1.0 : 0.0;
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self layoutImage:(SCGIFImageView *)[self.view viewWithTag:999]];
 }
 
