@@ -13,7 +13,10 @@
 #define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
 #define IPHONE5 (SCREEN_HEIGHT == 568)
 
+#define kPassworkKey @"PasswordKey"
+
 @interface PasswordViewController ()
+@property (nonatomic, copy) NSString *password;
 @end
 
 @implementation PasswordViewController
@@ -23,6 +26,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{kPassworkKey:@"987"}];
+        self.password = [[NSUserDefaults standardUserDefaults] valueForKey:kPassworkKey];
+        NSLog(@"%s Password: %@", __func__, _password);
     }
     return self;
 }
@@ -45,11 +51,26 @@
     [self.view addSubview:lockView];
 }
 
-- (void)lockScreen:(SPLockScreen *)lockScreen didEndWithPattern:(NSNumber *)patternNumber
+- (void)lockScreen:(SPLockScreen *)lockScreen didEndWithPattern:(NSString *)patternString
 {
-    if ([patternNumber compare:@(12357)] != NSOrderedSame) {
+    if (_isSetPasswordMode) {
+        if ([patternString length] < 3) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Password too short." delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
+            [alert show];
+        } else {
+            self.password = patternString;
+            [[NSUserDefaults standardUserDefaults] setValue:patternString forKey:kPassworkKey];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Password update succeed." delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
+            [alert show];
+            [self dismissViewControllerAnimated:YES completion:^{ }];
+        }
+        return;
+    }
+
+    if ([patternString isEqualToString:_password] == NO) {
 //        exit(0);
-        self.view.hidden = YES;
+//        self.view.hidden = YES;
+        self.view.userInteractionEnabled = NO;
     } else {
         [self dismissViewControllerAnimated:YES completion:^{ }];
     }

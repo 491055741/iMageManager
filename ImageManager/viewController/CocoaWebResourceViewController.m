@@ -211,4 +211,13 @@
     [self setUploadStatus:nil];
     [super viewDidUnload];
 }
+
+- (IBAction)resetPassword
+{
+    UIViewController *viewController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
+    [viewController setValue:@(YES) forKey:@"isSetPasswordMode"];
+    [self presentModalViewController:viewController animated:YES];
+}
+
+
 @end

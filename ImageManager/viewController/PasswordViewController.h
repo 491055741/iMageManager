@@ -10,5 +10,5 @@
 #import "SPLockScreen.h"
 
 @interface PasswordViewController : UIViewController <LockScreenDelegate>
-
+@property (nonatomic, assign) BOOL isSetPasswordMode;
 @end

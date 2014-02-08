@@ -33,7 +33,12 @@
 }
 
 + (NSMutableArray*)getGifFrames:(NSData*)gifImageData {
-	SCGIFImageView* gifImageView = [[SCGIFImageView alloc] initWithGIFData:gifImageData];
+
+	if (gifImageData.length < 4) {
+		return nil;
+	}
+	
+    SCGIFImageView* gifImageView = [[SCGIFImageView alloc] initWithGIFData:gifImageData];
 	if (!gifImageView) {
 		return nil;
 	}

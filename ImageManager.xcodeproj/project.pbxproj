@@ -732,7 +732,7 @@
 		E8FE057A1730A40D00B6A39B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "li peng";
 			};
 			buildConfigurationList = E8FE057D1730A40D00B6A39B /* Build configuration list for PBXProject "ImageManager" */;
@@ -956,6 +956,7 @@
 		E8F6FA7F17B4812C00702A14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -964,12 +965,6 @@
 				);
 				INFOPLIST_FILE = "ImageManager copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib\\\"",
-					/Users/lipeng/workspace/iMageManager/kxmovie/FFmpeg/lib,
-					/Users/lipeng/workspace/iMageManager/kxmovie/ffmpeg/compiled/fat/lib,
-				);
 				PRODUCT_NAME = "ImageManager-iPad";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -979,16 +974,11 @@
 		E8F6FA8017B4812C00702A14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib\\\"",
-					/Users/lipeng/workspace/iMageManager/kxmovie/FFmpeg/lib,
-					/Users/lipeng/workspace/iMageManager/kxmovie/ffmpeg/compiled/fat/lib,
-				);
 				PRODUCT_NAME = "ImageManager-iPad";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -999,7 +989,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = armv7;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1023,6 +1012,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "kxmovie/**";
@@ -1033,7 +1023,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = armv7;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1050,6 +1039,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "kxmovie/**";
@@ -1060,16 +1050,11 @@
 		E8FE05A01730A40D00B6A39B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib\\\"",
-					/Users/lipeng/workspace/iMageManager/kxmovie/FFmpeg/lib,
-					/Users/lipeng/workspace/iMageManager/kxmovie/ffmpeg/compiled/fat/lib,
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1078,16 +1063,11 @@
 		E8FE05A11730A40D00B6A39B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/kxmovie/FFmpeg/compiled/fat/lib\\\"",
-					/Users/lipeng/workspace/iMageManager/kxmovie/FFmpeg/lib,
-					/Users/lipeng/workspace/iMageManager/kxmovie/ffmpeg/compiled/fat/lib,
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

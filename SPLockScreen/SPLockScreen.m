@@ -143,7 +143,7 @@
 	NSInteger cellPos = [self indexForPoint:point];
 	
 	if(cellPos >=0 && cellPos != self.oldCellIndex)
-		[self.cellsInOrder addObject:@(self.currentCellIndex)];
+		[self.cellsInOrder addObject:@(self.currentCellIndex + 1)];
 	
 	if(cellPos < 0 && self.oldCellIndex < 0) return;
 	
@@ -178,11 +178,19 @@
 
 - (void)endPattern
 {
-	NSLog(@"PATTERN: %@",[self patternToUniqueId]);
 	if ([self.delegate respondsToSelector:@selector(lockScreen:didEndWithPattern:)])
-		[self.delegate lockScreen:self didEndWithPattern:[self patternToUniqueId]];
-	
+		[self.delegate lockScreen:self didEndWithPattern:[self patternToString]];
 	[self resetScreen];
+}
+
+- (NSString *)patternToString
+{
+    NSMutableString *patternString = [NSMutableString stringWithCapacity:10];
+    for (NSNumber *num in self.cellsInOrder) {
+        [patternString appendString:[num stringValue]];
+    }
+	NSLog(@"PATTERN: %@", patternString);
+    return patternString;
 }
 
 - (NSNumber *)patternToUniqueId
@@ -190,7 +198,7 @@
 	long finalNumber = 0;
 	long thisNum;
 	for(int i = self.cellsInOrder.count - 1 ; i >= 0 ; i--){
-		thisNum = ([[self.cellsInOrder objectAtIndex:i] integerValue] + 1) * pow(10, (self.cellsInOrder.count - i - 1));
+		thisNum = ([[self.cellsInOrder objectAtIndex:i] integerValue]) * pow(10, (self.cellsInOrder.count - i - 1));
 		finalNumber = finalNumber + thisNum;
 	}
 	return @(finalNumber);

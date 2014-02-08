@@ -1466,7 +1466,7 @@ static NSMutableDictionary * gHistory;
         _leftLabel.text = formatTimeInterval(duration - position, YES);
 
 #ifdef DEBUG
-    const NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _debugStartTime;
+//    const NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _debugStartTime;
     NSString *subinfo = _decoder.validSubtitles ? [NSString stringWithFormat: @" %d",_subtitles.count] : @"";
     
     NSString *audioStatus;
