@@ -117,7 +117,7 @@ static NSMutableDictionary * gHistory;
     UIButton            *_forwardButton;
     UIButton            *_doneButton;
     UILabel             *_progressLabel;
-    UILabel             *_leftLabel;
+    UILabel             *_durationLabel;
     UIButton            *_infoButton;
     UITableView         *_tableView;
     UIActivityIndicatorView *_activityIndicatorView;
@@ -315,37 +315,17 @@ static NSMutableDictionary * gHistory;
     _volumeSlider.showsVolumeSlider = YES;
     // 10,done:60  80,small:11  92,volume:width-92-30   width-30,large:25
 
+
 #if 0
-    _progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(48,5,50,20)];
-    _progressLabel.backgroundColor = [UIColor clearColor];
-    _progressLabel.opaque = NO;
-    _progressLabel.adjustsFontSizeToFitWidth = NO;
-    _progressLabel.textAlignment = UITextAlignmentRight;
-    _progressLabel.textColor = [UIColor whiteColor];
-    _progressLabel.text = @"00:00:00";
-    _progressLabel.font = [UIFont systemFontOfSize:12];
-    
-
-    _leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-80,5,60,20)];
-    _leftLabel.backgroundColor = [UIColor clearColor];
-    _leftLabel.opaque = NO;
-    _leftLabel.adjustsFontSizeToFitWidth = NO;
-    _leftLabel.textAlignment = UITextAlignmentLeft;
-    _leftLabel.textColor = [UIColor whiteColor];
-    _leftLabel.text = @"-99:59:59";
-    _leftLabel.font = [UIFont systemFontOfSize:12];
-    _leftLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-
     _infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
     _infoButton.frame = CGRectMake(width-25,5,20,20);
     _infoButton.showsTouchWhenHighlighted = YES;
     _infoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     [_infoButton addTarget:self action:@selector(infoDidTouch:) forControlEvents:UIControlEventTouchUpInside];
-
     [_topHUD addSubview:_infoButton];
-    [_topHUD addSubview:_leftLabel];
-    [_topHUD addSubview:_progressLabel];
 #endif
+
+
 
     [_topHUD addSubview:_doneButton];
     [_topHUD addSubview:_volumeSlider];
@@ -385,6 +365,28 @@ static NSMutableDictionary * gHistory;
     _progressSlider.value = 0;
     [_progressSlider setThumbImage:[UIImage imageNamed:@"kxmovie.bundle/sliderthumb"]
                           forState:UIControlStateNormal];
+
+    _progressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,70,50,20)];
+    _progressLabel.backgroundColor = [UIColor clearColor];
+    _progressLabel.opaque = NO;
+    _progressLabel.adjustsFontSizeToFitWidth = NO;
+    _progressLabel.textAlignment = UITextAlignmentLeft;
+    _progressLabel.textColor = [UIColor whiteColor];
+    _progressLabel.text = @"00:00:00";
+    _progressLabel.font = [UIFont systemFontOfSize:12];
+    
+    _durationLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-60,70,60,20)];
+    _durationLabel.backgroundColor = [UIColor clearColor];
+    _durationLabel.opaque = NO;
+    _durationLabel.adjustsFontSizeToFitWidth = NO;
+    _durationLabel.textAlignment = UITextAlignmentRight;
+    _durationLabel.textColor = [UIColor whiteColor];
+    _durationLabel.text = @"-99:59:59";
+    _durationLabel.font = [UIFont systemFontOfSize:12];
+    _durationLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    
+    [_bottomHUD addSubview:_durationLabel];
+    [_bottomHUD addSubview:_progressLabel];
 
     [_bottomHUD addSubview:_rewindButton];
     [_bottomHUD addSubview:_playButton];
@@ -436,7 +438,7 @@ static NSMutableDictionary * gHistory;
         _bottomHUD.hidden = YES;
         _progressLabel.hidden = YES;
         _progressSlider.hidden = YES;
-        _leftLabel.hidden = YES;
+        _durationLabel.hidden = YES;
         _infoButton.hidden = YES;
     }
 }
@@ -775,7 +777,7 @@ static NSMutableDictionary * gHistory;
             _bottomHUD.hidden       = NO;
             _progressLabel.hidden   = NO;
             _progressSlider.hidden  = NO;
-            _leftLabel.hidden       = NO;
+            _durationLabel.hidden   = NO;
             _infoButton.hidden      = NO;
             
             if (_activityIndicatorView.isAnimating) {
@@ -841,22 +843,24 @@ static NSMutableDictionary * gHistory;
     
     if (_decoder.duration == MAXFLOAT) {
         
-        _leftLabel.text = @"\u221E"; // infinity
-        _leftLabel.font = [UIFont systemFontOfSize:14];
+        _durationLabel.text = @"\u221E"; // infinity
+        _durationLabel.font = [UIFont systemFontOfSize:14];
         
         CGRect frame;
         
-        frame = _leftLabel.frame;
+        frame = _durationLabel.frame;
         frame.origin.x += 40;
         frame.size.width -= 40;
-        _leftLabel.frame = frame;
+        _durationLabel.frame = frame;
         
         frame =_progressSlider.frame;
         frame.size.width += 40;
         _progressSlider.frame = frame;
         
     } else {
-        
+
+        _durationLabel.text = formatTimeInterval(_decoder.duration, NO);
+
         [_progressSlider addTarget:self
                             action:@selector(progressDidChange:)
                   forControlEvents:UIControlEventValueChanged];
@@ -1264,10 +1268,10 @@ static NSMutableDictionary * gHistory;
             [self tick];
         });
     }
-    
-//    if ((_tickCounter++ % 3) == 0) {
-//        [self updateHUD];
-//    }
+
+    if ((_tickCounter++ % 3) == 0) {
+        [self updateHUD];
+    }
 }
 
 - (CGFloat) tickCorrection
@@ -1457,14 +1461,11 @@ static NSMutableDictionary * gHistory;
     
     if (_decoder.isEOF) {
         _progressSlider.value = 1.0;
-    } else if (_progressSlider.state == UIControlStateNormal)
+    } else if (_progressSlider.state == UIControlStateNormal) {
         _progressSlider.value = position / duration;
-    
+    }
     _progressLabel.text = formatTimeInterval(position, NO);
     
-    if (_decoder.duration != MAXFLOAT)
-        _leftLabel.text = formatTimeInterval(duration - position, YES);
-
 #ifdef DEBUG
 //    const NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _debugStartTime;
     NSString *subinfo = _decoder.validSubtitles ? [NSString stringWithFormat: @" %d",_subtitles.count] : @"";
