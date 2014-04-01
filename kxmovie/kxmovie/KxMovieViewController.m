@@ -118,6 +118,7 @@ static NSMutableDictionary * gHistory;
     UIButton            *_doneButton;
     UILabel             *_progressLabel;
     UILabel             *_durationLabel;
+    UILabel             *_timeLabel;
     UIButton            *_infoButton;
     UITableView         *_tableView;
     UIActivityIndicatorView *_activityIndicatorView;
@@ -374,7 +375,16 @@ static NSMutableDictionary * gHistory;
     _progressLabel.textColor = [UIColor whiteColor];
     _progressLabel.text = @"00:00:00";
     _progressLabel.font = [UIFont systemFontOfSize:12];
-    
+
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2-20,70,50,20)];
+    _timeLabel.backgroundColor = [UIColor clearColor];
+    _timeLabel.opaque = NO;
+    _timeLabel.adjustsFontSizeToFitWidth = NO;
+    _timeLabel.textAlignment = UITextAlignmentCenter;
+    _timeLabel.textColor = [UIColor whiteColor];
+    _timeLabel.text = @"00:00";
+    _timeLabel.font = [UIFont systemFontOfSize:12];
+
     _durationLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-60,70,60,20)];
     _durationLabel.backgroundColor = [UIColor clearColor];
     _durationLabel.opaque = NO;
@@ -386,6 +396,7 @@ static NSMutableDictionary * gHistory;
     _durationLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     
     [_bottomHUD addSubview:_durationLabel];
+    [_bottomHUD addSubview:_timeLabel];
     [_bottomHUD addSubview:_progressLabel];
 
     [_bottomHUD addSubview:_rewindButton];
@@ -1465,7 +1476,10 @@ static NSMutableDictionary * gHistory;
         _progressSlider.value = position / duration;
     }
     _progressLabel.text = formatTimeInterval(position, NO);
-    
+
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"hh:mm"];
+    _timeLabel.text = [formatter stringFromDate:[NSDate date]];
 #ifdef DEBUG
 //    const NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _debugStartTime;
     NSString *subinfo = _decoder.validSubtitles ? [NSString stringWithFormat: @" %d",_subtitles.count] : @"";
