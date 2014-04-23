@@ -27,7 +27,7 @@
 @property (nonatomic, assign) BOOL isToolBarShowing;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 
-@property (nonatomic, strong) NSMutableDictionary *cacheDict;
+@property (nonatomic, strong) NSCache *cache;
 @property (nonatomic, assign) BOOL isAllowGesture;
 
 - (IBAction)swipeRight:(id)sender;
@@ -57,7 +57,8 @@
 
 - (void)initDataWithStartIdx:(NSInteger)startIdx
 {
-    self.cacheDict = [NSMutableDictionary dictionaryWithCapacity:10];
+    self.cache = [[NSCache alloc] init];
+    [_cache setCountLimit:10];
     self.fileArray = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[FileManager filesOfPath:_path]];
 
@@ -109,16 +110,17 @@
         [self viewDidUnload];
         self.view = nil;
     }
-    [_cacheDict removeAllObjects];
 }
 
-- (void)showPicOfIndex:(NSInteger)idx
+- (void)showPic
 {
+    NSInteger idx = _currentIndex;
     if (idx > [_fileArray count] - 1) {
         NSLog(@"%s wrong idx:%d, file count:%d", __func__, idx, [_fileArray count]);
-        return;
+        idx = _currentIndex = 0;
+//        return;
     }
-    NSLog(@"%s %d", __func__, idx);
+//    NSLog(@"%s %d", __func__, idx);
 
     UIImageView *imageView = [self imageViewOfIndex:idx];
     
@@ -135,7 +137,6 @@
 
     self.view.userInteractionEnabled = NO;
     [self.view insertSubview:imageView atIndex:0];
-
     [UIView animateWithDuration:0.3
                      animations:^{
                          oldView.alpha = 0;
@@ -144,14 +145,19 @@
                          [oldView removeFromSuperview];
                          self.view.userInteractionEnabled = YES;
     }];
+    [self cacheImage:[self nextIndex]];
+    [self cacheImage: (_currentIndex + 2) % [_fileArray count]];
 }
 
 - (void)cacheImage:(NSInteger)idx
 {
+    if ([_cache objectForKey:@(idx)] != nil) {
+        return;
+    }
+    [_cache setObject:[NSNull null] forKey:@(idx)]; // NSNull is loading flag
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        _cacheDict[@(idx)] = [NSNull null]; // it is loading flag
-        NSString *filePath = [_path stringByAppendingPathComponent:_fileArray[idx]];
-        _cacheDict[@(idx)] = [NSData dataWithContentsOfFile:filePath];
+        [_cache setObject:[self loadFile:idx] forKey:@(idx)];
+//        NSLog(@"cacheImage: load image %d into cache.", idx);
     });
 }
 
@@ -162,69 +168,44 @@
         return nil;
     }
 
-    if (_cacheDict[@(idx)] == [NSNull null]) {  // loading
-        _isAllowGesture = NO;
-//        NSLog(@"%s wait loading...", __FUNCTION__);
-        while (_cacheDict[@(idx)] == [NSNull null]) { // wait until loading done
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        }
-//        NSLog(@"%s loading done", __FUNCTION__);
-        _isAllowGesture = YES;
-        return [self getImageFromCache:idx];
-    } else if (_cacheDict[@(idx)] != nil) {
-        return [self getImageFromCache:idx];
-    } else {
-        return [self loadImageView:idx];
+    if ([_cache objectForKey:@(idx)] == nil) { // miss, load into cache
+        [self cacheImage:idx];
     }
+
+    if ([_cache objectForKey:@(idx)] == [NSNull null]) {  // wait loading
+        _isAllowGesture = NO;
+        while ([_cache objectForKey:@(idx)] == [NSNull null]) { // wait until loading done
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+        }
+        _isAllowGesture = YES;
+    }
+
+    return [self getImageFromCache:idx];
 }
 
 - (UIImageView *)getImageFromCache:(NSInteger)idx
 {
-    if (_cacheDict[@(idx)] != nil) {
-        NSData *data = _cacheDict[@(idx)];
-        [_cacheDict removeObjectForKey:@(idx)];
+    if ([_cache objectForKey:@(idx)] != nil && [_cache objectForKey:@(idx)] != [NSNull null]) {
+        NSData *data = [_cache objectForKey:@(idx)];
         UIImageView *imageView;
         if ([SCGIFImageView isGifImage:data]) {
             imageView = [[SCGIFImageView alloc] initWithGIFData:data];
         } else {
-            imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:data]];
+            UIImage *image = [UIImage imageWithData:data];
+            NSAssert(image != nil, @"image is nil!");
+            CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
+            imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:size keepAspectRatio:YES]];
         }
         return imageView;
     }
     return nil;
 }
 
-- (UIImageView *)loadImageView:(NSInteger)idx
-{
-//    NSLog(@"%s begin-- [%d]", __FUNCTION__, idx);
-//    if ([NSThread isMainThread]) {
-//        NSLog(@"%s Warning! Load image in main thread!", __FUNCTION__);
-//    }
-    
-//    [NSThread sleepForTimeInterval:2];  // for test
-    
-    NSString *fileName = _fileArray[idx];
-    NSString *filePath = [_path stringByAppendingPathComponent:fileName];
-    
-    UIImageView *imageView;
-    if ([FileManager isGIFFile:fileName]) {
-        imageView = [[SCGIFImageView alloc] initWithGIFFile:filePath];
-    } else {
-        UIImage *image = [UIImage imageWithContentsOfFile:filePath];
-        NSAssert(image != nil, @"image is nil!");
-        CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
-        imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:size keepAspectRatio:YES]];
-    }
-//    NSLog(@"%s --end [%d] fileName:[%@].", __func__, idx, fileName);
-    return imageView;
-}
-
 - (NSData *)loadFile:(NSInteger)idx
 {
     NSString *fileName = _fileArray[idx];
     NSString *filePath = [_path stringByAppendingPathComponent:fileName];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    return data;
+    return [NSData dataWithContentsOfFile:filePath];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
@@ -251,35 +232,35 @@
 
 - (NSInteger)previousIndex
 {
-    if (_currentIndex > 0) {
-        _currentIndex--;
+    NSInteger index = _currentIndex;
+    if (index > 0) {
+        index--;
     } else {
-        _currentIndex = [_fileArray count] - 1;
+        index = [_fileArray count] - 1;
     }
-    return _currentIndex;
+    return index;
 }
 
 - (NSInteger)nextIndex
 {
-    _currentIndex = (_currentIndex + 1) % [_fileArray count];
-    return _currentIndex;
+    return (_currentIndex + 1) % [_fileArray count];
 }
 
 // swipe from left to right, show previous page
 - (IBAction)swipeRight:(id)sender
 {
     [self stopPlay];
-    [_cacheDict removeAllObjects];
-    [self cacheImage:_currentIndex];
-    [self showPicOfIndex:[self previousIndex]];
+    _currentIndex = [self previousIndex];
+    [self showPic];
+    [self cacheImage:[self previousIndex]];
 }
 
 // swipe to left, show next page
 - (IBAction)swipeLeft:(id)sender
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(play) object:nil];
-    [self showPicOfIndex:[self nextIndex]];
-    [self cacheImage:(_currentIndex + 1) % _fileArray.count];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    _currentIndex = [self nextIndex];
+    [self showPic];
     if (_isPlaying)
         [self performSelector:@selector(play) withObject:nil afterDelay:_showNextDelay];
 }
@@ -297,9 +278,6 @@
 // direction: from bottom to top
 - (IBAction)swipeUp:(id)sender
 {
-//    [self deleteBtnClicked:nil];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-//    self.navigationController.navigationBar.alpha = 1.0;
     [self showToolBar];
     [self back];
 }
@@ -360,7 +338,6 @@
         return;
     }
     _isPlaying = YES;
-    NSLog(@"%s", __func__);
     [self play];
 }
 
@@ -370,8 +347,8 @@
         return;
     }
 
-    [self showPicOfIndex:[self nextIndex]];
-    [self cacheImage:(_currentIndex + 1) % _fileArray.count];
+    _currentIndex = [self nextIndex];
+    [self showPic];
     [self performSelector:@selector(play) withObject:nil afterDelay:_showNextDelay];
 }
 
@@ -384,6 +361,7 @@
     }
 }
 
+// move file to path, select dst path
 - (IBAction)showFolderSelectionView
 {
     FolderSelectionViewController *viewController = [[FolderSelectionViewController alloc] initWithNibName:@"FolderSelectionViewController" bundle:nil basePath:[FileManager rootPath]];
@@ -394,6 +372,7 @@
     [self.navigationController presentModalViewController:nav animated:YES];
 }
 
+// move file to path selection done
 - (void)pathSelected:(NSString *)toPath
 {
     NSString *fileName = _fileArray[_currentIndex];
@@ -407,7 +386,8 @@
         [self showAlertMessage:@"Move Failed."];
     } else {
         [_fileArray removeObjectAtIndex:_currentIndex];
-        [self showPicOfIndex:[self nextIndex]];
+        _currentIndex = [self nextIndex];
+        [self showPic];
     }
 }
 

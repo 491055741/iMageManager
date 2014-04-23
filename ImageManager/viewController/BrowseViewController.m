@@ -457,7 +457,8 @@
     [self doAction];
 }
 
-- (IBAction)wifi:(id)sender {
+- (IBAction)wifi:(id)sender
+{
     UIViewController *viewController = [[NSClassFromString(@"CocoaWebResourceViewController") alloc] initWithNibName:@"CocoaWebResourceViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
 }
@@ -504,7 +505,7 @@
 
 - (UIImageView *)imageViewForPath:(NSString *)path
 {
-    if (_cacheDict[path] != nil && _cacheDict[path][@"image"] != nil) {
+    if (_cacheDict[path] && _cacheDict[path][@"image"]) {
         return _cacheDict[path][@"image"];
     }
     
@@ -528,8 +529,9 @@
         return imageView;
     }
     
-    // if path is dir, select and show a pic as dir's cover
+    // if path is dir, random select a pic as dir's cover
     if (![FileManager isDirPath:path]) {
+//        NSAssert(NO, @"not dir, not pic");
         return nil;
     }
     NSMutableArray *filesInPathArray = [NSMutableArray arrayWithArray: [FileManager filesOfPath:path]];
