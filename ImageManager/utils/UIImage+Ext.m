@@ -17,6 +17,10 @@
 
 - (UIImage *)resizeToSize:(CGSize)size keepAspectRatio:(BOOL)isKeepAspectRatio
 {
+    if (CGSizeEqualToSize(self.size, size)) {
+        return self;
+    }
+
     CGSize newSize = size;
     if (isKeepAspectRatio) {
         newSize.width = MIN(self.size.width, size.width);

@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AssetsGroupsTableViewCell.h"
 #import "InputView.h"
 
-@interface BrowseViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,  AssetsGroupsTableViewCellSelectionDelegate, InputViewDelegate>
+@interface BrowseViewController : UIViewController <InputViewDelegate>
 
 @end

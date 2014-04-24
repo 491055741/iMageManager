@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowseViewController">
             <connections>
+                <outlet property="collectionView" destination="Kgu-Ad-u2g" id="Lmp-S2-umK"/>
                 <outlet property="createDirBtn" destination="44" id="88"/>
                 <outlet property="cutBtn" destination="45" id="90"/>
                 <outlet property="deleteBtn" destination="81" id="89"/>
@@ -13,7 +15,6 @@
                 <outlet property="fileActionView" destination="41" id="54"/>
                 <outlet property="renameBtn" destination="47" id="87"/>
                 <outlet property="selectAllBtn" destination="75" id="84"/>
-                <outlet property="tableView" destination="4" id="11"/>
                 <outlet property="toolbar" destination="22" id="74"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -127,16 +128,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                <collectionView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" id="Kgu-Ad-u2g">
+                    <rect key="frame" x="20" y="0.0" width="280" height="436"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <inset key="contentInset" minX="0.0" minY="44" maxX="0.0" maxY="44"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7fR-ev-uOV">
+                        <size key="itemSize" width="130" height="150"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="9"/>
-                        <outlet property="delegate" destination="-1" id="10"/>
+                        <outlet property="dataSource" destination="-1" id="p51-wp-Nih"/>
+                        <outlet property="delegate" destination="-1" id="k4f-NH-blJ"/>
                     </connections>
-                </tableView>
+                </collectionView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="22">
                     <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -160,9 +167,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="70"/>
-                        <barButtonItem systemItem="bookmarks" id="66">
+                        <barButtonItem systemItem="organize" id="66">
                             <connections>
-                                <action selector="switchListMode:" destination="-1" id="67"/>
+                                <action selector="switchBrowseMode:" destination="-1" id="Jyk-iQ-kiU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="72"/>

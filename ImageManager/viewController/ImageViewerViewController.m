@@ -107,7 +107,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     if ([self isViewLoaded] && self.view.window == nil) { // not current view
-        [self viewDidUnload];
         self.view = nil;
     }
 }
@@ -205,7 +204,16 @@
 {
     NSString *fileName = _fileArray[idx];
     NSString *filePath = [_path stringByAppendingPathComponent:fileName];
-    return [NSData dataWithContentsOfFile:filePath];
+
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if ([SCGIFImageView isGifImage:data]) {
+        return data;
+    }
+    UIImage *image = [UIImage imageWithData:data];
+    CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
+    UIImage *newImage = [image resizeToSize:size keepAspectRatio:YES];
+    NSData *data2 = UIImageJPEGRepresentation(newImage, 0.75);
+    return data2;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration

@@ -12,7 +12,6 @@
 #import "ZipArchive.h"
 #import "FileManager.h"
 #import "SCGIFImageView.h"
-#import "PosterImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "KxMovieViewController.h"
 #import "KxMovieDecoder.h"
@@ -20,6 +19,7 @@
 #import "PicThumbImageView.h"
 #import "UINavigationBar+Ext.h"
 #import "UIImage+Ext.h"
+#import "ImageCell.h"
 
 #define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
@@ -31,18 +31,20 @@
 #define kFileActionViewTag 999
 
 @interface BrowseViewController ()
+
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, weak) IBOutlet UIView *fileActionView;
+@property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
+
 @property (nonatomic, strong) NSArray *contentArray;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *selectedPathArray;
+@property (nonatomic, strong) NSMutableDictionary *cacheDict;
+@property (nonatomic, strong) UIBarButtonItem *actionBarBtn;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, copy) NSString *rootPath;
 @property (nonatomic, copy) NSString *action;
-@property (nonatomic, strong) NSMutableArray *selectedPathArray;
-@property (strong, nonatomic) IBOutlet UIView *fileActionView;
-@property (strong) UITapGestureRecognizer *tap;
-@property (nonatomic) BOOL isListMode;
+@property (nonatomic, assign) BOOL isBrowseMode;
 @property (nonatomic, assign) BOOL isEditingMode;
-@property (nonatomic, strong) NSMutableDictionary *cacheDict;
-@property (nonatomic, strong) IBOutlet UIToolbar *toolbar;
-@property (nonatomic, strong) UIBarButtonItem *actionBarBtn;
 
 // action buttons
 @property (weak, nonatomic) IBOutlet UIButton *selectAllBtn;
@@ -52,14 +54,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *createDirBtn;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 
-
-- (IBAction)switchListMode:(id)sender;
-- (IBAction)createDir:(id)sender;
-- (IBAction)wifi:(id)sender;
-- (IBAction)rename:(id)sender;
-- (IBAction)hideFileActionView;
-- (IBAction)refresh:(id)sender;
-- (IBAction)play:(id)sender;
 @end
 
 @implementation BrowseViewController
@@ -82,7 +76,7 @@
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[FileManager contentsOfPath:_rootPath]];
 
     if (tempArray.count == 0) {
-        _isListMode = YES;
+        _isBrowseMode = YES;
     } else {
         // sort the array, move dir to head
         NSMutableArray *fileArray = [NSMutableArray arrayWithCapacity:200];
@@ -128,17 +122,18 @@
     actionButton.frame = CGRectMake(0, 0, 50, 30);
     [actionButton setBackgroundImage:[UIImage imageNamed:@"blackBtn.png"] forState:UIControlStateNormal];
     [actionButton addTarget:self action:@selector(switchEditingMode) forControlEvents:UIControlEventTouchUpInside];
-    [actionButton setTitle:@"Action" forState:UIControlStateNormal];
+    [actionButton setTitle:@"Edit" forState:UIControlStateNormal];
     actionButton.titleLabel.textColor = [UIColor whiteColor];
     actionButton.titleLabel.font = [UIFont systemFontOfSize:13];
     self.actionBarBtn = [[UIBarButtonItem alloc] initWithCustomView:actionButton];
 
     // Do any additional setup after loading the view from its nib.
-    [_tableView registerNib:[UINib nibWithNibName:@"AssetsGroupsTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"AssetsCell"];
-    _tableView.tableFooterView = [[UIView alloc] init];
-    if (!SYSTEM_VERSION_LESS_THAN(@"7.0")) {
-        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
-    }
+//    [_tableView registerNib:[UINib nibWithNibName:@"AssetsGroupsTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"AssetsCell"];
+//    _tableView.tableFooterView = [[UIView alloc] init];
+//    if (!SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+//        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
+//    }
+    [self.collectionView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellWithReuseIdentifier:kImageCellId];
     [self configActionButtonsStatus];
 }
 
@@ -174,29 +169,15 @@
     [_cacheDict removeAllObjects];
     // Dispose of any resources that can be recreated.
     if ([self isViewLoaded] && self.view.window == nil) { // not current view
-        [self viewDidUnload];
-
         self.view = nil;
     }
-}
-
-- (void)viewDidUnload {
-//    [self setTableView:nil];
-//    [self setFileActionView:nil];
-    [self setSelectAllBtn:nil];
-    [self setDeselectAllBtn:nil];
-    [self setCutBtn:nil];
-    [self setRenameBtn:nil];
-    [self setCreateDirBtn:nil];
-    [self setDeleteBtn:nil];
-    [super viewDidUnload];
 }
 
 - (void)backToParentFolder
 {
     self.rootPath = [_rootPath stringByDeletingLastPathComponent];
     [self initData];
-    [_tableView reloadData];
+    [_collectionView reloadData];
 
     if ([_rootPath isEqualToString:[FileManager rootPath]]) {
         self.navigationItem.leftBarButtonItem = nil;
@@ -205,33 +186,34 @@
     }
 }
 
-- (IBAction)switchListMode:(id)sender
+- (IBAction)switchBrowseMode:(id)sender
 {
     if (_contentArray.count == 0) {
         return;
     }
-    _isListMode = !_isListMode;
-    //    _toolbar.hidden = _isListMode;
+    _isBrowseMode = !_isBrowseMode;
+    //    _toolbar.hidden = _isBrowseMode;
+    self.title = _isBrowseMode ? @"Browse Mode" : @"iMage Manager";
     _isEditingMode = NO;
     [self configActionBtn];
-    [_tableView reloadData];
+    [_collectionView reloadData];
 }
 
 - (void)switchEditingMode
 {
     _isEditingMode = ! _isEditingMode;
     _isEditingMode ? [self showFileActionView] : [self hideFileActionView];
-    _tableView.contentInset = _isEditingMode ? UIEdgeInsetsMake(44, 0, 144, 0) : UIEdgeInsetsMake(44, 0, 44, 0);
+//    _tableView.contentInset = _isEditingMode ? UIEdgeInsetsMake(44, 0, 144, 0) : UIEdgeInsetsMake(44, 0, 44, 0);
 
-    [self.tableView reloadData];
+    [_collectionView reloadData];
 }
 
 - (void)configActionBtn
 {
-    self.navigationItem.rightBarButtonItem = _isListMode ? _actionBarBtn : nil;
+    self.navigationItem.rightBarButtonItem = _isBrowseMode ? _actionBarBtn : nil;
 
     UIButton *btn = (UIButton *)_actionBarBtn.customView;
-    [btn setTitle:(_isEditingMode ? @"Done" : @"Action") forState:UIControlStateNormal];
+    [btn setTitle:(_isEditingMode ? @"Done" : @"Edit") forState:UIControlStateNormal];
 }
 
 - (void)showFileActionView
@@ -263,7 +245,7 @@
     _isEditingMode = NO;
     [self configActionBtn];
     
-    [_tableView removeGestureRecognizer:_tap];
+//    [_tableView removeGestureRecognizer:_tap];
     CGRect startRect = CGRectMake(0, self.view.frame.size.height - _fileActionView.frame.size.height, _fileActionView.frame.size.width, _fileActionView.frame.size.height);
     CGRect endRect = CGRectMake(0, self.view.frame.size.height, _fileActionView.frame.size.width, _fileActionView.frame.size.height);
 
@@ -298,7 +280,7 @@
         [self initData];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_tableView reloadData];
+            [_collectionView reloadData];
             [self hideIndicator];
         });
     });
@@ -319,10 +301,10 @@
     self.action = @"cut";
     [_cutBtn setTitle:@"Paste" forState:UIControlStateNormal];
     [_cutBtn removeTarget:self action:@selector(cut:) forControlEvents:UIControlEventTouchUpInside];
-    [_cutBtn addTarget:self action:@selector(paste:) forControlEvents:UIControlEventTouchUpInside];
+    [_cutBtn addTarget:self action:@selector(paste) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (IBAction)paste:(id)sender
+- (void)paste
 {
     _action = @"paste";
     [_cutBtn setTitle:@"Cut" forState:UIControlStateNormal];
@@ -337,7 +319,7 @@
     for (NSString *path in _contentArray) {
         [_selectedPathArray addObject: [_rootPath stringByAppendingPathComponent:path]];
     }
-    [_tableView reloadData];
+    [_collectionView reloadData];
 
     _selectAllBtn.enabled = NO;
     _deselectAllBtn.enabled = YES;
@@ -350,7 +332,7 @@
 - (IBAction)deselectAll:(id)sender
 {
     [_selectedPathArray removeAllObjects];
-    [_tableView reloadData];
+    [_collectionView reloadData];
 
     _selectAllBtn.enabled = YES;
     _deselectAllBtn.enabled = NO;
@@ -368,7 +350,7 @@
         [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     }
     [self initData];
-    [_tableView reloadData];
+    [_collectionView reloadData];
 }
 
 - (void)doAction
@@ -399,7 +381,7 @@
                 [self configActionButtonsStatus];
                 [self hideIndicator];
                 [self hideFileActionView];
-                [_tableView reloadData];
+                [_collectionView reloadData];
             });
         });
 
@@ -414,7 +396,7 @@
         NSLog(@"%s delete folder %@", __func__, _selectedPathArray[0]);
         [[NSFileManager defaultManager] removeItemAtPath:_selectedPathArray[0] error:nil];
         [self initData];
-        [_tableView reloadData];
+        [_collectionView reloadData];
     }
 }
 
@@ -469,40 +451,6 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)fillDetailCell:(UITableViewCell *)cell withImagesInPath:(NSString *)path
-{
-    CGFloat x = 0;
-    if (_isEditingMode) {
-        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        selectButton.frame = CGRectMake(0, kImageTableCellHeight / 2 - 15, 30, 30);
-        selectButton.backgroundColor = [UIColor clearColor];
-        selectButton.showsTouchWhenHighlighted = YES;
-        [selectButton setImage:[UIImage imageNamed:@"bulletNotSelected.png"] forState:UIControlStateNormal];
-        [selectButton setImage:[UIImage imageNamed:@"bulletSelected.png"] forState:UIControlStateSelected];
-        [selectButton addTarget:self action:@selector(cellSelectBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        x += 40;
-        selectButton.tag = 101;
-        selectButton.titleLabel.text = path;
-        selectButton.titleLabel.hidden = YES;
-        selectButton.selected = [_selectedPathArray containsObject:path];
-        [cell addSubview:selectButton];
-    }
-
-    CGRect rect = CGRectMake(4 + x, 5, kImageTableCellHeight - 10, kImageTableCellHeight - 10);
-    UIImageView *imageView = [self imageViewForPath:path];
-    imageView.frame = rect;
-    imageView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:imageView.bounds] CGPath];
-    [cell addSubview:imageView];
-    
-    x += kImageTableCellHeight + 10;
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 5, 200, kImageTableCellHeight - 10)];
-    textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-    textLabel.text = [path lastPathComponent];
-    textLabel.tag = 100;
-    textLabel.font =  [UIFont boldSystemFontOfSize:17.0];
-    [cell addSubview:textLabel];
-}
-
 - (UIImageView *)imageViewForPath:(NSString *)path
 {
     if (_cacheDict[path] && _cacheDict[path][@"image"]) {
@@ -523,7 +471,7 @@
     }
 
     if (imageView != nil) {
-        if (!_isListMode)
+        if (!_isBrowseMode)
             _cacheDict[path] = @{@"idx": @(0), @"image":imageView};
         imageView.tag = 99;
         return imageView;
@@ -598,7 +546,7 @@
             [self showAlertMessage:@"Create Failed."];
         }
         [self initData];
-        [_tableView reloadData];
+        [_collectionView reloadData];
 
     } else if ([_action isEqualToString:@"rename"]) {
     
@@ -606,7 +554,7 @@
         NSMutableArray *pathComponents = [NSMutableArray arrayWithArray:[oldPath pathComponents]];
         [pathComponents removeLastObject];
         [pathComponents addObject:text];
-
+        
         NSString *newPath = [NSString pathWithComponents:pathComponents];
         NSLog(@"%s, old name [%@], new name [%@]", __FUNCTION__, oldPath, newPath);
         NSError *error = nil;
@@ -616,7 +564,7 @@
             [self showAlertMessage:@"Rename Failed."];
         }
         [self initData];
-        [_tableView reloadData];
+        [_collectionView reloadData];
     }
 //    [self hideFileActionView];
     [_selectedPathArray removeAllObjects];
@@ -674,160 +622,7 @@
     }];
 }
 
-#pragma mark -
-#pragma mark Table View Data Source Methods
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-    if (_isListMode) {
-        static NSString *ListCellIdentifier = @"ListCell";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ListCellIdentifier];
-        
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ListCellIdentifier];
-        }
-        [[cell viewWithTag:99] removeFromSuperview];
-        [[cell viewWithTag:100] removeFromSuperview];
-        [[cell viewWithTag:101] removeFromSuperview];
-        
-        if (_contentArray.count == 0) {
-            cell.textLabel.font = [UIFont systemFontOfSize:15];
-            cell.textLabel.textColor = [UIColor grayColor];
-            cell.textLabel.text = @"还没有图片，可通过wifi上传";
-            return cell;
-        } else {
-//            cell.textLabel.font = [UIFont systemFontOfSize:17];
-//            cell.textLabel.textColor = [UIColor blackColor];
-//            cell.textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        }
-
-        cell.textLabel.text = nil;
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
-        NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
-        [self fillDetailCell:cell withImagesInPath:path];
-
-        return cell;
-
-    } else {
-
-        AssetsGroupsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AssetsCell"];
-        cell.rowNumber = indexPath.row;
-        cell.selectionDelegate = self;
-        
-        // Configure the cell.
-        NSUInteger leftGroupIndex = indexPath.row * 2;
-        NSUInteger rightGroupIndex = leftGroupIndex + 1;
-
-        NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[leftGroupIndex]];
-        UIImageView *leftPoster = [self imageViewForPath:path];
-        [cell setLeftPosterImage:leftPoster];
-        [cell setLeftLabelText:_contentArray[leftGroupIndex]];
-
-        if ((indexPath.row + 1) * 2 <= _contentArray.count) {
-            path = [_rootPath stringByAppendingPathComponent:_contentArray[rightGroupIndex]];
-            UIImageView *rightPoster = [self imageViewForPath:path];
-            [cell setRightPosterImage:rightPoster];
-            [cell setRightLabelText:_contentArray[rightGroupIndex]];
-        } else {
-            [cell setRightPosterImage:nil];
-            [cell setRightLabelText:nil];
-        }
-        
-        return cell;
-    }
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if (_isListMode) {
-        tableView.separatorColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1];
-    } else {
-        tableView.separatorColor = [UIColor clearColor];
-    }
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (_isListMode) {
-        
-        if (_contentArray.count == 0) {
-            return 44;
-        }
-        return kImageTableCellHeight;
-    } else {
-        return kThumbnailCellHeight;
-    }
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (_contentArray.count == 0) {
-        return 1;
-    }
-
-    return _isListMode ? _contentArray.count : ceil((float)_contentArray.count / 2);
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (_isListMode) {
-        if (_contentArray.count == 0) {
-            [self wifi:nil];
-            return;
-        }
-        NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
-        if ([FileManager isDirPath:path] == NO) {
-//            NSLog(@"%s Click on a file.", __func__);
-
-            if ([FileManager isGIFFile:path]) {
-
-                UIImageView *imageView = [[SCGIFImageView alloc] initWithGIFFile:path];
-                [self quickViewImage:imageView];
-
-            } else if ([FileManager isPICFile:path]) {
-
-                UIImage *image = [UIImage imageWithContentsOfFile:path];
-                CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:size keepAspectRatio:YES]];
-                [self quickViewImage:imageView];
-            }
-
-        } else {
-            [self.navigationController.navigationBar setBackButtonTitle:_contentArray[indexPath.row] target:self action:@selector(backToParentFolder)];
-            self.rootPath = path;
-            [self initData];
-            [self.tableView reloadData];
-        }
-    }
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return _isListMode ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    _action = @"delete";
-    NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
-    NSLog(@"%s about to delete folder [%@]", __func__, path);
-    [_selectedPathArray removeAllObjects];
-    _selectedPathArray[0] = path;
-    [self doAction];
-}
-
-#pragma mark -
-#pragma mark AssetsGroupsTableViewCellSelectionDelegate
-- (void)assetsGroupsTableViewCell:(AssetsGroupsTableViewCell *)cell selectedGroupAtIndex:(NSUInteger)index {
-    
-    [self selectAsset:(cell.rowNumber * 2) + index];
-}
-
-- (void)selectAsset:(NSInteger)index
+- (void)selectItem:(NSInteger)index
 {
     NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[index]];
     NSLog(@"%s %@", __func__, path);
@@ -884,4 +679,74 @@
                                                                                parameters:parameters];
     [self presentViewController:vc animated:YES completion:nil];
 }
+
+#pragma mark -
+#pragma mark Collection View Data Source Methods
+- (NSInteger)numberOfSectionsInCollectionView:( UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+{
+    return [_contentArray count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    ImageCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kImageCellId forIndexPath:indexPath];
+    
+    NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
+    [cell setImageView:[self imageViewForPath:path] title:_contentArray[indexPath.row]];
+    cell.desc = path;
+    [cell setEditing:_isEditingMode];
+    [cell setSelectStauts:[_selectedPathArray containsObject:cell.desc]];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ImageCell *cell = (ImageCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    if (_isBrowseMode) {
+        if (_isEditingMode) {
+            [cell setSelectStauts:!cell.selectStauts];
+            cell.selectStauts ? [_selectedPathArray addObject: cell.desc] : [_selectedPathArray removeObject:cell.desc];
+            [self configActionButtonsStatus];
+            
+        } else {
+            //        if (_contentArray.count == 0) {
+            //            [self wifi:nil];
+            //            return;
+            //        }
+            NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
+            if ([FileManager isDirPath:path] == NO) {
+                //            NSLog(@"%s Click on a file.", __func__);
+                
+                if ([FileManager isGIFFile:path]) {
+                    
+                    UIImageView *imageView = [[SCGIFImageView alloc] initWithGIFFile:path];
+                    [self quickViewImage:imageView];
+                    
+                } else if ([FileManager isPICFile:path]) {
+                    
+                    UIImage *image = [UIImage imageWithContentsOfFile:path];
+                    CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
+                    UIImageView *imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:size keepAspectRatio:YES]];
+                    [self quickViewImage:imageView];
+                }
+                
+            } else {
+                [self.navigationController.navigationBar setBackButtonTitle:_contentArray[indexPath.row] target:self action:@selector(backToParentFolder)];
+                self.rootPath = path;
+                [self initData];
+                [collectionView reloadData];
+            }
+        }
+        
+    } else {
+        [self selectItem:indexPath.row];
+    }
+}
+
 @end
