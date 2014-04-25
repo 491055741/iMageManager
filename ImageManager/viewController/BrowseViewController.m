@@ -242,11 +242,9 @@
 
 - (IBAction)hideFileActionView
 {
-    self.toolbar.hidden = NO;
     _isEditingMode = NO;
     [self configActionBtn];
-    
-//    [_tableView removeGestureRecognizer:_tap];
+
     CGRect startRect = CGRectMake(0, self.view.frame.size.height - _fileActionView.frame.size.height, _fileActionView.frame.size.width, _fileActionView.frame.size.height);
     CGRect endRect = CGRectMake(0, self.view.frame.size.height, _fileActionView.frame.size.width, _fileActionView.frame.size.height);
 
@@ -255,6 +253,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         _fileActionView.frame = endRect;
     } completion:^(BOOL finished) {
+        self.toolbar.hidden = NO;
         [_fileActionView removeFromSuperview];
     }];
 }

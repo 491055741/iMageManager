@@ -14,11 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" id="Llh-PX-blJ">
-                        <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="middleTruncation" adjustsFontSizeToFit="NO" id="8NX-ec-aXS">
                         <rect key="frame" x="0.0" y="110" width="130" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -32,7 +27,7 @@
                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <size key="shadowOffset" width="1" height="1"/>
                     </label>
-                    <view alpha="0.29999999999999966" contentMode="scaleToFill" id="0zW-zq-H6f">
+                    <view alpha="0.29999999999999966" contentMode="scaleToFill" id="0zW-zq-H6f" userLabel="label background">
                         <rect key="frame" x="0.0" y="110" width="130" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -45,7 +40,6 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <connections>
-                <outlet property="containerView" destination="Llh-PX-blJ" id="rj3-WS-UaI"/>
                 <outlet property="selectStatusImageView" destination="kcR-97-w8M" id="1Xp-yX-aJ2"/>
                 <outlet property="titleLabel" destination="8NX-ec-aXS" id="ol5-dx-qxL"/>
             </connections>

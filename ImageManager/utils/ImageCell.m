@@ -8,9 +8,10 @@
 
 #import "ImageCell.h"
 
+#define kImageTag 13
+
 @interface ImageCell()
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
-@property (nonatomic, weak) IBOutlet UIView *containerView;
 @property (nonatomic, weak) IBOutlet UIImageView *selectStatusImageView;
 
 @end
@@ -53,20 +54,18 @@
 
 - (void)setImageView:(UIImageView *)imageView title:(NSString *)title
 {
-    for (UIView *subView in [_containerView subviews]) {
-        [subView removeFromSuperview];
-    }
+    [[self viewWithTag:kImageTag] removeFromSuperview];
     _titleLabel.text = title;
     if (imageView == nil) {
         return;
     }
-    imageView.frame = CGRectMake(0, 0, _containerView.frame.size.width, _containerView.frame.size.width);
+    imageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width);
     imageView.layer.shadowOffset = CGSizeMake(2, 2);
     imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:imageView.bounds].CGPath;
     imageView.layer.shadowColor = [UIColor blackColor].CGColor;
     imageView.layer.shadowOpacity = 0.8;
-
-    [_containerView addSubview:imageView];
+    imageView.tag = kImageTag;
+    [self insertSubview:imageView atIndex:0];
 }
 
 @end
