@@ -377,7 +377,7 @@
     viewController.title = @"Move To";
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     nav.navigationBar.barStyle = UIBarStyleBlack;
-    [self.navigationController presentModalViewController:nav animated:YES];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 // move file to path selection done

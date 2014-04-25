@@ -34,17 +34,21 @@
     // Drawing code
 }
 */
+- (void)prepareForReuse
+{
+    self.selected = NO;
+}
 
 - (void)setEditing:(BOOL)editing
 {
     _selectStatusImageView.hidden = !editing;
-    [self setSelectStauts:editing ? _selectStauts : NO];
+    [self setSelected:editing ? self.selected : NO];
 }
 
-- (void)setSelectStauts:(BOOL)selectStauts
+- (void)setSelected:(BOOL)selected
 {
-    _selectStauts = selectStauts;
-    _selectStatusImageView.image = [UIImage imageNamed:selectStauts ? @"selectOn" : @"selectOff"];
+    [super setSelected:selected];
+    _selectStatusImageView.image = [UIImage imageNamed:selected ? @"selectOn" : @"selectOff"];
 }
 
 - (void)setImageView:(UIImageView *)imageView title:(NSString *)title
@@ -57,6 +61,11 @@
         return;
     }
     imageView.frame = CGRectMake(0, 0, _containerView.frame.size.width, _containerView.frame.size.width);
+    imageView.layer.shadowOffset = CGSizeMake(2, 2);
+    imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:imageView.bounds].CGPath;
+    imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    imageView.layer.shadowOpacity = 0.8;
+
     [_containerView addSubview:imageView];
 }
 

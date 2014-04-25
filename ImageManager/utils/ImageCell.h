@@ -12,11 +12,9 @@
 
 @interface ImageCell : UICollectionViewCell
 
-
-@property (nonatomic, assign) BOOL selectStauts; // should not use 'selected', because it will change automaticly
 @property (nonatomic, copy) NSString *desc;
 
 - (void)setImageView:(UIImageView *)imageView title:(NSString *)title;
 - (void)setEditing:(BOOL)editing;
-//- (void)setSelectStauts:(BOOL)selectStauts;
+
 @end

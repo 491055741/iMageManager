@@ -33,7 +33,7 @@
 @interface BrowseViewController ()
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, weak) IBOutlet UIView *fileActionView;
+@property (nonatomic, strong) IBOutlet UIView *fileActionView;// use strong to retain it when remove frow superView
 @property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic, strong) NSArray *contentArray;
@@ -133,7 +133,8 @@
 //    if (!SYSTEM_VERSION_LESS_THAN(@"7.0")) {
 //        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
 //    }
-    [self.collectionView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellWithReuseIdentifier:kImageCellId];
+    [_collectionView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellWithReuseIdentifier:kImageCellId];
+    _collectionView.allowsMultipleSelection = YES;
     [self configActionButtonsStatus];
 }
 
@@ -681,7 +682,7 @@
 }
 
 #pragma mark -
-#pragma mark Collection View Data Source Methods
+#pragma mark Collection View Methods
 - (NSInteger)numberOfSectionsInCollectionView:( UICollectionView *)collectionView
 {
     return 1;
@@ -700,7 +701,7 @@
     [cell setImageView:[self imageViewForPath:path] title:_contentArray[indexPath.row]];
     cell.desc = path;
     [cell setEditing:_isEditingMode];
-    [cell setSelectStauts:[_selectedPathArray containsObject:cell.desc]];
+    [cell setSelected:[_selectedPathArray containsObject:cell.desc]];
     return cell;
 }
 
@@ -710,8 +711,8 @@
     cell.backgroundColor = [UIColor whiteColor];
     if (_isBrowseMode) {
         if (_isEditingMode) {
-            [cell setSelectStauts:!cell.selectStauts];
-            cell.selectStauts ? [_selectedPathArray addObject: cell.desc] : [_selectedPathArray removeObject:cell.desc];
+            [cell setSelected:!cell.selected];
+            cell.selected ? [_selectedPathArray addObject: cell.desc] : [_selectedPathArray removeObject:cell.desc];
             [self configActionButtonsStatus];
             
         } else {
