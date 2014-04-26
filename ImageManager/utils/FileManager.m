@@ -35,11 +35,7 @@
 + (BOOL)isVideoFile:(NSString *)fileName
 {
     NSString *ext = fileName.pathExtension.lowercaseString;
-    return ([ext isEqualToString:@"mp3"] ||
-            [ext isEqualToString:@"caff"]||
-            [ext isEqualToString:@"aiff"]||
-            [ext isEqualToString:@"ogg"] ||
-            [ext isEqualToString:@"wma"] ||
+    return (
             [ext isEqualToString:@"m4a"] ||
             [ext isEqualToString:@"m4v"] ||
             [ext isEqualToString:@"wmv"] ||

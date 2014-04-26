@@ -458,8 +458,8 @@
 }
 
 #pragma mark alert
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
     switch (alertView.tag) {
         case 1:  // delete file
         {
@@ -469,6 +469,8 @@
                 NSString *filePath = [_path stringByAppendingPathComponent:fileName];
                 [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
                 [_fileArray removeObjectAtIndex:_currentIndex];
+                [_cache removeAllObjects];
+                self.title = [NSString stringWithFormat:@"%d张图片", [_fileArray count]];
                 [self swipeLeft:nil];
             }
             break;
@@ -478,7 +480,8 @@
     }
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload
+{
     [self setToolBar:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];

@@ -7,6 +7,7 @@
 //
 
 #import "PicThumbImageView.h"
+#import "UIImage+Ext.h"
 
 @implementation PicThumbImageView
 
@@ -26,7 +27,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.image = image;
+            self.image = image;//[image resizeToSize:self.bounds.size];
             [self setNeedsDisplay];
         });
     }) ;

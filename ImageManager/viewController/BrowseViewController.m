@@ -30,6 +30,30 @@
 #define kMaskViewTag 88
 #define kFileActionViewTag 999
 
+@interface SectionHeaderView : UICollectionReusableView
+{
+    
+}
+
+@property (nonatomic, strong) UILabel *label;
+@end
+
+@implementation SectionHeaderView
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 40)];
+        _label.textAlignment = NSTextAlignmentCenter;
+        _label.textColor = [UIColor darkGrayColor];
+        [self addSubview:_label];
+    }
+    return self;
+}
+
+@end
+
 @interface BrowseViewController ()
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -62,8 +86,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTaped)];
+//        self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTaped)];
         self.rootPath = [FileManager rootPath];
         NSLog(@"%s %@", __func__, _rootPath);
         [self initData];
@@ -73,28 +96,32 @@
 
 - (void)initData
 {
-    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[FileManager contentsOfPath:_rootPath]];
+    NSMutableArray *videoArray = [NSMutableArray arrayWithCapacity:10];
+    NSMutableArray *allItemsArray = [NSMutableArray arrayWithArray:[FileManager contentsOfPath:_rootPath]];
 
-    if (tempArray.count == 0) {
-        _isBrowseMode = YES;
-    } else {
-        // sort the array, move dir to head
-        NSMutableArray *fileArray = [NSMutableArray arrayWithCapacity:200];
-        for (NSString *path in tempArray) {
-            if (![FileManager isDirPath:[_rootPath stringByAppendingPathComponent:path]]) {
+    // sort the array, keep dir on head, move files to tail
+    NSMutableArray *fileArray = [NSMutableArray arrayWithCapacity:200];
+    for (NSString *path in allItemsArray) {
+        if (![FileManager isDirPath:[_rootPath stringByAppendingPathComponent:path]]
+            ) {
+            if ([FileManager isVideoFile:path]) {
+                [videoArray addObject:path];
+            } else {
                 [fileArray addObject:path];
             }
         }
-        // sort files with file type
-        [fileArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSString *path1 = obj1;
-            NSString *path2 = obj2;
-            return [[path1 pathExtension] compare:[path2 pathExtension]];
-        }];
-        [tempArray removeObjectsInArray:fileArray];
-        [tempArray addObjectsFromArray:fileArray];
     }
-    self.contentArray = [NSArray arrayWithArray:tempArray];
+    // sort files with file type
+    [fileArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString *path1 = obj1;
+        NSString *path2 = obj2;
+        return [[path1 pathExtension] compare:[path2 pathExtension]];
+    }];
+    [allItemsArray removeObjectsInArray:fileArray];
+    [allItemsArray removeObjectsInArray:videoArray];
+    [allItemsArray addObjectsFromArray:fileArray];
+
+    self.contentArray = @[allItemsArray, videoArray]; // todo : consider nil
     self.cacheDict = [NSMutableDictionary dictionaryWithCapacity:10];
     if (![_action isEqualToString:@"cut"])
         self.selectedPathArray = [NSMutableArray arrayWithCapacity:10];
@@ -127,13 +154,9 @@
     actionButton.titleLabel.font = [UIFont systemFontOfSize:13];
     self.actionBarBtn = [[UIBarButtonItem alloc] initWithCustomView:actionButton];
 
-    // Do any additional setup after loading the view from its nib.
-//    [_tableView registerNib:[UINib nibWithNibName:@"AssetsGroupsTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"AssetsCell"];
-//    _tableView.tableFooterView = [[UIView alloc] init];
-//    if (!SYSTEM_VERSION_LESS_THAN(@"7.0")) {
-//        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
-//    }
+//    [_collectionView addGestureRecognizer:_tap];
     [_collectionView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellWithReuseIdentifier:kImageCellId];
+    [_collectionView registerClass:[SectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
     _collectionView.allowsMultipleSelection = YES;
     [self configActionButtonsStatus];
 }
@@ -189,11 +212,7 @@
 
 - (IBAction)switchBrowseMode:(id)sender
 {
-    if (_contentArray.count == 0) {
-        return;
-    }
     _isBrowseMode = !_isBrowseMode;
-    //    _toolbar.hidden = _isBrowseMode;
     self.title = _isBrowseMode ? @"Browse Mode" : @"iMage Manager";
     _isEditingMode = NO;
     [self configActionBtn];
@@ -240,7 +259,7 @@
     }];
 }
 
-- (IBAction)hideFileActionView
+- (void)hideFileActionView
 {
     _isEditingMode = NO;
     [self configActionBtn];
@@ -316,9 +335,12 @@
 - (IBAction)selectAll:(id)sender
 {
     [_selectedPathArray removeAllObjects];
-    for (NSString *path in _contentArray) {
-        [_selectedPathArray addObject: [_rootPath stringByAppendingPathComponent:path]];
+    for (NSArray *array in _contentArray) {
+        for (NSString *path in array) {
+            [_selectedPathArray addObject: [_rootPath stringByAppendingPathComponent:path]];
+        }
     }
+
     [_collectionView reloadData];
 
     _selectAllBtn.enabled = NO;
@@ -471,7 +493,7 @@
     }
 
     if (imageView != nil) {
-        if (!_isBrowseMode)
+        if (!_isBrowseMode)// not cache in browse mode
             _cacheDict[path] = @{@"idx": @(0), @"image":imageView};
         imageView.tag = 99;
         return imageView;
@@ -515,7 +537,7 @@
 
 - (IBAction)play:(id)sender
 {
-    if ([self.contentArray count] == 0) {
+    if ([_contentArray count] == 0) {
         return;
     }
     [self showImageViewControllerWithPath:_rootPath];
@@ -622,16 +644,16 @@
     }];
 }
 
-- (void)selectItem:(NSInteger)index
+- (void)selectItem:(NSIndexPath *)indexPath
 {
-    NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[index]];
+    NSString *name = _contentArray[indexPath.section][indexPath.row];
+    NSString *path = [_rootPath stringByAppendingPathComponent:name];
     NSLog(@"%s %@", __func__, path);
     
     if ([FileManager isZIPFile:path]) {
-        NSString *fileName = _contentArray[index];
         NSString *folder = [path stringByDeletingPathExtension];
         [[NSFileManager defaultManager] createDirectoryAtPath:folder withIntermediateDirectories:NO attributes:nil error:nil];
-        [self unzipFile:fileName toFolder:folder];
+        [self unzipFile:name toFolder:folder];
         [self removeRubbishInFolder:folder];
         [self refresh:nil];
         return;
@@ -684,45 +706,66 @@
 #pragma mark Collection View Methods
 - (NSInteger)numberOfSectionsInCollectionView:( UICollectionView *)collectionView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    return [_contentArray count];
+    return ((NSArray *)_contentArray[section]).count;
+}
+
+- (UICollectionReusableView *)collectionView: (UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+
+    if (kind == UICollectionElementKindSectionHeader) {
+
+        SectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        NSString *title = indexPath.section == 0 ? @"Images" : @"Videos";
+        if (((NSArray *)_contentArray[indexPath.section]).count == 0) {
+            title = nil;
+        }
+        headerView.label.text = title;
+        reusableview = headerView;
+    }
+    return reusableview;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     ImageCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kImageCellId forIndexPath:indexPath];
-    
-    NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
-    [cell setImageView:[self imageViewForPath:path] title:_contentArray[indexPath.row]];
+    NSString *name = _contentArray[indexPath.section][indexPath.row];
+    NSString *path = [_rootPath stringByAppendingPathComponent:name];
+    [cell setImageView:[self imageViewForPath:path] title:name];
     cell.desc = path;
     [cell setEditing:_isEditingMode];
     [cell setSelected:[_selectedPathArray containsObject:cell.desc]];
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ImageCell *cell = (ImageCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    if (_isBrowseMode) {
+        if (_isEditingMode) {
+            [_selectedPathArray removeObject:cell.desc];
+            [self configActionButtonsStatus];
+        }
+    }
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ImageCell *cell = (ImageCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
+    NSString *name = _contentArray[indexPath.section][indexPath.row];
     if (_isBrowseMode) {
         if (_isEditingMode) {
-            [cell setSelected:!cell.selected];
-            cell.selected ? [_selectedPathArray addObject: cell.desc] : [_selectedPathArray removeObject:cell.desc];
+            [_selectedPathArray addObject: cell.desc];
             [self configActionButtonsStatus];
-            
         } else {
-            //        if (_contentArray.count == 0) {
-            //            [self wifi:nil];
-            //            return;
-            //        }
-            NSString *path = [_rootPath stringByAppendingPathComponent:_contentArray[indexPath.row]];
+            NSString *path = [_rootPath stringByAppendingPathComponent:name];
             if ([FileManager isDirPath:path] == NO) {
-                //            NSLog(@"%s Click on a file.", __func__);
-                
+
                 if ([FileManager isGIFFile:path]) {
                     
                     UIImageView *imageView = [[SCGIFImageView alloc] initWithGIFFile:path];
@@ -737,7 +780,7 @@
                 }
                 
             } else {
-                [self.navigationController.navigationBar setBackButtonTitle:_contentArray[indexPath.row] target:self action:@selector(backToParentFolder)];
+                [self.navigationController.navigationBar setBackButtonTitle:name target:self action:@selector(backToParentFolder)];
                 self.rootPath = path;
                 [self initData];
                 [collectionView reloadData];
@@ -745,7 +788,7 @@
         }
         
     } else {
-        [self selectItem:indexPath.row];
+        [self selectItem:indexPath];
     }
 }
 

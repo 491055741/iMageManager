@@ -13,19 +13,11 @@
 @interface ImageCell()
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *selectStatusImageView;
+@property (nonatomic, weak) IBOutlet UIView *containerView;
 
 @end
 
 @implementation ImageCell
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -48,24 +40,26 @@
 
 - (void)setSelected:(BOOL)selected
 {
+//    selected = !self.selected;
     [super setSelected:selected];
     _selectStatusImageView.image = [UIImage imageNamed:selected ? @"selectOn" : @"selectOff"];
 }
 
 - (void)setImageView:(UIImageView *)imageView title:(NSString *)title
 {
-    [[self viewWithTag:kImageTag] removeFromSuperview];
+    _containerView.layer.shadowOffset = CGSizeMake(2, 2);
+    _containerView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_containerView.bounds].CGPath;
+    _containerView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _containerView.layer.shadowOpacity = 0.8;
+
+    [[self.containerView viewWithTag:kImageTag] removeFromSuperview];
     _titleLabel.text = title;
     if (imageView == nil) {
         return;
     }
     imageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width);
-    imageView.layer.shadowOffset = CGSizeMake(2, 2);
-    imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:imageView.bounds].CGPath;
-    imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-    imageView.layer.shadowOpacity = 0.8;
     imageView.tag = kImageTag;
-    [self insertSubview:imageView atIndex:0];
+    [self.containerView addSubview:imageView];
 }
 
 @end
