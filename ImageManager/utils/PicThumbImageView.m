@@ -25,9 +25,9 @@
     self.image = placeholder;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *image = [UIImage imageWithContentsOfFile:path];
+        UIImage *image = [[UIImage imageWithContentsOfFile:path] resizeToSize:self.bounds.size];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.image = image;//[image resizeToSize:self.bounds.size];
+            self.image = image;
             [self setNeedsDisplay];
         });
     }) ;

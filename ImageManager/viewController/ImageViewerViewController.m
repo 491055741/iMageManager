@@ -192,8 +192,7 @@
         } else {
             UIImage *image = [UIImage imageWithData:data];
             NSAssert(image != nil, @"image is nil!");
-            CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
-            imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:size keepAspectRatio:YES]];
+            imageView = [[UIImageView alloc] initWithImage:image];
         }
         return imageView;
     }

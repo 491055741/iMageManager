@@ -62,7 +62,7 @@
 
 @property (nonatomic, strong) NSArray *contentArray;
 @property (nonatomic, strong) NSMutableArray *selectedPathArray;
-@property (nonatomic, strong) NSMutableDictionary *cacheDict;
+@property (nonatomic, strong) NSCache *cache;
 @property (nonatomic, strong) UIBarButtonItem *actionBarBtn;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, copy) NSString *rootPath;
@@ -122,7 +122,8 @@
     [allItemsArray addObjectsFromArray:fileArray];
 
     self.contentArray = @[allItemsArray, videoArray]; // todo : consider nil
-    self.cacheDict = [NSMutableDictionary dictionaryWithCapacity:10];
+    self.cache = [[NSCache alloc] init];
+    [_cache setCountLimit:50];
     if (![_action isEqualToString:@"cut"])
         self.selectedPathArray = [NSMutableArray arrayWithCapacity:10];
 }
@@ -131,7 +132,7 @@
 {
     [VideoThumbImageView clearCache];
     [FileManager clearCache];
-    [_cacheDict removeAllObjects];
+    [_cache removeAllObjects];
 //    NSArray *subPathArray = [FileManager subPathOfPath:[FileManager rootPath]]; // only check one level of subpath
 //    for (NSString *path in subPathArray) {
 //        NSString *cacheFileName = [[FileManager rootPath] stringByAppendingPathComponent: [path stringByAppendingPathComponent:kFileListCacheFileName]];
@@ -190,7 +191,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    [_cacheDict removeAllObjects];
     // Dispose of any resources that can be recreated.
     if ([self isViewLoaded] && self.view.window == nil) { // not current view
         self.view = nil;
@@ -469,14 +469,14 @@
 
 - (void)showImageViewControllerWithPath:(NSString *)path
 {
-    ImageViewerViewController *viewController = [[ImageViewerViewController alloc] initWithNibName:@"ImageViewerViewController" bundle:nil path:path startIdx:[_cacheDict[path][@"idx"] integerValue]];
+    ImageViewerViewController *viewController = [[ImageViewerViewController alloc] initWithNibName:@"ImageViewerViewController" bundle:nil path:path startIdx:[[_cache objectForKey:path][@"idx"] integerValue]];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (UIImageView *)imageViewForPath:(NSString *)path
 {
-    if (_cacheDict[path] && _cacheDict[path][@"image"]) {
-        return _cacheDict[path][@"image"];
+    if ([_cache objectForKey:path] && [_cache objectForKey:path][@"image"]) {
+        return [_cache objectForKey:path][@"image"];
     }
     
     UIImageView *imageView = nil;
@@ -490,49 +490,42 @@
     } else if ([FileManager isVideoFile:path]) {
         imageView = [[VideoThumbImageView alloc] init];
         [(VideoThumbImageView *)imageView setImageWithVideoPath:path placeholderImage:[UIImage imageNamed:@"video.png"]];
+    } else if ([FileManager isDirPath:path]) {
+        // folder thumbnail, random select a pic as dir's cover
+        NSMutableArray *filesInPathArray = [NSMutableArray arrayWithArray: [FileManager filesOfPath:path]];
+        if (filesInPathArray.count == 0) {
+            imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"folder.png"]];
+            imageView.tag = 99;
+        } else {
+            NSInteger idx = arc4random() % [filesInPathArray count];
+            NSString *fileName = filesInPathArray[idx];
+            NSString *filePath = [path stringByAppendingPathComponent:fileName];
+            
+            if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) { // cache error
+                NSLog(@"%s cache error: file not exist. clear cache.", __FUNCTION__);
+                [self clearCache];
+                return nil;
+            }
+            if ([FileManager isGIFFile:fileName]) {
+                imageView = [[SCGIFImageView alloc] initWithGIFFile:filePath];
+            } else {
+                UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+                imageView = [[UIImageView alloc] initWithImage:[image resizeToSize:kImageCellSize]];
+            }
+            
+            imageView.tag = 99;
+            imageView.layer.shadowOffset = CGSizeMake(1, 1);
+            imageView.layer.shadowOpacity = 1;
+            imageView.layer.shadowColor = [[UIColor grayColor] CGColor];
+        }
     }
 
     if (imageView != nil) {
-        if (!_isBrowseMode)// not cache in browse mode
-            _cacheDict[path] = @{@"idx": @(0), @"image":imageView};
+        [_cache setObject:@{@"idx": @(0), @"image":imageView} forKey:path];
         imageView.tag = 99;
         return imageView;
     }
-    
-    // if path is dir, random select a pic as dir's cover
-    if (![FileManager isDirPath:path]) {
-//        NSAssert(NO, @"not dir, not pic");
-        return nil;
-    }
-    NSMutableArray *filesInPathArray = [NSMutableArray arrayWithArray: [FileManager filesOfPath:path]];
-    if (filesInPathArray.count == 0) {
-        imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"folder.png"]];
-        imageView.tag = 99;
-        return imageView;
-    }
-
-    NSInteger idx = arc4random() % [filesInPathArray count];
-    NSString *fileName = filesInPathArray[idx];
-    NSString *filePath = [path stringByAppendingPathComponent:fileName];
-
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) { // cache error
-        NSLog(@"%s cache error: file not exist. clear cache.", __FUNCTION__);
-        [self clearCache];
-        return nil;
-    }
-    if ([FileManager isGIFFile:fileName]) {
-        imageView = [[SCGIFImageView alloc] initWithGIFFile:filePath];
-    } else {
-        UIImage *image = [UIImage imageWithContentsOfFile:filePath];
-        imageView = [[UIImageView alloc] initWithImage:image];
-    }
-    
-    imageView.tag = 99;
-    imageView.layer.shadowOffset = CGSizeMake(1, 1);
-    imageView.layer.shadowOpacity = 1;
-    imageView.layer.shadowColor = [[UIColor grayColor] CGColor];
-    _cacheDict[path] = @{@"idx": @(idx), @"image":imageView};
-    return imageView;
+    return nil;
 }
 
 - (IBAction)play:(id)sender

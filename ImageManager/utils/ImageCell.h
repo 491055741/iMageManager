@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define kImageCellId @"ImageCell"
+#define kImageCellSize CGSizeMake(130, 130)
 
 @interface ImageCell : UICollectionViewCell
 
