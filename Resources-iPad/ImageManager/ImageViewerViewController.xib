@@ -17,9 +17,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="cav-Qe-noR">
-                    <rect key="frame" x="167" y="980" width="435" height="44"/>
+                    <rect key="frame" x="0.0" y="980" width="768" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="YIB-an-YSx"/>
                         <barButtonItem systemItem="action" id="Pkr-Wz-lJg">
                             <connections>
                                 <action selector="showFolderSelectionView" destination="-1" id="ZWt-fW-grR"/>
@@ -28,7 +29,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="2UF-t6-Do9"/>
                         <barButtonItem style="plain" id="CMJ-BI-uLQ">
                             <button key="customView" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UYL-l7-Vdp">
-                                <rect key="frame" x="197" y="2" width="40" height="40"/>
+                                <rect key="frame" x="364" y="2" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -50,6 +51,7 @@
                                 <action selector="deleteBtnClicked:" destination="-1" id="7A1-yt-9zt"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="rYo-kI-5d5"/>
                     </items>
                     <connections>
                         <outlet property="delegate" destination="-1" id="Loa-1M-kzG"/>
