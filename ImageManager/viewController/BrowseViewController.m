@@ -44,7 +44,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 40)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 40)];
         _label.textAlignment = NSTextAlignmentCenter;
         _label.textColor = [UIColor darkGrayColor];
         [self addSubview:_label];
@@ -214,6 +214,8 @@
 {
     _isBrowseMode = !_isBrowseMode;
     self.title = _isBrowseMode ? @"Browse Mode" : @"iMage Manager";
+    self.navigationController.navigationBar.barStyle = _isBrowseMode ? UIBarStyleDefault : UIBarStyleBlack;
+    _collectionView.backgroundColor = _isBrowseMode ? [UIColor grayColor] : [UIColor whiteColor];
     _isEditingMode = NO;
     [self configActionBtn];
     [_collectionView reloadData];

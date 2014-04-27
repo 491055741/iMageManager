@@ -90,6 +90,7 @@
 		E8E52954190CA740005BB21F /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E5294E190CA740005BB21F /* PasswordViewController.xib */; };
 		E8E52955190CA81A005BB21F /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6C17C613DB00135717 /* BrowseViewController.xib */; };
 		E8E52956190CAA4A005BB21F /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
+		E8E52958190CF287005BB21F /* Icon_iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52957190CF287005BB21F /* Icon_iPad@2x.png */; };
 		E8F0212D1732093700357277 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F021191732093700357277 /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212E1732093700357277 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211B1732093700357277 /* DDData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212F1732093700357277 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211D1732093700357277 /* DDNumber.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -156,7 +157,6 @@
 		E8F6FA7417B4812C00702A14 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89AEB95175B352200E4712B /* Default@2x.png */; };
 		E8F6FA7617B4812C00702A14 /* PosterHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E812E02F175C729C004DB096 /* PosterHighlight.png */; };
 		E8F6FA7717B4812C00702A14 /* zip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E812E03A175D7319004DB096 /* zip@2x.png */; };
-		E8F6FA7817B4812C00702A14 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E812E03C175DA4D1004DB096 /* Icon@2x.png */; };
 		E8F6FA7B17B4812C00702A14 /* kxmovie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E83EC1C317B2500E00F43697 /* kxmovie.bundle */; };
 		E8F6FA7C17B4812C00702A14 /* video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E83EC1E417B275FE00F43697 /* video@2x.png */; };
 		E8FA2A6517C5BEF10031F96C /* playButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FA2A6417C5BEF00031F96C /* playButton@2x.png */; };
@@ -187,7 +187,6 @@
 		E8FDED9317C613DB00135717 /* CocoaWebResourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6E17C613DB00135717 /* CocoaWebResourceViewController.m */; };
 		E8FDED9417C613DB00135717 /* CocoaWebResourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6E17C613DB00135717 /* CocoaWebResourceViewController.m */; };
 		E8FDED9517C613DB00135717 /* CocoaWebResourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6F17C613DB00135717 /* CocoaWebResourceViewController.xib */; };
-		E8FDED9617C613DB00135717 /* CocoaWebResourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6F17C613DB00135717 /* CocoaWebResourceViewController.xib */; };
 		E8FDED9717C613DB00135717 /* FolderSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7117C613DB00135717 /* FolderSelectionViewController.m */; };
 		E8FDED9817C613DB00135717 /* FolderSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7117C613DB00135717 /* FolderSelectionViewController.m */; };
 		E8FDED9917C613DB00135717 /* FolderSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7217C613DB00135717 /* FolderSelectionViewController.xib */; };
@@ -274,6 +273,7 @@
 		E8E5294C190CA740005BB21F /* ImageViewerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewerViewController.xib; sourceTree = "<group>"; };
 		E8E5294D190CA740005BB21F /* InputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputView.xib; sourceTree = "<group>"; };
 		E8E5294E190CA740005BB21F /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordViewController.xib; sourceTree = "<group>"; };
+		E8E52957190CF287005BB21F /* Icon_iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_iPad@2x.png"; sourceTree = SOURCE_ROOT; };
 		E8F021181732093700357277 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		E8F021191732093700357277 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		E8F0211A1732093700357277 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -540,6 +540,7 @@
 		E8FC1A39173541C600E5A78B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E8E52957190CF287005BB21F /* Icon_iPad@2x.png */,
 				E83798191908A992000366EC /* selectOff@2x.png */,
 				E837981A1908A992000366EC /* selectOn@2x.png */,
 				E80E92AB17D8D68000C6D362 /* speakerLarge.png */,
@@ -787,14 +788,13 @@
 				E8F6FA7417B4812C00702A14 /* Default@2x.png in Resources */,
 				E8F6FA7617B4812C00702A14 /* PosterHighlight.png in Resources */,
 				E8F6FA7717B4812C00702A14 /* zip@2x.png in Resources */,
-				E8F6FA7817B4812C00702A14 /* Icon@2x.png in Resources */,
 				E8F6FA7B17B4812C00702A14 /* kxmovie.bundle in Resources */,
 				E8F6FA7C17B4812C00702A14 /* video@2x.png in Resources */,
 				E8FA2A6617C5BEF10031F96C /* playButton@2x.png in Resources */,
 				E8FA2A6917C5BEFF0031F96C /* Default-568h@2x.png in Resources */,
 				E8FDED8217C613DB00135717 /* InputView.xib in Resources */,
 				E837981C1908A992000366EC /* selectOff@2x.png in Resources */,
-				E8FDED9617C613DB00135717 /* CocoaWebResourceViewController.xib in Resources */,
+				E8E52958190CF287005BB21F /* Icon_iPad@2x.png in Resources */,
 				E8E52953190CA740005BB21F /* InputView.xib in Resources */,
 				E8FDED9A17C613DB00135717 /* FolderSelectionViewController.xib in Resources */,
 				E8E5294F190CA740005BB21F /* BrowseViewController.xib in Resources */,

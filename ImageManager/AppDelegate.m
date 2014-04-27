@@ -27,7 +27,8 @@
     _viewController = [[NSClassFromString(@"BrowseViewController") alloc] initWithNibName:@"BrowseViewController" bundle:nil];
     
     _navController = [[UINavigationController alloc] init];
-    _navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    _navController.navigationBar.barStyle = UIBarStyleBlack;
+    _navController.navigationBar.translucent = YES;
     _window.rootViewController = _navController;
     [_navController pushViewController:_viewController animated:NO];
     [self.window makeKeyAndVisible];
