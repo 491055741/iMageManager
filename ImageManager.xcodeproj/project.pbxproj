@@ -82,6 +82,14 @@
 		E8B60F9C17C71CFA00ABE472 /* UIImage+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */; };
 		E8C9045017C6FAFB00BBD1C0 /* VideoThumbImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C9044F17C6FAFB00BBD1C0 /* VideoThumbImageView.m */; };
 		E8C9045117C6FAFB00BBD1C0 /* VideoThumbImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C9044F17C6FAFB00BBD1C0 /* VideoThumbImageView.m */; };
+		E8E5294F190CA740005BB21F /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E52949190CA740005BB21F /* BrowseViewController.xib */; };
+		E8E52950190CA740005BB21F /* CocoaWebResourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E5294A190CA740005BB21F /* CocoaWebResourceViewController.xib */; };
+		E8E52951190CA740005BB21F /* FolderSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E5294B190CA740005BB21F /* FolderSelectionViewController.xib */; };
+		E8E52952190CA740005BB21F /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E5294C190CA740005BB21F /* ImageViewerViewController.xib */; };
+		E8E52953190CA740005BB21F /* InputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E5294D190CA740005BB21F /* InputView.xib */; };
+		E8E52954190CA740005BB21F /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E5294E190CA740005BB21F /* PasswordViewController.xib */; };
+		E8E52955190CA81A005BB21F /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6C17C613DB00135717 /* BrowseViewController.xib */; };
+		E8E52956190CAA4A005BB21F /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
 		E8F0212D1732093700357277 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F021191732093700357277 /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212E1732093700357277 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211B1732093700357277 /* DDData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212F1732093700357277 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211D1732093700357277 /* DDNumber.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -176,8 +184,6 @@
 		E8FDED8C17C613DB00135717 /* UINavigationController+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6617C613DB00135717 /* UINavigationController+Ext.m */; };
 		E8FDED8F17C613DB00135717 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6B17C613DB00135717 /* BrowseViewController.m */; };
 		E8FDED9017C613DB00135717 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6B17C613DB00135717 /* BrowseViewController.m */; };
-		E8FDED9117C613DB00135717 /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6C17C613DB00135717 /* BrowseViewController.xib */; };
-		E8FDED9217C613DB00135717 /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6C17C613DB00135717 /* BrowseViewController.xib */; };
 		E8FDED9317C613DB00135717 /* CocoaWebResourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6E17C613DB00135717 /* CocoaWebResourceViewController.m */; };
 		E8FDED9417C613DB00135717 /* CocoaWebResourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED6E17C613DB00135717 /* CocoaWebResourceViewController.m */; };
 		E8FDED9517C613DB00135717 /* CocoaWebResourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6F17C613DB00135717 /* CocoaWebResourceViewController.xib */; };
@@ -188,8 +194,6 @@
 		E8FDED9A17C613DB00135717 /* FolderSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7217C613DB00135717 /* FolderSelectionViewController.xib */; };
 		E8FDED9B17C613DB00135717 /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7417C613DB00135717 /* ImageViewerViewController.m */; };
 		E8FDED9C17C613DB00135717 /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7417C613DB00135717 /* ImageViewerViewController.m */; };
-		E8FDED9D17C613DB00135717 /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
-		E8FDED9E17C613DB00135717 /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
 		E8FDED9F17C613DB00135717 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7717C613DB00135717 /* PasswordViewController.m */; };
 		E8FDEDA017C613DB00135717 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7717C613DB00135717 /* PasswordViewController.m */; };
 		E8FDEDA117C613DB00135717 /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7817C613DB00135717 /* PasswordViewController.xib */; };
@@ -264,6 +268,12 @@
 		E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Ext.m"; sourceTree = "<group>"; };
 		E8C9044E17C6FAFB00BBD1C0 /* VideoThumbImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoThumbImageView.h; sourceTree = "<group>"; };
 		E8C9044F17C6FAFB00BBD1C0 /* VideoThumbImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoThumbImageView.m; sourceTree = "<group>"; };
+		E8E52949190CA740005BB21F /* BrowseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseViewController.xib; sourceTree = "<group>"; };
+		E8E5294A190CA740005BB21F /* CocoaWebResourceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CocoaWebResourceViewController.xib; sourceTree = "<group>"; };
+		E8E5294B190CA740005BB21F /* FolderSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FolderSelectionViewController.xib; sourceTree = "<group>"; };
+		E8E5294C190CA740005BB21F /* ImageViewerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewerViewController.xib; sourceTree = "<group>"; };
+		E8E5294D190CA740005BB21F /* InputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputView.xib; sourceTree = "<group>"; };
+		E8E5294E190CA740005BB21F /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordViewController.xib; sourceTree = "<group>"; };
 		E8F021181732093700357277 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		E8F021191732093700357277 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		E8F0211A1732093700357277 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -444,6 +454,27 @@
 			);
 			name = kxmovie;
 			path = kxmovie/kxmovie;
+			sourceTree = "<group>";
+		};
+		E8E52947190CA740005BB21F /* Resources-iPad */ = {
+			isa = PBXGroup;
+			children = (
+				E8E52948190CA740005BB21F /* ImageManager */,
+			);
+			path = "Resources-iPad";
+			sourceTree = SOURCE_ROOT;
+		};
+		E8E52948190CA740005BB21F /* ImageManager */ = {
+			isa = PBXGroup;
+			children = (
+				E8E52949190CA740005BB21F /* BrowseViewController.xib */,
+				E8E5294A190CA740005BB21F /* CocoaWebResourceViewController.xib */,
+				E8E5294B190CA740005BB21F /* FolderSelectionViewController.xib */,
+				E8E5294C190CA740005BB21F /* ImageViewerViewController.xib */,
+				E8E5294D190CA740005BB21F /* InputView.xib */,
+				E8E5294E190CA740005BB21F /* PasswordViewController.xib */,
+			);
+			path = ImageManager;
 			sourceTree = "<group>";
 		};
 		E8F021171732093700357277 /* CocoaWebResource */ = {
@@ -646,6 +677,7 @@
 		E8FE058B1730A40D00B6A39B /* ImageManager */ = {
 			isa = PBXGroup;
 			children = (
+				E8E52947190CA740005BB21F /* Resources-iPad */,
 				E8FDED5417C613DB00135717 /* utils */,
 				E8FDED6917C613DB00135717 /* viewController */,
 				E8FE05941730A40D00B6A39B /* AppDelegate.h */,
@@ -745,6 +777,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8F6FA6917B4812C00702A14 /* InfoPlist.strings in Resources */,
+				E8E52954190CA740005BB21F /* PasswordViewController.xib in Resources */,
+				E8E52950190CA740005BB21F /* CocoaWebResourceViewController.xib in Resources */,
 				E8F6FA6E17B4812C00702A14 /* docroot in Resources */,
 				E8F6FA7017B4812C00702A14 /* blackBtn@2x.png in Resources */,
 				E8F6FA7117B4812C00702A14 /* leftArrow@2x.png in Resources */,
@@ -759,14 +793,16 @@
 				E8FA2A6617C5BEF10031F96C /* playButton@2x.png in Resources */,
 				E8FA2A6917C5BEFF0031F96C /* Default-568h@2x.png in Resources */,
 				E8FDED8217C613DB00135717 /* InputView.xib in Resources */,
-				E8FDED9217C613DB00135717 /* BrowseViewController.xib in Resources */,
 				E837981C1908A992000366EC /* selectOff@2x.png in Resources */,
 				E8FDED9617C613DB00135717 /* CocoaWebResourceViewController.xib in Resources */,
+				E8E52953190CA740005BB21F /* InputView.xib in Resources */,
 				E8FDED9A17C613DB00135717 /* FolderSelectionViewController.xib in Resources */,
-				E8FDED9E17C613DB00135717 /* ImageViewerViewController.xib in Resources */,
+				E8E5294F190CA740005BB21F /* BrowseViewController.xib in Resources */,
 				E8FDEDA217C613DB00135717 /* PasswordViewController.xib in Resources */,
 				E8619C8C17D5BAC600F44144 /* gif@2x.png in Resources */,
+				E8E52952190CA740005BB21F /* ImageViewerViewController.xib in Resources */,
 				E8619C8F17D5BBE500F44144 /* folder@2x.png in Resources */,
+				E8E52951190CA740005BB21F /* FolderSelectionViewController.xib in Resources */,
 				E8339DFD17D892FC001A2AE6 /* pic.png in Resources */,
 				E8339DFF17D892FC001A2AE6 /* pic@2x.png in Resources */,
 				E8339E0117D892FC001A2AE6 /* wifi.png in Resources */,
@@ -799,19 +835,19 @@
 				E8FA2A6517C5BEF10031F96C /* playButton@2x.png in Resources */,
 				E8FA2A6817C5BEFF0031F96C /* Default-568h@2x.png in Resources */,
 				E8FDED8117C613DB00135717 /* InputView.xib in Resources */,
-				E8FDED9117C613DB00135717 /* BrowseViewController.xib in Resources */,
 				E837981B1908A992000366EC /* selectOff@2x.png in Resources */,
 				E8FDED9517C613DB00135717 /* CocoaWebResourceViewController.xib in Resources */,
 				E8FDED9917C613DB00135717 /* FolderSelectionViewController.xib in Resources */,
-				E8FDED9D17C613DB00135717 /* ImageViewerViewController.xib in Resources */,
 				E8FDEDA117C613DB00135717 /* PasswordViewController.xib in Resources */,
 				E8619C8B17D5BAC600F44144 /* gif@2x.png in Resources */,
 				E8619C8E17D5BBE500F44144 /* folder@2x.png in Resources */,
+				E8E52955190CA81A005BB21F /* BrowseViewController.xib in Resources */,
 				E8339DFC17D892FC001A2AE6 /* pic.png in Resources */,
 				E8339DFE17D892FC001A2AE6 /* pic@2x.png in Resources */,
 				E8339E0017D892FC001A2AE6 /* wifi.png in Resources */,
 				E837981D1908A992000366EC /* selectOn@2x.png in Resources */,
 				E8339E0217D892FC001A2AE6 /* wifi@2x.png in Resources */,
+				E8E52956190CAA4A005BB21F /* ImageViewerViewController.xib in Resources */,
 				E80E92AF17D8D68000C6D362 /* speakerLarge.png in Resources */,
 				E80E92B117D8D68000C6D362 /* speakerLarge@2x.png in Resources */,
 				E820C01119080FE700FDC42E /* ImageCell.xib in Resources */,
