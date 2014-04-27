@@ -480,6 +480,7 @@
     }
     
     UIImageView *imageView = nil;
+    NSInteger idx = 0;
     if ([FileManager isZIPFile:path]) {
         imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"zip.png"]];
     } else if ([FileManager isGIFFile:path]) {
@@ -497,7 +498,7 @@
             imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"folder.png"]];
             imageView.tag = 99;
         } else {
-            NSInteger idx = arc4random() % [filesInPathArray count];
+            idx = arc4random() % [filesInPathArray count];
             NSString *fileName = filesInPathArray[idx];
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
             
@@ -521,7 +522,7 @@
     }
 
     if (imageView != nil) {
-        [_cache setObject:@{@"idx": @(0), @"image":imageView} forKey:path];
+        [_cache setObject:@{@"idx": @(idx), @"image":imageView} forKey:path];
         imageView.tag = 99;
         return imageView;
     }
