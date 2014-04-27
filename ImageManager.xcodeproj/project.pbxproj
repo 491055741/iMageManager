@@ -91,6 +91,7 @@
 		E8E52955190CA81A005BB21F /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED6C17C613DB00135717 /* BrowseViewController.xib */; };
 		E8E52956190CAA4A005BB21F /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
 		E8E52958190CF287005BB21F /* Icon_iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52957190CF287005BB21F /* Icon_iPad@2x.png */; };
+		E8E5295A190CF862005BB21F /* Icon_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52959190CF862005BB21F /* Icon_iPad.png */; };
 		E8F0212D1732093700357277 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F021191732093700357277 /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212E1732093700357277 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211B1732093700357277 /* DDData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212F1732093700357277 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211D1732093700357277 /* DDNumber.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -274,6 +275,7 @@
 		E8E5294D190CA740005BB21F /* InputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputView.xib; sourceTree = "<group>"; };
 		E8E5294E190CA740005BB21F /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordViewController.xib; sourceTree = "<group>"; };
 		E8E52957190CF287005BB21F /* Icon_iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_iPad@2x.png"; sourceTree = SOURCE_ROOT; };
+		E8E52959190CF862005BB21F /* Icon_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_iPad.png; sourceTree = SOURCE_ROOT; };
 		E8F021181732093700357277 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		E8F021191732093700357277 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		E8F0211A1732093700357277 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 		E8FC1A39173541C600E5A78B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E8E52959190CF862005BB21F /* Icon_iPad.png */,
 				E8E52957190CF287005BB21F /* Icon_iPad@2x.png */,
 				E83798191908A992000366EC /* selectOff@2x.png */,
 				E837981A1908A992000366EC /* selectOn@2x.png */,
@@ -804,6 +807,7 @@
 				E8619C8F17D5BBE500F44144 /* folder@2x.png in Resources */,
 				E8E52951190CA740005BB21F /* FolderSelectionViewController.xib in Resources */,
 				E8339DFD17D892FC001A2AE6 /* pic.png in Resources */,
+				E8E5295A190CF862005BB21F /* Icon_iPad.png in Resources */,
 				E8339DFF17D892FC001A2AE6 /* pic@2x.png in Resources */,
 				E8339E0117D892FC001A2AE6 /* wifi.png in Resources */,
 				E837981E1908A992000366EC /* selectOn@2x.png in Resources */,
