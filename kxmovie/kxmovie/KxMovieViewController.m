@@ -371,7 +371,7 @@ static NSMutableDictionary * gHistory;
     _progressLabel.backgroundColor = [UIColor clearColor];
     _progressLabel.opaque = NO;
     _progressLabel.adjustsFontSizeToFitWidth = NO;
-    _progressLabel.textAlignment = UITextAlignmentLeft;
+    _progressLabel.textAlignment = NSTextAlignmentLeft;
     _progressLabel.textColor = [UIColor whiteColor];
     _progressLabel.text = @"00:00:00";
     _progressLabel.font = [UIFont systemFontOfSize:12];
@@ -380,7 +380,7 @@ static NSMutableDictionary * gHistory;
     _timeLabel.backgroundColor = [UIColor clearColor];
     _timeLabel.opaque = NO;
     _timeLabel.adjustsFontSizeToFitWidth = NO;
-    _timeLabel.textAlignment = UITextAlignmentCenter;
+    _timeLabel.textAlignment = NSTextAlignmentCenter;
     _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.text = @"00:00";
     _timeLabel.font = [UIFont systemFontOfSize:12];
@@ -389,7 +389,7 @@ static NSMutableDictionary * gHistory;
     _durationLabel.backgroundColor = [UIColor clearColor];
     _durationLabel.opaque = NO;
     _durationLabel.adjustsFontSizeToFitWidth = NO;
-    _durationLabel.textAlignment = UITextAlignmentRight;
+    _durationLabel.textAlignment = NSTextAlignmentRight;
     _durationLabel.textColor = [UIColor whiteColor];
     _durationLabel.text = @"-99:59:59";
     _durationLabel.font = [UIFont systemFontOfSize:12];
@@ -886,7 +886,7 @@ static NSMutableDictionary * gHistory;
         _subtitlesLabel.backgroundColor = [UIColor clearColor];
         _subtitlesLabel.opaque = NO;
         _subtitlesLabel.adjustsFontSizeToFitWidth = NO;
-        _subtitlesLabel.textAlignment = UITextAlignmentCenter;
+        _subtitlesLabel.textAlignment = NSTextAlignmentCenter;
         _subtitlesLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _subtitlesLabel.textColor = [UIColor whiteColor];
         _subtitlesLabel.font = [UIFont systemFontOfSize:16];
@@ -896,7 +896,7 @@ static NSMutableDictionary * gHistory;
     }
 }
 
-- (void) setupUserInteraction
+- (void)setupUserInteraction
 {
     UIView * view = [self frameView];
     view.userInteractionEnabled = YES;
@@ -952,14 +952,14 @@ static NSMutableDictionary * gHistory;
 - (void)handleSwipeLeft
 {
     NSLog(@"%s", __func__);
-    const CGFloat ff = -10;
+    const CGFloat ff = 10;
     [self setMoviePosition: _moviePosition + ff];
 }
 
 - (void)handleSwipeRight
 {
     NSLog(@"%s", __func__);
-    const CGFloat ff = 10;
+    const CGFloat ff = -10;
     [self setMoviePosition: _moviePosition + ff];
 }
 
@@ -967,14 +967,14 @@ static NSMutableDictionary * gHistory;
 {
     NSLog(@"%s", __func__);
     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
-    musicPlayer.volume += 0.05; // from 0 to 1.0. Mute when begin playing.
+    musicPlayer.volume += 0.02; // from 0 to 1.0. Mute when begin playing.
 }
 
 - (void)handleSwipeDown
 {
     NSLog(@"%s", __func__);
     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
-    musicPlayer.volume -= 0.05; // from 0 to 1.0. Mute when begin playing.
+    musicPlayer.volume -= 0.02; // from 0 to 1.0. Mute when begin playing.
 }
 
 - (void)handleDoubleSwipeLeft
@@ -1531,7 +1531,12 @@ static NSMutableDictionary * gHistory;
     
 }
 
-- (void) fullscreenMode: (BOOL) on
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+- (void)fullscreenMode:(BOOL)on
 {
     _fullscreen = on;
     UIApplication *app = [UIApplication sharedApplication];
@@ -1542,12 +1547,12 @@ static NSMutableDictionary * gHistory;
     // }
 }
 
-- (void) setMoviePositionFromDecoder
+- (void)setMoviePositionFromDecoder
 {
     _moviePosition = _decoder.position;
 }
 
-- (void) setDecoderPosition: (CGFloat) position
+- (void)setDecoderPosition: (CGFloat) position
 {
     _decoder.position = position;
 }

@@ -426,6 +426,7 @@
 
 - (void)unzipFile:(NSString *)fileName toFolder:(NSString *)destPath
 {
+    [self showIndicator];
     NSString *l_zipfile = [_rootPath stringByAppendingPathComponent:fileName];
     ZipArchive* zip = [[ZipArchive alloc] init];
     // 如果解压中文有问题，参考http://www.cocoachina.com/bbs/simple/?t10195.html解决
@@ -436,6 +437,7 @@
         }
         [zip UnzipCloseFile];
         [[NSFileManager defaultManager] removeItemAtPath:l_zipfile error:nil];
+        [self hideIndicator];
     }
 }
 
@@ -541,12 +543,12 @@
 
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (void)textInputDone:(NSString *)text

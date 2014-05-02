@@ -197,7 +197,6 @@
 		E8FDED9F17C613DB00135717 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7717C613DB00135717 /* PasswordViewController.m */; };
 		E8FDEDA017C613DB00135717 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FDED7717C613DB00135717 /* PasswordViewController.m */; };
 		E8FDEDA117C613DB00135717 /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7817C613DB00135717 /* PasswordViewController.xib */; };
-		E8FDEDA217C613DB00135717 /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7817C613DB00135717 /* PasswordViewController.xib */; };
 		E8FE05861730A40D00B6A39B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FE05851730A40D00B6A39B /* UIKit.framework */; };
 		E8FE05881730A40D00B6A39B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FE05871730A40D00B6A39B /* Foundation.framework */; };
 		E8FE058A1730A40D00B6A39B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FE05891730A40D00B6A39B /* CoreGraphics.framework */; };
@@ -801,7 +800,6 @@
 				E8E52953190CA740005BB21F /* InputView.xib in Resources */,
 				E8FDED9A17C613DB00135717 /* FolderSelectionViewController.xib in Resources */,
 				E8E5294F190CA740005BB21F /* BrowseViewController.xib in Resources */,
-				E8FDEDA217C613DB00135717 /* PasswordViewController.xib in Resources */,
 				E8619C8C17D5BAC600F44144 /* gif@2x.png in Resources */,
 				E8E52952190CA740005BB21F /* ImageViewerViewController.xib in Resources */,
 				E8619C8F17D5BBE500F44144 /* folder@2x.png in Resources */,

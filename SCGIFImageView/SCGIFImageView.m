@@ -94,8 +94,11 @@
 	// Add all subframes to the animation
 	NSMutableArray *array = [[NSMutableArray alloc] init];
 	for (NSUInteger i = 0; i < [GIF_frames count]; i++)
-	{		
-		[array addObject: [self getFrameAsImageAtIndex:i]];
+	{
+        UIImage *image = [self getFrameAsImageAtIndex:i];
+        if (image) {
+            [array addObject: image];
+        }
 	}
 	
 	NSMutableArray *overlayArray = [[NSMutableArray alloc] init];
