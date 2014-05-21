@@ -80,7 +80,7 @@
 - (void)showLoginView
 {
 #if TARGET_IPHONE_SIMULATOR
-    return;
+//    return;
 #endif
     
 #ifndef NO_PASSWORD

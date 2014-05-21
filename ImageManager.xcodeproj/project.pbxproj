@@ -92,6 +92,8 @@
 		E8E52956190CAA4A005BB21F /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
 		E8E52958190CF287005BB21F /* Icon_iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52957190CF287005BB21F /* Icon_iPad@2x.png */; };
 		E8E5295A190CF862005BB21F /* Icon_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52959190CF862005BB21F /* Icon_iPad.png */; };
+		E8E5E976192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */; };
+		E8E5E977192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */; };
 		E8F0212D1732093700357277 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F021191732093700357277 /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212E1732093700357277 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211B1732093700357277 /* DDData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8F0212F1732093700357277 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F0211D1732093700357277 /* DDNumber.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -275,6 +277,8 @@
 		E8E5294E190CA740005BB21F /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordViewController.xib; sourceTree = "<group>"; };
 		E8E52957190CF287005BB21F /* Icon_iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_iPad@2x.png"; sourceTree = SOURCE_ROOT; };
 		E8E52959190CF862005BB21F /* Icon_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_iPad.png; sourceTree = SOURCE_ROOT; };
+		E8E5E974192CFE110098FE03 /* NSObject+ScreenSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ScreenSize.h"; sourceTree = "<group>"; };
+		E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ScreenSize.m"; sourceTree = "<group>"; };
 		E8F021181732093700357277 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		E8F021191732093700357277 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		E8F0211A1732093700357277 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -583,6 +587,8 @@
 				E8FDED5C17C613DB00135717 /* InputView.xib */,
 				E8FDED5D17C613DB00135717 /* NSObject+Alert.h */,
 				E8FDED5E17C613DB00135717 /* NSObject+Alert.m */,
+				E8E5E974192CFE110098FE03 /* NSObject+ScreenSize.h */,
+				E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */,
 				E8FDED6117C613DB00135717 /* TimeMeter.h */,
 				E8FDED6217C613DB00135717 /* TimeMeter.m */,
 				E8FDED6317C613DB00135717 /* UINavigationBar+Ext.h */,
@@ -875,6 +881,7 @@
 				E8F6FA3B17B4812C00702A14 /* FileResource.m in Sources */,
 				E8F6FA3C17B4812C00702A14 /* HTTPAuthenticationRequest.m in Sources */,
 				E8F6FA3D17B4812C00702A14 /* HTTPConnection.m in Sources */,
+				E8E5E977192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */,
 				E8F6FA3E17B4812C00702A14 /* HTTPResponse.m in Sources */,
 				E8F6FA3F17B4812C00702A14 /* HTTPServer.m in Sources */,
 				E8F6FA4017B4812C00702A14 /* RegexKitLite.m in Sources */,
@@ -923,6 +930,7 @@
 				E8F021311732093700357277 /* FileResource.m in Sources */,
 				E8F021321732093700357277 /* HTTPAuthenticationRequest.m in Sources */,
 				E8F021331732093700357277 /* HTTPConnection.m in Sources */,
+				E8E5E976192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */,
 				E8F021341732093700357277 /* HTTPResponse.m in Sources */,
 				E8F021351732093700357277 /* HTTPServer.m in Sources */,
 				E8F021361732093700357277 /* RegexKitLite.m in Sources */,

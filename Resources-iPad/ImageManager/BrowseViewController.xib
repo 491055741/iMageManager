@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -8,7 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowseViewController">
             <connections>
                 <outlet property="collectionView" destination="RFi-xf-waq" id="lUq-lf-hm4"/>
+                <outlet property="createDirBtn" destination="BFV-nJ-oVt" id="XPC-Xs-rKR"/>
+                <outlet property="cutBtn" destination="Hbf-dR-NlN" id="Kv5-aE-pe1"/>
+                <outlet property="deleteBtn" destination="ozz-gM-yzv" id="xiw-gW-qsI"/>
+                <outlet property="deselectAllBtn" destination="xYJ-5V-qKj" id="sCN-Ys-MER"/>
                 <outlet property="fileActionView" destination="pHc-YV-qs2" id="nke-OH-2xm"/>
+                <outlet property="renameBtn" destination="wJa-Hb-PFg" id="Rmc-86-jyq"/>
+                <outlet property="selectAllBtn" destination="DAx-Uo-2G9" id="YbV-XQ-BiX"/>
                 <outlet property="toolbar" destination="22" id="vkE-Un-3nb"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -74,16 +80,16 @@
         </view>
         <view contentMode="scaleToFill" id="pHc-YV-qs2">
             <rect key="frame" x="0.0" y="0.0" width="768" height="150"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="Fm4-EX-2i9">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="150"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view alpha="0.60000002384185791" contentMode="scaleToFill" id="REB-Wm-f17">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="150"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="wJa-Hb-PFg">

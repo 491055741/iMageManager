@@ -9,6 +9,7 @@
 #import "BrowseViewController.h"
 #import "ImageViewerViewController.h"
 #import "NSObject+Alert.h"
+#import "NSObject+ScreenSize.h"
 #import "ZipArchive.h"
 #import "FileManager.h"
 #import "SCGIFImageView.h"
@@ -323,6 +324,7 @@
     [_cutBtn setTitle:@"Paste" forState:UIControlStateNormal];
     [_cutBtn removeTarget:self action:@selector(cut:) forControlEvents:UIControlEventTouchUpInside];
     [_cutBtn addTarget:self action:@selector(paste) forControlEvents:UIControlEventTouchUpInside];
+    [self doAction];
 }
 
 - (void)paste
@@ -395,6 +397,7 @@
                 if (error != nil) {
                     NSLog(@"%s [%@] move failed: %@", __FUNCTION__, fileName, error.description);
                     [self showAlertMessage:@"Move Failed."];// error.userInfo[@"NSUnderlyingError"]
+                    break;
                 }
             }
 //            [self clearCache];
@@ -544,6 +547,16 @@
 - (BOOL)shouldAutorotate
 {
     return YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if ([self.view viewWithTag:kFileActionViewTag] == nil) {
+        return;
+    }
+
+    CGRect endRect = CGRectMake(0, self.view.frame.size.height - _fileActionView.frame.size.height, self.view.frame.size.width, _fileActionView.frame.size.height);
+    _fileActionView.frame = endRect;
 }
 
 - (NSUInteger)supportedInterfaceOrientations
