@@ -25,19 +25,18 @@
 {
     self = [super init];
     if (self) {
-        self.title = @"Movies";
+        self.title = @"FFmpegPlayer";
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag: 0];
         
         _remoteMovies = @[
 
-            @"http://eric.cast.ro/stream2.flv",
-            @"http://liveipad.wasu.cn/cctv2_ipad/z.m3u8",                          
+//            @"http://eric.cast.ro/stream2.flv",
+//            @"http://liveipad.wasu.cn/cctv2_ipad/z.m3u8",
             @"http://www.wowza.com/_h264/BigBuckBunny_175k.mov",
             // @"http://www.wowza.com/_h264/BigBuckBunny_115k.mov",
-
-//            @"rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov",
-//            @"http://santai.tv/vod/test/test_format_1.3gp",
-//            @"http://santai.tv/vod/test/test_format_1.mp4",
+            @"rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov",
+            @"http://santai.tv/vod/test/test_format_1.3gp",
+            @"http://santai.tv/vod/test/test_format_1.mp4",
         
             //@"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov",
             //@"http://santai.tv/vod/test/BigBuckBunny_175k.mov",
@@ -65,9 +64,21 @@
     [self.view addSubview:self.tableView];
 }
 
+- (BOOL)prefersStatusBarHidden { return YES; }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+#ifdef DEBUG_AUTOPLAY
+    [self performSelector:@selector(launchDebugTest) withObject:nil afterDelay:0.5];
+#endif
+}
+
+- (void)launchDebugTest
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:4
+                                                                              inSection:1]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,7 +102,6 @@
 - (void) reloadMovies
 {
     NSMutableArray *ma = [NSMutableArray array];
-    [ma addObject:[[NSBundle mainBundle] pathForResource:@"sophie" ofType:@"mov"]];
     NSFileManager *fm = [[NSFileManager alloc] init];
     NSString *folder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                             NSUserDomainMask,
@@ -136,6 +146,15 @@
             }
         }
     }
+
+    // Add all the movies present in the app bundle.
+    NSBundle *bundle = [NSBundle mainBundle];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"mp4" inDirectory:@"SampleMovies"]];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"mov" inDirectory:@"SampleMovies"]];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"m4v" inDirectory:@"SampleMovies"]];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"wav" inDirectory:@"SampleMovies"]];
+
+    [ma sortedArrayUsingSelector:@selector(compare:)];
     
     _localMovies = [ma copy];
 }
@@ -199,10 +218,12 @@
     
     if (indexPath.section == 0) {
         
+        if (indexPath.row >= _remoteMovies.count) return;
         path = _remoteMovies[indexPath.row];
         
     } else {
-        
+
+        if (indexPath.row >= _localMovies.count) return;
         path = _localMovies[indexPath.row];
     }
     
@@ -222,6 +243,8 @@
                                                                                parameters:parameters];
     [self presentViewController:vc animated:YES completion:nil];
     //[self.navigationController pushViewController:vc animated:YES];    
+
+    LoggerApp(1, @"Playing a movie: %@", path);
 }
 
 @end
