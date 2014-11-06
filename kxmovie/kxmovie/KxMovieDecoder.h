@@ -114,8 +114,8 @@ typedef BOOL(^KxMovieDecoderInterruptCallback)();
 - (BOOL) openFile: (NSString *) path
             error: (NSError **) perror;
 
--(void) closeFile;
-
+- (void) closeFile;
+- (void) closeAudioStream; // by lipeng : when get thumbnail, not decode audio
 - (BOOL) setupVideoFrameFormat: (KxVideoFrameFormat) format;
 
 - (NSArray *) decodeFrames: (CGFloat) minDuration;

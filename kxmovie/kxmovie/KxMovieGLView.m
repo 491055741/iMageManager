@@ -16,7 +16,6 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import "KxMovieDecoder.h"
-#import "KxLogger.h"
 
 //////////////////////////////////////////////////////////
 
@@ -85,14 +84,14 @@ static BOOL validateProgram(GLuint prog)
     {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetProgramInfoLog(prog, logLength, &logLength, log);
-        LoggerVideo(1, @"Program validate log:\n%s", log);
+        NSLog(@"Program validate log:\n%s", log);
         free(log);
     }
 #endif
     
     glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
     if (status == GL_FALSE) {
-		LoggerVideo(0, @"Failed to validate program %d", prog);
+		NSLog(@"Failed to validate program %d", prog);
         return NO;
     }
 	
@@ -106,7 +105,7 @@ static GLuint compileShader(GLenum type, NSString *shaderString)
 	
     GLuint shader = glCreateShader(type);
     if (shader == 0 || shader == GL_INVALID_ENUM) {
-        LoggerVideo(0, @"Failed to create shader %d", type);
+        NSLog(@"Failed to create shader %d", type);
         return 0;
     }
     
@@ -120,7 +119,7 @@ static GLuint compileShader(GLenum type, NSString *shaderString)
     {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetShaderInfoLog(shader, logLength, &logLength, log);
-        LoggerVideo(1, @"Shader compile log:\n%s", log);
+        NSLog(@"Shader compile log:\n%s", log);
         free(log);
     }
 #endif
@@ -128,7 +127,7 @@ static GLuint compileShader(GLenum type, NSString *shaderString)
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (status == GL_FALSE) {
         glDeleteShader(shader);
-		LoggerVideo(0, @"Failed to compile shader:\n");
+		NSLog(@"Failed to compile shader:\n");
         return 0;
     }
     
@@ -381,12 +380,12 @@ enum {
         if ([decoder setupVideoFrameFormat:KxVideoFrameFormatYUV]) {
             
             _renderer = [[KxMovieGLRenderer_YUV alloc] init];
-            LoggerVideo(1, @"OK use YUV GL renderer");
+            NSLog(@"OK use YUV GL renderer");
             
         } else {
             
             _renderer = [[KxMovieGLRenderer_RGB alloc] init];
-            LoggerVideo(1, @"OK use RGB GL renderer");
+            NSLog(@"OK use RGB GL renderer");
         }
                 
         CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
@@ -401,7 +400,7 @@ enum {
         if (!_context ||
             ![EAGLContext setCurrentContext:_context]) {
             
-            LoggerVideo(0, @"failed to setup EAGLContext");
+            NSLog(@"failed to setup EAGLContext");            
             self = nil;
             return nil;
         }
@@ -418,7 +417,7 @@ enum {
         GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
         if (status != GL_FRAMEBUFFER_COMPLETE) {
             
-            LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
+            NSLog(@"failed to make complete framebuffer object %x", status);
             self = nil;
             return nil;
         }
@@ -426,7 +425,7 @@ enum {
         GLenum glError = glGetError();
         if (GL_NO_ERROR != glError) {
             
-            LoggerVideo(0, @"failed to setup GL %x", glError);
+            NSLog(@"failed to setup GL %x", glError);
             self = nil;
             return nil;
         }
@@ -446,7 +445,7 @@ enum {
         _vertices[6] =  1.0f;  // x3
         _vertices[7] =  1.0f;  // y3
         
-        LoggerVideo(1, @"OK setup GL");
+        NSLog(@"OK setup GL");
     }
     
     return self;
@@ -488,11 +487,11 @@ enum {
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
 		
-        LoggerVideo(0, @"failed to make complete framebuffer object %x", status);
+        NSLog(@"failed to make complete framebuffer object %x", status);
         
 	} else {
         
-        LoggerVideo(1, @"OK setup GL framebuffer %d:%d", _backingWidth, _backingHeight);
+        NSLog(@"OK setup GL framebuffer %d:%d", _backingWidth, _backingHeight);
     }
     
     [self updateVertices];
@@ -532,7 +531,7 @@ enum {
     GLint status;
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-		LoggerVideo(0, @"Failed to link program %d", _program);
+		NSLog(@"Failed to link program %d", _program);
         goto exit;
     }
     
@@ -550,7 +549,7 @@ exit:
     
     if (result) {
         
-        LoggerVideo(1, @"OK setup GL programm");
+        NSLog(@"OK setup GL programm");
         
     } else {
         
@@ -617,7 +616,7 @@ exit:
     #if 0
         if (!validateProgram(_program))
         {
-            LoggerVideo(0, @"Failed to validate program");
+            NSLog(@"Failed to validate program");
             return;
         }
     #endif

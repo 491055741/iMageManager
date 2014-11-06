@@ -3,10 +3,6 @@
 //
 
 #ifdef __OBJC__
-#    import <Foundation/Foundation.h>
-#    import <UIKit/UIKit.h>
-#    import "KxLogger.h"
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
 #endif
-
-
-
