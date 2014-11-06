@@ -1,5 +1,21 @@
-kxmovie/FFmpeg
+## xcode specific
+build/*
+*.pbxuser
+*.mode2v3
+*.mode1v3
+*.perspective
+*.perspectivev3
+*~.nib
 
-ImageManager.xcodeproj/project.xcworkspace/xcuserdata/
+## ignore private workspace stuff added by Xcode4
+xcuserdata
+xcshareddata
+project.xcworkspace
+*.xcuserdata
+*.xccheckout
 
-ImageManager.xcodeproj/xcuserdata/
+## generic files to ignore
+*~
+*.DS_Store
+*.swp
+*.out
