@@ -747,7 +747,7 @@
 		E8FE057A1730A40D00B6A39B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "li peng";
 			};
 			buildConfigurationList = E8FE057D1730A40D00B6A39B /* Build configuration list for PBXProject "ImageManager" */;
@@ -970,7 +970,6 @@
 		E8F6FA7F17B4812C00702A14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -992,7 +991,6 @@
 		E8F6FA8017B4812C00702A14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager-Info.plist";
@@ -1072,7 +1070,6 @@
 		E8FE05A01730A40D00B6A39B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
@@ -1089,7 +1086,6 @@
 		E8FE05A11730A40D00B6A39B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
