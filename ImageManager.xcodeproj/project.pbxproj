@@ -977,7 +977,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "ImageManager copy-Info.plist";
+				INFOPLIST_FILE = "ImageManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -995,7 +995,7 @@
 				ARCHS = armv7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
-				INFOPLIST_FILE = "ImageManager copy-Info.plist";
+				INFOPLIST_FILE = "ImageManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
