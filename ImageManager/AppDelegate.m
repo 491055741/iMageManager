@@ -42,7 +42,7 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 //    _navController.topViewController.view.hidden = YES;
 
-    _navController.topViewController.navigationController.navigationBar.hidden = YES;
+//    _navController.topViewController.navigationController.navigationBar.hidden = YES;
     _navController.topViewController.view.hidden = YES;
     
     _navController.topViewController.presentedViewController.view.hidden = YES;
@@ -60,7 +60,7 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 
     [self showLoginView];
-    _navController.topViewController.navigationController.navigationBar.hidden = NO;
+//    _navController.topViewController.navigationController.navigationBar.hidden = NO;
     _navController.topViewController.view.hidden = NO;
 //    if (![_navController.topViewController.presentedViewController isKindOfClass:NSClassFromString(@"PasswordViewController")]) {
         _navController.topViewController.presentedViewController.view.hidden = NO;
@@ -82,7 +82,7 @@
 #if TARGET_IPHONE_SIMULATOR
     return;
 #endif
-    
+
 #ifndef NO_PASSWORD
     UIViewController *viewController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
 

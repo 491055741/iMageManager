@@ -88,7 +88,11 @@
         [self performSelector:@selector(back) withObject:nil afterDelay:0.5];
         return;
     }
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:self.navigationController.navigationBar.hidden withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -305,6 +309,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     CGRect rect = self.navigationController.navigationBar.frame;
     rect.origin.y = 20;
+    self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.frame = rect;
     [UIView animateWithDuration:0.3 animations:^{
         _toolBar.alpha = 1.0;
@@ -320,6 +325,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         _toolBar.alpha = 0;
         self.navigationController.navigationBar.alpha = 0;
+        self.navigationController.navigationBar.hidden = YES;
     } completion:^(BOOL finished) {
         _isToolBarShowing = NO;
     }];
