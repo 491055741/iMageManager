@@ -89,7 +89,13 @@
         return;
     }
 
-    [self playBtnClicked:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if ([_fileArray count] != 0) {
+        [self playBtnClicked:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -229,7 +235,6 @@
 
 - (void)layoutImage:(UIImageView *)imageView
 {
-    NSLog(@"%@", self.view);
     imageView.frame = CGRectMake(0, 0, MIN(imageView.image.size.width, self.view.frame.size.width), MIN(imageView.image.size.height, self.view.frame.size.height));
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.center = self.view.center;
