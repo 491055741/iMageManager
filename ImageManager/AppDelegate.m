@@ -19,33 +19,39 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login) name:@"login" object:nil];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     _viewController = [[NSClassFromString(@"BrowseViewController") alloc] initWithNibName:@"BrowseViewController" bundle:nil];
-    
     _navController = [[UINavigationController alloc] init];
     _navController.navigationBar.barStyle = UIBarStyleBlack;
     _navController.navigationBar.translucent = YES;
-    _window.rootViewController = _navController;
     [_navController pushViewController:_viewController animated:NO];
+
+    UIViewController *passwordController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
+    _window.rootViewController = passwordController;
     [self.window makeKeyAndVisible];
-    [self showLoginView];
     return YES;
+}
+
+- (void)login
+{
+    _window.rootViewController = _navController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-//    _navController.topViewController.view.hidden = YES;
 
 //    _navController.topViewController.navigationController.navigationBar.hidden = YES;
-    _navController.topViewController.view.hidden = YES;
+    _navController.topViewController.view.hidden = YES; // browse view
     
-    _navController.topViewController.presentedViewController.view.hidden = YES;
+    _navController.topViewController.presentedViewController.view.hidden = YES; // movie player view
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -60,9 +66,9 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    self.window.hidden = NO;
     [self showLoginView];
-//    _navController.topViewController.navigationController.navigationBar.hidden = NO;
+    self.window.hidden = NO;
+    //    _navController.topViewController.navigationController.navigationBar.hidden = NO;
     _navController.topViewController.view.hidden = NO;
 //    if (![_navController.topViewController.presentedViewController isKindOfClass:NSClassFromString(@"PasswordViewController")]) {
         _navController.topViewController.presentedViewController.view.hidden = NO;
@@ -82,7 +88,7 @@
 - (void)showLoginView
 {
 #if TARGET_IPHONE_SIMULATOR
-    return;
+//    return;
 #endif
 
 #ifndef NO_PASSWORD

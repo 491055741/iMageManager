@@ -72,6 +72,7 @@
 //        self.view.hidden = YES;
         self.view.userInteractionEnabled = NO;
     } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"login" object:nil];
         [self dismissViewControllerAnimated:YES completion:^{ }];
     }
 }
