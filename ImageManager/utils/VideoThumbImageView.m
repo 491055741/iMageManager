@@ -64,15 +64,17 @@ static BOOL cacheDirtyFlag;
 
 + (UIImage *)getImageFromCache:(NSString *)path
 {
-    if (videoThumbCacheDict[path]) {
-        return [UIImage imageWithData:videoThumbCacheDict[path]];
+    NSString *fileName = [path lastPathComponent];
+    if (videoThumbCacheDict[fileName]) {
+        return [UIImage imageWithData:videoThumbCacheDict[fileName]];
     }
     return nil;
 }
 
 - (void)setImageWithVideoPath:(NSString *)path placeholderImage:(UIImage *)placeholder
 {
-    __block UIImage *image = [VideoThumbImageView getImageFromCache:path];
+    NSString *fileName = [path lastPathComponent];
+    __block UIImage *image = [VideoThumbImageView getImageFromCache:fileName];
     if (image != nil) {
         self.image = image;
         [self addPlayButtonImage];
@@ -104,7 +106,7 @@ static BOOL cacheDirtyFlag;
             return;
         }
 
-        videoThumbCacheDict[path] = UIImagePNGRepresentation(image);
+        videoThumbCacheDict[fileName] = UIImagePNGRepresentation(image);
         cacheDirtyFlag = YES;
 
         self.image = image;
