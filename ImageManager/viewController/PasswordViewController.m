@@ -8,6 +8,7 @@
 
 #import "PasswordViewController.h"
 #import "UIImage+Ext.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 #define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
@@ -49,6 +50,27 @@
     lockView.backgroundColor = [UIColor clearColor];
     lockView.delegate = self;
     [self.view addSubview:lockView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSError *error = nil;
+    LAContext *la = [[LAContext alloc] init];
+    if ([la canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+
+        [la evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"请输入8位密码" reply:^(BOOL succes, NSError *error) {
+             if (succes) {
+                 NSLog(@"%s TouchID evaluate success, login", __FUNCTION__);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[NSNotificationCenter defaultCenter] postNotificationName:@"login" object:nil];
+                 });
+             } else {
+                 NSLog(@"%s TouchID evaluate failed with %@", __FUNCTION__, error.localizedDescription);
+             }
+        }];
+    } else {
+        NSLog(@"%s Device not support TouchID.", __FUNCTION__);
+    }
 }
 
 - (void)lockScreen:(SPLockScreen *)lockScreen didEndWithPattern:(NSString *)patternString

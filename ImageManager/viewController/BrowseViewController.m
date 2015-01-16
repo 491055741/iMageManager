@@ -163,6 +163,11 @@
     [self configActionButtonsStatus];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"%s", __FUNCTION__);
+}
+
 - (void)configActionButtonsStatus
 {
     if ([_selectedPathArray count] == 1) {

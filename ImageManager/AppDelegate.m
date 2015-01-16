@@ -8,11 +8,13 @@
 
 #import "AppDelegate.h"
 #import "VideoThumbImageView.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) UIViewController *browseViewController;
 @property (nonatomic, strong) UIViewController *loginViewController;
 @property (nonatomic, strong) UINavigationController *navController;
+
 @end
 
 
@@ -21,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login) name:@"login" object:nil];
-    
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
@@ -32,28 +34,33 @@
     _navController.navigationBar.barStyle = UIBarStyleBlack;
     _navController.navigationBar.translucent = YES;
     _browseViewController = [[NSClassFromString(@"BrowseViewController") alloc] initWithNibName:@"BrowseViewController" bundle:nil];
+    _loginViewController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
     [_navController pushViewController:_browseViewController animated:NO];
-
-    [self showLoginView];
+    _window.rootViewController = _navController;
     [self.window makeKeyAndVisible];
+    [self showLoginView];
     return YES;
 }
 
 - (void)showLoginView
 {
+    NSLog(@"%s", __FUNCTION__);
 #if TARGET_IPHONE_SIMULATOR
     [self login];
     return;
 #endif
-    if (!_loginViewController) {
-        _loginViewController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
-    }
-    _window.rootViewController = _loginViewController;
+//    _window.rootViewController = _loginViewController;
+//    _window.rootViewController = _navController;
+    [_window addSubview:_loginViewController.view];
 }
 
 - (void)login
 {
-    _window.rootViewController = _navController;
+    NSLog(@"%s", __FUNCTION__);
+//    _window.rootViewController = _navController;
+//    [_navController.topViewController.presentedViewController dismissViewControllerAnimated:YES completion:^{
+//    }];
+    [_loginViewController.view removeFromSuperview];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

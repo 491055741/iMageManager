@@ -73,6 +73,7 @@
 		E8619C8C17D5BAC600F44144 /* gif@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8619C8A17D5BAC600F44144 /* gif@2x.png */; };
 		E8619C8E17D5BBE500F44144 /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8619C8D17D5BBE500F44144 /* folder@2x.png */; };
 		E8619C8F17D5BBE500F44144 /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8619C8D17D5BBE500F44144 /* folder@2x.png */; };
+		E87179731A67FCAC007320E7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E87179721A67FCAC007320E7 /* LocalAuthentication.framework */; };
 		E89AEB96175B352200E4712B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89AEB95175B352200E4712B /* Default@2x.png */; };
 		E8B60F9B17C71CFA00ABE472 /* UIImage+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */; };
 		E8B60F9C17C71CFA00ABE472 /* UIImage+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */; };
@@ -258,6 +259,7 @@
 		E85973291A0BC6D0001F300A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = kxmovie/libs/FFmpeg/libswscale.a; sourceTree = "<group>"; };
 		E8619C8A17D5BAC600F44144 /* gif@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gif@2x.png"; sourceTree = "<group>"; };
 		E8619C8D17D5BBE500F44144 /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
+		E87179721A67FCAC007320E7 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		E89AEB95175B352200E4712B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E8B60F9917C71CFA00ABE472 /* UIImage+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Ext.h"; sourceTree = "<group>"; };
 		E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Ext.m"; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E87179731A67FCAC007320E7 /* LocalAuthentication.framework in Frameworks */,
 				E83EC1BC17B24DF600F43697 /* libbz2.1.0.dylib in Frameworks */,
 				E83EC1BA17B24DED00F43697 /* libiconv.2.4.0.dylib in Frameworks */,
 				E83EC1B817B24DC100F43697 /* MediaPlayer.framework in Frameworks */,
@@ -646,6 +649,7 @@
 		E8FE05841730A40D00B6A39B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E87179721A67FCAC007320E7 /* LocalAuthentication.framework */,
 				E85973251A0BC6D0001F300A /* libavcodec.a */,
 				E85973261A0BC6D0001F300A /* libavformat.a */,
 				E85973271A0BC6D0001F300A /* libavutil.a */,
@@ -749,6 +753,11 @@
 			attributes = {
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "li peng";
+				TargetAttributes = {
+					E8FE05811730A40D00B6A39B = {
+						DevelopmentTeam = TVXZ27JPZ9;
+					};
+				};
 			};
 			buildConfigurationList = E8FE057D1730A40D00B6A39B /* Build configuration list for PBXProject "ImageManager" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1070,6 +1079,10 @@
 		E8FE05A01730A40D00B6A39B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7s,
+					armv7,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
@@ -1086,6 +1099,10 @@
 		E8FE05A11730A40D00B6A39B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7s,
+					armv7,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
