@@ -14,6 +14,7 @@
 #define kAlterOne							1234
 #define kAlterTwo							4321
 #define kTagIdentifier                      22222
+#define kCircleRadius   30.0
 
 @interface SPLockScreen()
 @property (nonatomic, strong) NormalCircle *selectedCell;
@@ -23,15 +24,18 @@
 @property (nonatomic, strong) NSMutableArray *finalLines, *cellsInOrder;
 
 - (void)resetScreen;
-
++ (CGFloat)calcHeight:(CGFloat)width;
 @end
 
 @implementation SPLockScreen
 
 - (id)init
 {
-	CGRect frame = CGRectMake(0, 120, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width);
-	self = [super initWithFrame:frame];
+//	CGRect frame = CGRectMake(0, 120, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width);
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGFloat height = [SPLockScreen calcHeight: width];
+    CGRect frame = CGRectMake(0, ([UIScreen mainScreen].bounds.size.height - height)/2, width, height);
+    self = [super initWithFrame:frame];
 	if (self) {
 		[self setNeedsDisplay];
 		[self setUpTheScreen];
@@ -57,6 +61,13 @@
 			[self addGestureRecognizer];
     }
     return self;
+}
+
++ (CGFloat)calcHeight:(CGFloat)width
+{
+    CGFloat radius = kCircleRadius;
+    CGFloat gap = (width - 6 * radius )/4;
+    return 6 * radius + 2 * gap;
 }
 
 - (void)setUpTheScreen

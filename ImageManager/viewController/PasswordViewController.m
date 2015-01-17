@@ -15,6 +15,8 @@
 #define IPHONE5 (SCREEN_HEIGHT == 568)
 
 #define kPassworkKey @"PasswordKey"
+#define kLockViewTag 10
+#define kImageViewTag 11
 
 @interface PasswordViewController ()
 @property (nonatomic, copy) NSString *password;
@@ -44,11 +46,14 @@
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:image];
     backgroundImageView.frame = [UIScreen mainScreen].bounds;
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
+    backgroundImageView.tag = kImageViewTag;
     [self.view insertSubview:backgroundImageView atIndex:0];
 
     SPLockScreen *lockView = [[SPLockScreen alloc] init];
     lockView.backgroundColor = [UIColor clearColor];
     lockView.delegate = self;
+    lockView.tag = kLockViewTag;
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:lockView];
 }
 
@@ -119,6 +124,22 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
+}
+
+//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+//{
+//    CGRectMake(0, 120, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width);
+//}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    UIView *lockView = [self.view viewWithTag:kLockViewTag];
+//    lockView.frame = CGRectMake(0, 0, size.width, size.height);
+    lockView.center = CGPointMake(size.width/2, size.height/2);
+    UIView *imageView = [self.view viewWithTag:kImageViewTag];
+    imageView.frame = CGRectMake(0, 0, size.width, size.height);
 }
 
 - (BOOL)shouldAutorotate

@@ -36,7 +36,7 @@
     _browseViewController = [[NSClassFromString(@"BrowseViewController") alloc] initWithNibName:@"BrowseViewController" bundle:nil];
     _loginViewController = [[NSClassFromString(@"PasswordViewController") alloc] initWithNibName:@"PasswordViewController" bundle:nil];
     [_navController pushViewController:_browseViewController animated:NO];
-    _window.rootViewController = _navController;
+//    _window.rootViewController = _navController;
     [self.window makeKeyAndVisible];
     [self showLoginView];
     return YES;
@@ -46,21 +46,18 @@
 {
     NSLog(@"%s", __FUNCTION__);
 #if TARGET_IPHONE_SIMULATOR
-    [self login];
-    return;
+//    [self login];
+//    return;
 #endif
-//    _window.rootViewController = _loginViewController;
-//    _window.rootViewController = _navController;
-    [_window addSubview:_loginViewController.view];
+    _window.rootViewController = _loginViewController;
+//    [_window addSubview:_loginViewController.view];
 }
 
 - (void)login
 {
     NSLog(@"%s", __FUNCTION__);
-//    _window.rootViewController = _navController;
-//    [_navController.topViewController.presentedViewController dismissViewControllerAnimated:YES completion:^{
-//    }];
-    [_loginViewController.view removeFromSuperview];
+    _window.rootViewController = _navController;
+//    [_loginViewController.view removeFromSuperview];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

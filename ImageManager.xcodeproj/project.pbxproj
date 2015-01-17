@@ -74,6 +74,7 @@
 		E8619C8E17D5BBE500F44144 /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8619C8D17D5BBE500F44144 /* folder@2x.png */; };
 		E8619C8F17D5BBE500F44144 /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8619C8D17D5BBE500F44144 /* folder@2x.png */; };
 		E87179731A67FCAC007320E7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E87179721A67FCAC007320E7 /* LocalAuthentication.framework */; };
+		E87179741A6A7C21007320E7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E87179721A67FCAC007320E7 /* LocalAuthentication.framework */; };
 		E89AEB96175B352200E4712B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89AEB95175B352200E4712B /* Default@2x.png */; };
 		E8B60F9B17C71CFA00ABE472 /* UIImage+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */; };
 		E8B60F9C17C71CFA00ABE472 /* UIImage+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */; };
@@ -365,6 +366,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E87179741A6A7C21007320E7 /* LocalAuthentication.framework in Frameworks */,
 				E8F6FA5117B4812C00702A14 /* libbz2.1.0.dylib in Frameworks */,
 				E8F6FA5217B4812C00702A14 /* libiconv.2.4.0.dylib in Frameworks */,
 				E8F6FA5317B4812C00702A14 /* MediaPlayer.framework in Frameworks */,
@@ -979,6 +981,10 @@
 		E8F6FA7F17B4812C00702A14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1000,6 +1006,10 @@
 		E8F6FA8017B4812C00702A14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager-Info.plist";
