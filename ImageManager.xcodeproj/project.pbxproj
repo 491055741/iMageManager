@@ -776,6 +776,9 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "li peng";
 				TargetAttributes = {
+					E8F6FA2D17B4812C00702A14 = {
+						DevelopmentTeam = S4NUSJ3KDJ;
+					};
 					E8FE05811730A40D00B6A39B = {
 						DevelopmentTeam = S4NUSJ3KDJ;
 					};
@@ -1009,6 +1012,8 @@
 					armv7,
 					armv7s,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1022,6 +1027,7 @@
 					"$(PROJECT_DIR)/kxmovie/libs/FFmpeg",
 				);
 				PRODUCT_NAME = "ImageManager-iPad";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1034,6 +1040,8 @@
 					armv7,
 					armv7s,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager-Info.plist";
@@ -1043,6 +1051,7 @@
 					"$(PROJECT_DIR)/kxmovie/libs/FFmpeg",
 				);
 				PRODUCT_NAME = "ImageManager-iPad";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
