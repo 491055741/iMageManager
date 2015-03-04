@@ -9,12 +9,13 @@
 #import "CocoaWebResourceViewController.h"
 #import "FileManager.h"
 #import "UINavigationBar+Ext.h"
+#import "ASProgressPopUpView.h"
 
 #define HTTPUploadingStartNotification @"UploadingStarted"
 #define HTTPUploadingProgressNotification @"UploadingProgress"
 
 @interface CocoaWebResourceViewController ()
-@property (weak, nonatomic) IBOutlet UIProgressView *uploadProgress;
+@property (weak, nonatomic) IBOutlet ASProgressPopUpView *uploadProgress;
 @property (weak, nonatomic) IBOutlet UILabel *uploadStatus;
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
 @end
@@ -46,6 +47,8 @@
 	[httpServer setupBuiltInDocroot];
 	httpServer.fileResourceDelegate = self;
     [self startService];
+    [self initProgressView];
+
     [super viewDidLoad];
 }
 
@@ -64,10 +67,10 @@
 
 -(BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
+- (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -75,6 +78,14 @@
 - (void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)initProgressView
+{
+    self.uploadProgress.popUpViewAnimatedColors = @[[UIColor greenColor], [UIColor orangeColor], [UIColor redColor]];
+    self.uploadProgress.popUpViewCornerRadius = 12.0;
+    self.uploadProgress.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:28];
+    [self.uploadProgress showPopUpViewAnimated:YES];
 }
 
 - (void)uploadingStarted:(NSNotification *)notification
@@ -95,7 +106,8 @@
         self.uploadStatus.text = @"Done!";
     else
         self.uploadStatus.text = [NSString stringWithFormat:@"%d%%", (int)(progress * 100)];
-    self.uploadProgress.progress = progress;
+//    self.uploadProgress.progress = progress;
+    [self.uploadProgress setProgress:progress animated:YES];
 
 //    NSLog(@"%s progress status %@, value %f,  ", __func__, self.uploadStatus.text, progress);
 }
@@ -130,7 +142,8 @@
     }
     [urlLabel setText:[NSString stringWithFormat:@"http://%@:%d", [httpServer hostName], [httpServer port]]];
     [self.uploadStatus setText:@""];
-    self.uploadProgress.hidden = YES;
+    [self.fileNameLabel setText:@""];
+    self.uploadProgress.progress = 0;
 }
 
 - (void)stopService
@@ -138,7 +151,8 @@
     [httpServer stop];
     [urlLabel setText:@""];
     [self.uploadStatus setText:@""];
-    self.uploadProgress.hidden = YES;
+    [self.fileNameLabel setText:@""];
+    self.uploadProgress.progress = 0;
 }
 
 #pragma mark actions

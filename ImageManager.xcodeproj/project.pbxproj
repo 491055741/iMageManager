@@ -90,6 +90,10 @@
 		E8E52956190CAA4A005BB21F /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FDED7517C613DB00135717 /* ImageViewerViewController.xib */; };
 		E8E52958190CF287005BB21F /* Icon_iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52957190CF287005BB21F /* Icon_iPad@2x.png */; };
 		E8E5295A190CF862005BB21F /* Icon_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E52959190CF862005BB21F /* Icon_iPad.png */; };
+		E8E5350B1AA7064B00C33759 /* ASPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E535081AA7064B00C33759 /* ASPopUpView.m */; };
+		E8E5350C1AA7064B00C33759 /* ASPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E535081AA7064B00C33759 /* ASPopUpView.m */; };
+		E8E5350D1AA7064B00C33759 /* ASProgressPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E5350A1AA7064B00C33759 /* ASProgressPopUpView.m */; };
+		E8E5350E1AA7064B00C33759 /* ASProgressPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E5350A1AA7064B00C33759 /* ASProgressPopUpView.m */; };
 		E8E5E976192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */; };
 		E8E5E977192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */; };
 		E8F0212D1732093700357277 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F021191732093700357277 /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -274,6 +278,10 @@
 		E8E5294E190CA740005BB21F /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordViewController.xib; sourceTree = "<group>"; };
 		E8E52957190CF287005BB21F /* Icon_iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_iPad@2x.png"; sourceTree = SOURCE_ROOT; };
 		E8E52959190CF862005BB21F /* Icon_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_iPad.png; sourceTree = SOURCE_ROOT; };
+		E8E535071AA7064B00C33759 /* ASPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPopUpView.h; sourceTree = "<group>"; };
+		E8E535081AA7064B00C33759 /* ASPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPopUpView.m; sourceTree = "<group>"; };
+		E8E535091AA7064B00C33759 /* ASProgressPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASProgressPopUpView.h; sourceTree = "<group>"; };
+		E8E5350A1AA7064B00C33759 /* ASProgressPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASProgressPopUpView.m; sourceTree = "<group>"; };
 		E8E5E974192CFE110098FE03 /* NSObject+ScreenSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ScreenSize.h"; sourceTree = "<group>"; };
 		E8E5E975192CFE110098FE03 /* NSObject+ScreenSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ScreenSize.m"; sourceTree = "<group>"; };
 		E8F021181732093700357277 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
@@ -477,6 +485,17 @@
 			path = ImageManager;
 			sourceTree = "<group>";
 		};
+		E8E535061AA7064B00C33759 /* ASProgressPopUpView */ = {
+			isa = PBXGroup;
+			children = (
+				E8E535071AA7064B00C33759 /* ASPopUpView.h */,
+				E8E535081AA7064B00C33759 /* ASPopUpView.m */,
+				E8E535091AA7064B00C33759 /* ASProgressPopUpView.h */,
+				E8E5350A1AA7064B00C33759 /* ASProgressPopUpView.m */,
+			);
+			path = ASProgressPopUpView;
+			sourceTree = "<group>";
+		};
 		E8F021171732093700357277 /* CocoaWebResource */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,6 +644,7 @@
 		E8FE05791730A40C00B6A39B = {
 			isa = PBXGroup;
 			children = (
+				E8E535061AA7064B00C33759 /* ASProgressPopUpView */,
 				E807B78417C1F3340067043B /* SPLockScreen */,
 				E83EC1BF17B2500E00F43697 /* kxmovie */,
 				E8FC1A39173541C600E5A78B /* Images */,
@@ -757,7 +777,7 @@
 				ORGANIZATIONNAME = "li peng";
 				TargetAttributes = {
 					E8FE05811730A40D00B6A39B = {
-						DevelopmentTeam = TVXZ27JPZ9;
+						DevelopmentTeam = S4NUSJ3KDJ;
 					};
 				};
 			};
@@ -870,6 +890,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8E5350E1AA7064B00C33759 /* ASProgressPopUpView.m in Sources */,
 				E8F6FA2F17B4812C00702A14 /* main.m in Sources */,
 				E8F6FA3017B4812C00702A14 /* AppDelegate.m in Sources */,
 				E8F6FA3417B4812C00702A14 /* SCGIFImageView.m in Sources */,
@@ -879,6 +900,7 @@
 				E8F6FA3A17B4812C00702A14 /* DDRange.m in Sources */,
 				E8F6FA3B17B4812C00702A14 /* FileResource.m in Sources */,
 				E8F6FA3C17B4812C00702A14 /* HTTPAuthenticationRequest.m in Sources */,
+				E8E5350C1AA7064B00C33759 /* ASPopUpView.m in Sources */,
 				E8F6FA3D17B4812C00702A14 /* HTTPConnection.m in Sources */,
 				E8E5E977192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */,
 				E8F6FA3E17B4812C00702A14 /* HTTPResponse.m in Sources */,
@@ -919,6 +941,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8E5350D1AA7064B00C33759 /* ASProgressPopUpView.m in Sources */,
 				E8FE05921730A40D00B6A39B /* main.m in Sources */,
 				E8FE05961730A40D00B6A39B /* AppDelegate.m in Sources */,
 				E8FE05BB173159D200B6A39B /* SCGIFImageView.m in Sources */,
@@ -928,6 +951,7 @@
 				E8F021301732093700357277 /* DDRange.m in Sources */,
 				E8F021311732093700357277 /* FileResource.m in Sources */,
 				E8F021321732093700357277 /* HTTPAuthenticationRequest.m in Sources */,
+				E8E5350B1AA7064B00C33759 /* ASPopUpView.m in Sources */,
 				E8F021331732093700357277 /* HTTPConnection.m in Sources */,
 				E8E5E976192CFE110098FE03 /* NSObject+ScreenSize.m in Sources */,
 				E8F021341732093700357277 /* HTTPResponse.m in Sources */,
@@ -1093,6 +1117,7 @@
 					armv7s,
 					armv7,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
@@ -1113,6 +1138,7 @@
 					armv7s,
 					armv7,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
