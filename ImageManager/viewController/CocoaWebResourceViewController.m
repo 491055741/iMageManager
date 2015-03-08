@@ -16,7 +16,7 @@
 
 @interface CocoaWebResourceViewController ()
 @property (weak, nonatomic) IBOutlet ASProgressPopUpView *uploadProgress;
-@property (weak, nonatomic) IBOutlet UILabel *uploadStatus;
+//@property (weak, nonatomic) IBOutlet UILabel *uploadStatus;
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
 @end
 
@@ -93,7 +93,6 @@
     NSString *fileName = [notification userInfo][@"fileName"];
     self.fileNameLabel.hidden = NO;
     self.fileNameLabel.text = fileName;
-    self.uploadStatus.text = @"0%";
     self.uploadProgress.hidden = NO;
     self.uploadProgress.progress = 0;
     NSLog(@"%s", __func__);
@@ -102,19 +101,11 @@
 - (void)uploadingProgress:(NSNotification *)notification
 {
     float progress = [[[notification userInfo] objectForKey:@"progress"] floatValue];
-    if (progress >= 1.0)
-        self.uploadStatus.text = @"Done!";
-    else
-        self.uploadStatus.text = [NSString stringWithFormat:@"%d%%", (int)(progress * 100)];
-//    self.uploadProgress.progress = progress;
     [self.uploadProgress setProgress:progress animated:YES];
-
-//    NSLog(@"%s progress status %@, value %f,  ", __func__, self.uploadStatus.text, progress);
 }
 
 - (void)uploadingFinished
 {
-    self.uploadStatus.text = @"Done!";
     self.uploadProgress.progress = 1.0;
     NSLog(@"%s", __func__);
 }
@@ -141,7 +132,6 @@
         NSLog(@"Error starting HTTP Server: %@", error);
     }
     [urlLabel setText:[NSString stringWithFormat:@"http://%@:%d", [httpServer hostName], [httpServer port]]];
-    [self.uploadStatus setText:@""];
     [self.fileNameLabel setText:@""];
     self.uploadProgress.progress = 0;
 }
@@ -150,7 +140,6 @@
 {
     [httpServer stop];
     [urlLabel setText:@""];
-    [self.uploadStatus setText:@""];
     [self.fileNameLabel setText:@""];
     self.uploadProgress.progress = 0;
 }
@@ -222,7 +211,6 @@
 
 - (void)viewDidUnload {
     [self setUploadProgress:nil];
-    [self setUploadStatus:nil];
     [super viewDidUnload];
 }
 
