@@ -20,6 +20,7 @@
 
 @interface PasswordViewController ()
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, weak) IBOutlet SPLockScreen *lockView;
 @end
 
 @implementation PasswordViewController
@@ -49,12 +50,9 @@
     backgroundImageView.tag = kImageViewTag;
     [self.view insertSubview:backgroundImageView atIndex:0];
 
-    SPLockScreen *lockView = [[SPLockScreen alloc] init];
-    lockView.backgroundColor = [UIColor clearColor];
-    lockView.delegate = self;
-    lockView.tag = kLockViewTag;
+    _lockView.delegate = self;
+    _lockView.tag = kLockViewTag;
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:lockView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -135,9 +133,9 @@
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    UIView *lockView = [self.view viewWithTag:kLockViewTag];
+//    UIView *lockView = [self.view viewWithTag:kLockViewTag];
 //    lockView.frame = CGRectMake(0, 0, size.width, size.height);
-    lockView.center = CGPointMake(size.width/2, size.height/2);
+//    lockView.center = CGPointMake(size.width/2, size.height/2);
     UIView *imageView = [self.view viewWithTag:kImageViewTag];
     imageView.frame = CGRectMake(0, 0, size.width, size.height);
 }

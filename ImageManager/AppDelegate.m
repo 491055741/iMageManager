@@ -46,8 +46,8 @@
 {
     NSLog(@"%s", __FUNCTION__);
 #if TARGET_IPHONE_SIMULATOR
-    [self login];
-    return;
+//    [self login];
+//    return;
 #endif
     _window.rootViewController = _loginViewController;
 //    [_window addSubview:_loginViewController.view];

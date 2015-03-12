@@ -31,17 +31,20 @@
 
 - (id)init
 {
-//	CGRect frame = CGRectMake(0, 120, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width);
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    CGFloat height = [SPLockScreen calcHeight: width];
-    CGRect frame = CGRectMake(0, ([UIScreen mainScreen].bounds.size.height - height)/2, width, height);
-    self = [super initWithFrame:frame];
+    self = [super init];
 	if (self) {
-		[self setNeedsDisplay];
-		[self setUpTheScreen];
-		[self addGestureRecognizer];
+
 	}
 	return self;
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    if (newSuperview != nil) {
+        [self setNeedsDisplay];
+        [self setUpTheScreen];
+        [self addGestureRecognizer];
+    }
 }
 
 - (id)initWithDelegate:(id<LockScreenDelegate>)lockDelegate
@@ -50,17 +53,6 @@
 	self.delegate = lockDelegate;
 	
 	return self;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-			[self setNeedsDisplay];
-			[self setUpTheScreen];
-			[self addGestureRecognizer];
-    }
-    return self;
 }
 
 + (CGFloat)calcHeight:(CGFloat)width
