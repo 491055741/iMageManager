@@ -215,10 +215,10 @@
     NSString *filePath = [_path stringByAppendingPathComponent:fileName];
 
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if ([SCGIFImageView isGifImage:data]) {
+    if (data && [SCGIFImageView isGifImage:data]) {
         return data;
     }
-    UIImage *image = [UIImage imageWithData:data];
+    UIImage *image = data ? [UIImage imageWithData:data] : [UIImage imageNamed:@"pic"];
     CGSize size = CGSizeMake( MIN(image.size.width, self.view.frame.size.width), MIN(image.size.height, self.view.frame.size.height));
     UIImage *newImage = [image resizeToSize:size keepAspectRatio:YES];
     NSData *data2 = UIImageJPEGRepresentation(newImage, 0.75);
