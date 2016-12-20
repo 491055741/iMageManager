@@ -475,7 +475,7 @@
 
 - (IBAction)wifi:(id)sender
 {
-    UIViewController *viewController = [[NSClassFromString(@"CocoaWebResourceViewController") alloc] initWithNibName:@"CocoaWebResourceViewController" bundle:nil];
+    UIViewController *viewController = [[NSClassFromString(@"WebServerViewController") alloc] initWithNibName:@"WebServerViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
