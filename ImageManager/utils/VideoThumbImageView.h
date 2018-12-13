@@ -14,6 +14,7 @@
 
 + (void)clearCache;
 + (void)flush; // flush memory cache to file
++ (void)changeCacheKey:(NSString *)oldKey toKey:(NSString *)key;
 - (void)setImageWithVideoPath:(NSString *)path placeholderImage:(UIImage *)placeholder;
 
 @end

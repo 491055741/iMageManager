@@ -71,6 +71,16 @@ static BOOL cacheDirtyFlag;
     return nil;
 }
 
+// for file rename
++ (void)changeCacheKey:(NSString *)oldKey toKey:(NSString *)key
+{
+    if (videoThumbCacheDict[oldKey]) {
+        videoThumbCacheDict[key] = videoThumbCacheDict[oldKey];
+        [videoThumbCacheDict removeObjectForKey:oldKey];
+        cacheDirtyFlag = YES;
+    }
+}
+
 - (void)setImageWithVideoPath:(NSString *)path placeholderImage:(UIImage *)placeholder
 {
     NSString *fileName = [path lastPathComponent];

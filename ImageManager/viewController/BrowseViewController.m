@@ -91,6 +91,8 @@
         self.rootPath = [FileManager rootPath];
         NSLog(@"%s %@", __func__, _rootPath);
         [self initData];
+        self.cache = [[NSCache alloc] init];
+        [_cache setCountLimit:50];
     }
     return self;
 }
@@ -282,11 +284,7 @@
     [allItemsArray addObjectsFromArray:fileArray];
     
     self.contentArray = @[allItemsArray, videoArray]; // todo : consider nil
-    self.cache = [[NSCache alloc] init];
-    [_cache setCountLimit:50];
-    if (![_action isEqualToString:@"move"]) {
-        self.selectedPathArray = [NSMutableArray arrayWithCapacity:10];
-    }
+    self.selectedPathArray = [NSMutableArray arrayWithCapacity:100];
 }
 
 - (void)clearCache
@@ -427,6 +425,7 @@
 
 - (void)showInputViewTitle:(NSString *)title defaultValue:(NSString *)defaultValue placeHolder:(NSString *)placeHolder
 {
+    [[self.view viewWithTag:kInputViewTag] removeFromSuperview];
     InputView *inputView = getObjectFromNib(@"InputView", @"InputView");
     inputView.tag = kInputViewTag;
     CGRect frame = inputView.frame;
@@ -525,7 +524,10 @@
         imageView.tag = 99;
     } else {
         if ([_cache objectForKey:path] && [_cache objectForKey:path][@"image"]) {
+//            NSLog(@"cache hit for key: %@", path);
             return [_cache objectForKey:path][@"image"];
+        } else {
+//            NSLog(@"cache miss for key: %@", path);
         }
 
         if ([FileManager isZIPFile:path]) {
@@ -761,6 +763,7 @@
             [self showAlertMessage:@"Rename Failed."];
         }
         [self initData];
+        [self changeCacheKey:oldPath withKey:newPath];
         [_collectionView reloadData];
     }
     [self hideInputView];
@@ -768,6 +771,19 @@
     [self updateActionButtonsStatus];
 }
 
+- (void)changeCacheKey:(NSString *)oldKey withKey:(NSString *)key
+{
+    NSObject *obj = [_cache objectForKey:oldKey];
+    if (obj) {
+        [_cache setObject:obj forKey:key];
+        [_cache removeObjectForKey:oldKey];
+    }
+    // update video thumb cache and flush to file
+    if ([FileManager isVideoFile:key]) {
+        [VideoThumbImageView changeCacheKey:[oldKey lastPathComponent] toKey:[key lastPathComponent]];
+        [VideoThumbImageView flush];
+    }
+}
 
 #pragma mark -
 #pragma mark Collection View Methods
@@ -819,8 +835,15 @@
 {
     if (_isEditingMode) {
         ImageCell *cell = (ImageCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        [_selectedPathArray addObject: cell.desc];
-        [cell setChecked:![cell isChecked]];
+
+        BOOL hasChecked = [_selectedPathArray containsObject:cell.desc];
+        [cell setChecked:!hasChecked];
+        if (hasChecked) {
+            [_selectedPathArray removeObject:cell.desc];
+        } else {
+            [_selectedPathArray addObject: cell.desc];
+        }
+
         [self updateActionButtonsStatus];
     } else if (_isBrowsingMode) {
         NSString *name = _contentArray[indexPath.section][indexPath.row];
