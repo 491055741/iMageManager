@@ -10,7 +10,7 @@
 #import "ZipArchive.h"
 #import "zlib.h"
 #import "zconf.h"
-
+#include "time.h"
 
 
 @interface ZipArchive (Private)

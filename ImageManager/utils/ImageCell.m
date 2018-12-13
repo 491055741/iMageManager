@@ -14,7 +14,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *selectStatusImageView;
 @property (nonatomic, weak) IBOutlet UIView *containerView;
-
+@property (nonatomic, assign) BOOL isChecked;
 @end
 
 @implementation ImageCell
@@ -30,19 +30,26 @@
 - (void)prepareForReuse
 {
     self.selected = NO;
+    self.isChecked = NO;
 }
 
 - (void)setEditing:(BOOL)editing
 {
     _selectStatusImageView.hidden = !editing;
-    [self setSelected:editing ? self.selected : NO];
+    [self setChecked:editing ? self.isChecked : NO];
+    
 }
 
-- (void)setSelected:(BOOL)selected
+- (BOOL)isChecked
 {
-//    selected = !self.selected;
-    [super setSelected:selected];
-    _selectStatusImageView.image = [UIImage imageNamed:selected ? @"selectOn" : @"selectOff"];
+    return _isChecked;
+}
+
+- (void)setChecked:(BOOL)checked
+{
+    self.isChecked = checked;
+//    [super setSelected:selected];
+    _selectStatusImageView.image = [UIImage imageNamed:_isChecked ? @"selectOn" : @"selectOff"];
 }
 
 - (void)setImageView:(UIImageView *)imageView title:(NSString *)title
@@ -59,6 +66,7 @@
     }
     imageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width);
     imageView.tag = kImageTag;
+    imageView.userInteractionEnabled = NO;
     [self.containerView addSubview:imageView];
 }
 

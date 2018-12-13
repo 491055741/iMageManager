@@ -10,11 +10,7 @@
 #import "UIImage+Ext.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 
-#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
-#define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
-#define IPHONE5 (SCREEN_HEIGHT == 568)
-
-#define kPassworkKey @"PasswordKey"
+#define kPasswordKey @"PasswordKey"
 #define kLockViewTag 10
 #define kImageViewTag 11
 
@@ -30,8 +26,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [[NSUserDefaults standardUserDefaults] registerDefaults:@{kPassworkKey:@"987"}];
-        self.password = [[NSUserDefaults standardUserDefaults] valueForKey:kPassworkKey];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{kPasswordKey:@"987"}];
+        self.password = [[NSUserDefaults standardUserDefaults] valueForKey:kPasswordKey];
         NSLog(@"%s Password: %@", __func__, _password);
     }
     return self;
@@ -84,7 +80,7 @@
             [alert show];
         } else {
             self.password = patternString;
-            [[NSUserDefaults standardUserDefaults] setValue:patternString forKey:kPassworkKey];
+            [[NSUserDefaults standardUserDefaults] setValue:patternString forKey:kPasswordKey];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Password update succeed." delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
             [alert show];
             [self dismissViewControllerAnimated:YES completion:^{ }];
@@ -145,9 +141,10 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAllButUpsideDown;
+//    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

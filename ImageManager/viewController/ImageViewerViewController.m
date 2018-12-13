@@ -61,7 +61,9 @@
     [_cache setCountLimit:10];
     self.fileArray = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[FileManager filesOfPath:_path]];
-
+    if (tempArray.count == 0) {
+        return;
+    }
     if ([FileManager isPICFile:tempArray[startIdx]] || [FileManager isGIFFile:tempArray[startIdx]]) {
         [self.fileArray addObject:tempArray[startIdx]];
     }
@@ -415,7 +417,7 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }

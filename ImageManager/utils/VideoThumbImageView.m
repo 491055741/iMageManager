@@ -7,10 +7,10 @@
 //
 
 #import "VideoThumbImageView.h"
-#import "KxMovieDecoder.h"
 #import "TimeMeter.h"
 #import "FileManager.h"
 #import "UIImage+Ext.h"
+#import "KxMovieDecoder.h"
 
 static NSMutableDictionary *videoThumbCacheDict;
 static BOOL cacheDirtyFlag;
@@ -82,7 +82,6 @@ static BOOL cacheDirtyFlag;
     } else {
         self.image = placeholder;
     }
-
     dispatch_async(dispatch_get_main_queue(), ^{
 
         KxMovieDecoder *decoder = [KxMovieDecoder movieDecoderWithContentPath:path error:nil];// must run in main thread
@@ -111,13 +110,15 @@ static BOOL cacheDirtyFlag;
 
         self.image = image;
         [self addPlayButtonImage];
+
     });
+
 }
 
 - (void)addPlayButtonImage
 {
     // add play button image
-    UIImageView *playImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playButton.png"]];
+    UIImageView *playImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playBtn.png"]];
     playImage.frame = CGRectMake(0, 0, 40, 40);
     playImage.alpha = 0.7;
     playImage.center = self.center;

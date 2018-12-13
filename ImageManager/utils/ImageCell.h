@@ -17,5 +17,6 @@
 
 - (void)setImageView:(UIImageView *)imageView title:(NSString *)title;
 - (void)setEditing:(BOOL)editing;
-
+- (void)setChecked:(BOOL)checked;
+- (BOOL)isChecked;
 @end
