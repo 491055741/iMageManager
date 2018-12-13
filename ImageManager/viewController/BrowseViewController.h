@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "InputView.h"
 
-
-
-@interface BrowseViewController : UIViewController <InputViewDelegate, UIActionSheetDelegate>
+@interface BrowseViewController : UIViewController
 
 @end
