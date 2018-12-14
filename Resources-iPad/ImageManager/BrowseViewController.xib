@@ -33,8 +33,8 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <inset key="contentInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q0R-7e-ldr">
-                        <size key="itemSize" width="130" height="130"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="Q0R-7e-ldr">
+                        <size key="itemSize" width="150" height="150"/>
                         <size key="headerReferenceSize" width="768" height="40"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -96,7 +96,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="wJa-Hb-PFg">
-                    <rect key="frame" x="525" y="20" width="120" height="50"/>
+                    <rect key="frame" x="515" y="15" width="140" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <state key="normal" title="Rename" backgroundImage="blackBtn.png">
@@ -111,7 +111,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="BFV-nJ-oVt">
-                    <rect key="frame" x="525" y="86" width="120" height="50"/>
+                    <rect key="frame" x="515" y="83" width="140" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <state key="normal" title="NewFolder" backgroundImage="blackBtn.png">
@@ -126,7 +126,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="ozz-gM-yzv">
-                    <rect key="frame" x="324" y="86" width="120" height="50"/>
+                    <rect key="frame" x="314" y="83" width="140" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <state key="normal" title="Delete" backgroundImage="blackBtn.png">
@@ -141,7 +141,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="Hbf-dR-NlN">
-                    <rect key="frame" x="324" y="20" width="120" height="50"/>
+                    <rect key="frame" x="314" y="15" width="140" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <state key="normal" title="Move" backgroundImage="blackBtn.png">
@@ -156,7 +156,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="DAx-Uo-2G9">
-                    <rect key="frame" x="123" y="20" width="120" height="50"/>
+                    <rect key="frame" x="113" y="15" width="140" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <state key="normal" title="SelectAll" backgroundImage="blackBtn.png">
@@ -171,7 +171,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="xYJ-5V-qKj">
-                    <rect key="frame" x="124" y="86" width="120" height="50"/>
+                    <rect key="frame" x="114" y="83" width="140" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <state key="normal" title="DeselectAll" backgroundImage="blackBtn.png">

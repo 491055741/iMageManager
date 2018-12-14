@@ -30,7 +30,7 @@
                     </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8">
-                    <rect key="frame" x="670" y="27" width="60" height="30"/>
+                    <rect key="frame" x="631" y="11" width="128" height="55"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                     <state key="normal" title="Done" backgroundImage="blackBtn.png">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -55,6 +55,7 @@
                 <outlet property="textField" destination="3" id="11"/>
                 <outlet property="titleLabel" destination="12" id="13"/>
             </connections>
+            <point key="canvasLocation" x="106.25" y="76.7578125"/>
         </view>
     </objects>
     <resources>
