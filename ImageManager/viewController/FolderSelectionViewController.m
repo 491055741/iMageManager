@@ -53,6 +53,11 @@
     _tableView.tableFooterView = [[UIView alloc] init];
 }
 
+- (IBAction)selectDone
+{
+    [self selectPath:_basePath];
+}
+
 - (void)backToParentFolder
 {
     self.basePath = [_basePath stringByDeletingLastPathComponent];
@@ -64,11 +69,6 @@
     } else {
         [self.navigationController.navigationBar setBackButtonTitle:[_basePath lastPathComponent] target:self action:@selector(backToParentFolder)];
     }
-}
-
-- (IBAction)selectDone
-{
-    [self selectPath:_basePath];
 }
 
 - (void)selectPath:(NSString *)path
