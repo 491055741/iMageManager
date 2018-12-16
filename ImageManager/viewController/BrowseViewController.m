@@ -34,9 +34,6 @@
 #define kFileActionViewTag 999
 
 @interface SectionHeaderView : UICollectionReusableView
-{
-    
-}
 
 @property (nonatomic, strong) UILabel *label;
 @end

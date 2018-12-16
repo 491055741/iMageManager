@@ -19,17 +19,17 @@
 #import "IJKMediaControl.h"
 #import "UIDevice+Ext.h"
 
-@interface IJKVideoViewController() <UIGestureRecognizerDelegate> {
-    // by lipeng
-    UITapGestureRecognizer   *_tapGestureRecognizer;
-    UISwipeGestureRecognizer *_swipeLeftGestureRecognizer;
-    UISwipeGestureRecognizer *_swipeRightGestureRecognizer;
-    UISwipeGestureRecognizer *_swipeUpGestureRecognizer;
-    UISwipeGestureRecognizer *_swipeDownGestureRecognizer;
-    UISwipeGestureRecognizer *_swipeDoubleLeftGestureRecognizer;
-    UISwipeGestureRecognizer *_swipeDoubleRightGestureRecognizer;
+@interface IJKVideoViewController() <UIGestureRecognizerDelegate>
 
-}
+@property (nonatomic, strong) UITapGestureRecognizer   *tapGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeUpGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDownGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDoubleLeftGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDoubleRightGestureRecognizer;
+@property (nonatomic, assign) float originalVolume;
+
 
 @end
 
@@ -99,13 +99,8 @@
     self.mediaControl.delegatePlayer = self.player;
     [self.mediaControl showAndFade];
     [self setupUserInteraction];
-    [self setVolume:0.01];
-}
-
-// volume: the value is between 0.0f and 1.0f
-- (void)setVolume:(float)volume {
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
-    musicPlayer.volume = volume; // from 0 to 1.0. Mute when begin playing.
+    _originalVolume = [MPMusicPlayerController applicationMusicPlayer].volume;
+    [[MPMusicPlayerController applicationMusicPlayer] setVolume:0.01]; // 0 ~ 1.0f
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -118,6 +113,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[MPMusicPlayerController applicationMusicPlayer] setVolume:_originalVolume];
+
 //    [UIDevice setOrientation:UIInterfaceOrientationPortrait];
 }
 //
