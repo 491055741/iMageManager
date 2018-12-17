@@ -177,6 +177,7 @@
 - (IBAction)onClickDone:(id)sender
 {
     NSLog(@"%s", __FUNCTION__);
+    [self.player stop];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

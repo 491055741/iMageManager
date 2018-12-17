@@ -13,12 +13,13 @@
 #import "UINavigationBar+Ext.h"
 #import "FileManager.h"
 #import "UIImage+Ext.h"
+#import "FolderSelectionViewController.h"
 
 #define kStaticImageDelay 3.5
 #define kDynamicImageDelay 5
 #define kMaxRepeatTimes 2
 
-@interface ImageViewerViewController ()
+@interface ImageViewerViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate, FolderSelectionDelegate, CAAnimationDelegate>
 @property (nonatomic, strong) NSMutableArray *fileArray;
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -127,7 +128,7 @@
 {
     NSInteger idx = _currentIndex;
     if (idx > [_fileArray count] - 1) {
-        NSLog(@"%s wrong idx:%d, file count:%d", __func__, idx, [_fileArray count]);
+        NSLog(@"%s wrong idx:%ld, file count:%ld", __func__, idx, [_fileArray count]);
         idx = _currentIndex = 0;
 //        return;
     }
@@ -236,15 +237,17 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
     [self layoutImage:(SCGIFImageView *)[self.view viewWithTag:999]];
 }
 
 - (void)layoutImage:(UIImageView *)imageView
 {
-    imageView.frame = CGRectMake(0, 0, MIN(imageView.image.size.width, self.view.frame.size.width), MIN(imageView.image.size.height, self.view.frame.size.height));
+    NSLog(@"self.view.width: %f, self.view.height: %f", self.view.frame.size.width, self.view.frame.size.height);
+    imageView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.center = self.view.center;
-    
+
     if (![imageView isKindOfClass:[SCGIFImageView class]])
         [self addAnimationToImageView:imageView];
 }
@@ -483,7 +486,7 @@
                 [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
                 [_fileArray removeObjectAtIndex:_currentIndex];
                 [_cache removeAllObjects];
-                self.title = [NSString stringWithFormat:@"%d张图片", [_fileArray count]];
+                self.title = [NSString stringWithFormat:@"%ld张图片", [_fileArray count]];
                 [self swipeLeft:nil];
             }
             break;

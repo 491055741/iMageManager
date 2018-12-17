@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FolderSelectionViewController.h"
 
-@interface ImageViewerViewController : UIViewController <UIGestureRecognizerDelegate, UIAlertViewDelegate, FolderSelectionDelegate>
+@interface ImageViewerViewController : UIViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil path:(NSString *)path startIdx:(NSInteger)idx;
 
