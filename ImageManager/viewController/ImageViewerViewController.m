@@ -243,7 +243,7 @@
 
 - (void)layoutImage:(UIImageView *)imageView
 {
-    NSLog(@"self.view.width: %f, self.view.height: %f", self.view.frame.size.width, self.view.frame.size.height);
+//    NSLog(@"self.view.width: %f, self.view.height: %f", self.view.frame.size.width, self.view.frame.size.height);
     imageView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.center = self.view.center;

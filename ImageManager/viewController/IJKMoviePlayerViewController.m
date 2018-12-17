@@ -18,6 +18,7 @@
 #import "IJKMoviePlayerViewController.h"
 #import "IJKMediaControl.h"
 #import "UIDevice+Ext.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface IJKVideoViewController() <UIGestureRecognizerDelegate>
 
@@ -69,18 +70,10 @@
     [super viewDidLoad];
 
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-//    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft animated:NO];
 
-#ifdef DEBUG
     [IJKFFMoviePlayerController setLogReport:NO];
     [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_ERROR];
-#else
-    [IJKFFMoviePlayerController setLogReport:NO];
-    [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_INFO];
-#endif
-
     [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:YES];
-    // [IJKFFMoviePlayerController checkIfPlayerVersionMatch:YES major:1 minor:0 micro:0];
 
     IJKFFOptions *options = [IJKFFOptions optionsByDefault];
     [options setOptionIntValue:1 forKey:@"videotoolbox" ofCategory:kIJKFFOptionCategoryPlayer]; // add by lipeng
@@ -99,7 +92,8 @@
     self.mediaControl.delegatePlayer = self.player;
     [self.mediaControl showAndFade];
     [self setupUserInteraction];
-    _originalVolume = [MPMusicPlayerController applicationMusicPlayer].volume;
+
+    _originalVolume = [[AVAudioSession sharedInstance] outputVolume]; // can't get volume via applicationMusicPlayer
     [[MPMusicPlayerController applicationMusicPlayer] setVolume:0.01]; // 0 ~ 1.0f
 }
 
