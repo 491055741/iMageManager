@@ -256,13 +256,13 @@
 - (void)initData
 {
     NSMutableArray *videoArray = [NSMutableArray arrayWithCapacity:10];
-    NSMutableArray *allItemsArray = [NSMutableArray arrayWithArray:[FileManager contentsOfPath:_rootPath]];
+    [self removeRubbishInFolder:_rootPath];
+    NSMutableArray *allItemsArray = [NSMutableArray arrayWithArray:[FileManager contentsOfPath:_rootPath]];// 只取一级子目录
     
     // sort the array, keep dir on head, move files to tail
     NSMutableArray *fileArray = [NSMutableArray arrayWithCapacity:200];
     for (NSString *path in allItemsArray) {
-        if (![FileManager isDirPath:[_rootPath stringByAppendingPathComponent:path]]
-            ) {
+        if (![FileManager isDirPath:[_rootPath stringByAppendingPathComponent:path]]) {
             if ([FileManager isVideoFile:path]) {
                 [videoArray addObject:path];
             } else {
@@ -539,6 +539,7 @@
             [(VideoThumbImageView *)imageView setImageWithVideoPath:path placeholderImage:[UIImage imageNamed:@"video.png"]];
         } else if ([FileManager isDirPath:path]) {
             // folder thumbnail, random select a pic as dir's cover
+            [self removeRubbishInFolder:path];
             NSMutableArray *filesInPathArray = [NSMutableArray arrayWithArray: [FileManager filesOfPath:path]];
             if (filesInPathArray.count == 0) {
                 imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"folder.png"]];
@@ -627,8 +628,6 @@
         NSString *folder = [path stringByDeletingPathExtension];
         [[NSFileManager defaultManager] createDirectoryAtPath:folder withIntermediateDirectories:NO attributes:nil error:nil];
         [self unzipFile:name toFolder:folder];
-        [self removeRubbishInFolder:folder];
-        [self refresh:nil];
         return;
     }
 
@@ -641,18 +640,6 @@
     if ([FileManager isDirPath:path]) {
         [self showImageViewControllerWithPath:path];
         return;
-    }
-}
-
-- (void)removeRubbishInFolder:(NSString *)path
-{
-    NSArray *rubbishNameArray = @[@"__MACOSX", @".DS_Store"];
-    for (NSString *name in rubbishNameArray) {
-        NSString *toRemovePath = [path stringByAppendingPathComponent: name];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:toRemovePath]) {
-            NSLog(@"%s about to remove rubbish folder:%@", __func__, toRemovePath);
-            [[NSFileManager defaultManager] removeItemAtPath:toRemovePath error:nil];
-        }
     }
 }
 
@@ -700,13 +687,25 @@
             [zip UnzipCloseFile];
             [[NSFileManager defaultManager] removeItemAtPath:l_zipfile error:nil];
         }
-        
+
         //通知主线程刷新
         dispatch_async(dispatch_get_main_queue(), ^{
-            //回调或者说是通知主线程刷新，
             [self hideIndicator];
+            [self refresh:nil];
         });
     });
+}
+
+- (void)removeRubbishInFolder:(NSString *)path
+{
+    NSArray *rubbishNameArray = @[@"__MACOSX", @".DS_Store"];
+    for (NSString *name in rubbishNameArray) {
+        NSString *toRemovePath = [path stringByAppendingPathComponent: name];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:toRemovePath]) {
+            NSLog(@"%s about to remove rubbish folder:%@", __func__, toRemovePath);
+            [[NSFileManager defaultManager] removeItemAtPath:toRemovePath error:nil];
+        }
+    }
 }
 
 - (void)showIndicator
