@@ -52,6 +52,16 @@
                                         <action selector="onClickDone:" destination="-1" eventType="touchUpInside" id="CNC-YJ-Fe1"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LbM-wK-N50">
+                                    <rect key="frame" x="0.0" y="0.0" width="62" height="42"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="leftArrow.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onClickDone:" destination="-1" eventType="touchUpInside" id="SWS-KO-N4Z"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
@@ -141,6 +151,7 @@
         <navigationItem title="Title" id="wNK-Og-f4q"/>
     </objects>
     <resources>
+        <image name="leftArrow.png" width="14" height="22"/>
         <image name="mediaControlBg.png" width="400" height="100"/>
         <image name="pauseBtn.png" width="36" height="36"/>
         <image name="playBtn.png" width="36" height="36"/>
