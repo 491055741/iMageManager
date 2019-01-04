@@ -31,7 +31,9 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9kQ-4W-Dgz">
                     <rect key="frame" x="0.0" y="893" width="768" height="131"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" red="0.86226086635819488" green="0.90387231912937971" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
                     <state key="normal" title="移动到这"/>
                     <connections>
                         <action selector="selectDone" destination="-1" eventType="touchUpInside" id="nEY-bx-G7O"/>
