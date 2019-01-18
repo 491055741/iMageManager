@@ -25,25 +25,25 @@
         </view>
         <view contentMode="scaleToFill" id="6" customClass="IJKMediaControl">
             <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="54" userLabel="Overlay" customClass="UIControl">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <view alpha="0.69999999999999996" contentMode="scaleToFill" id="tDJ-55-b6U">
-                            <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
+                            <rect key="frame" x="0.0" y="20" width="480" height="55"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B7y-9D-nTk">
-                                    <rect key="frame" x="70" y="10" width="340" height="21"/>
+                                    <rect key="frame" x="70" y="17" width="340" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dd2-nd-Bo6">
-                                    <rect key="frame" x="393" y="0.0" width="87" height="42"/>
+                                    <rect key="frame" x="393" y="0.0" width="87" height="54"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                     <state key="normal" title="Close">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,7 +53,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LbM-wK-N50">
-                                    <rect key="frame" x="0.0" y="0.0" width="62" height="42"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="62" height="55"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                     <state key="normal" image="leftArrow.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,15 +66,15 @@
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" id="38" userLabel="Panel: Bottom">
-                            <rect key="frame" x="40" y="200" width="400" height="100"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="40" y="174" width="400" height="132"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="mediaControlBg.png" id="39" userLabel="View: Background">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                                    <rect key="frame" x="0.0" y="-6" width="400" height="138"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 </imageView>
                                 <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="40" userLabel="Button: Play">
-                                    <rect key="frame" x="180" y="7" width="40" height="40"/>
+                                    <rect key="frame" x="180" y="12" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="playBtn.png"/>
                                     <connections>
@@ -82,7 +82,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="41" userLabel="Button: Pause">
-                                    <rect key="frame" x="180" y="8" width="40" height="40"/>
+                                    <rect key="frame" x="180" y="13" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                     <state key="normal" image="pauseBtn.png">
@@ -96,8 +96,23 @@
                                         <action selector="onClickPause:" destination="-1" eventType="touchUpInside" id="46"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" alpha="0.69999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fRM-G0-u0i" userLabel="Button: Pause">
+                                    <rect key="frame" x="270" y="13" width="40" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" image="fastforwardBtn.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onClickFastforward:" destination="-1" eventType="touchUpInside" id="s93-ZL-AMl"/>
+                                    </connections>
+                                </button>
                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" id="42" userLabel="Slider: Video Progress">
-                                    <rect key="frame" x="68" y="55" width="264" height="29"/>
+                                    <rect key="frame" x="68" y="79" width="264" height="29"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <connections>
                                         <action selector="didSliderTouchCancel" destination="-1" eventType="touchCancel" id="uRn-za-g7e"/>
@@ -108,19 +123,34 @@
                                     </connections>
                                 </slider>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="43" userLabel="Label: Current Time">
-                                    <rect key="frame" x="20" y="61" width="50" height="21"/>
+                                    <rect key="frame" x="20" y="83" width="50" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="20:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="44" userLabel="Label: Total Duration">
-                                    <rect key="frame" x="330" y="61" width="50" height="21"/>
+                                    <rect key="frame" x="330" y="83" width="50" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" alpha="0.69999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="osx-Vp-8eg" userLabel="Button: Pause">
+                                    <rect key="frame" x="89" y="12" width="40" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <state key="normal" image="fastbackwardBtn.png">
+                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onClickFastbackward:" destination="-1" eventType="touchUpInside" id="Rja-nk-rdv"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
@@ -151,6 +181,8 @@
         <navigationItem title="Title" id="wNK-Og-f4q"/>
     </objects>
     <resources>
+        <image name="fastbackwardBtn.png" width="45" height="36"/>
+        <image name="fastforwardBtn.png" width="45" height="36"/>
         <image name="leftArrow.png" width="14" height="22"/>
         <image name="mediaControlBg.png" width="400" height="100"/>
         <image name="pauseBtn.png" width="36" height="36"/>

@@ -20,7 +20,31 @@
 #import "UIDevice+Ext.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface IJKVideoViewController() <UIGestureRecognizerDelegate>
+
+@interface IJKVideoViewController() <UIGestureRecognizerDelegate, IJKMediaControlDelegate>
+
+
+@property(atomic,strong) NSURL *url;
+@property(atomic, retain) id<IJKMediaPlayback> player;
+
+- (id)initWithURL:(NSURL *)url;
+
+
+- (IBAction)onClickMediaControl:(id)sender;
+- (IBAction)onClickOverlay:(id)sender;
+- (IBAction)onClickDone:(id)sender;
+- (IBAction)onClickPlay:(id)sender;
+- (IBAction)onClickFastforward:(id)sender;
+- (IBAction)onClickFastbackward:(id)sender;
+- (IBAction)onClickPause:(id)sender;
+
+- (IBAction)didSliderTouchDown;
+- (IBAction)didSliderTouchCancel;
+- (IBAction)didSliderTouchUpOutside;
+- (IBAction)didSliderTouchUpInside;
+- (IBAction)didSliderValueChanged;
+
+@property(nonatomic,strong) IBOutlet IJKMediaControl *mediaControl;
 
 @property (nonatomic, strong) UITapGestureRecognizer   *tapGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftGestureRecognizer;
@@ -30,6 +54,7 @@
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeDoubleLeftGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeDoubleRightGestureRecognizer;
 @property (nonatomic, assign) float originalVolume;
+@property (nonatomic, assign) BOOL isShowStatusBar;
 
 
 @end
@@ -58,11 +83,26 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [self setStatusBarBackgroundColor:UIColor.blackColor];
+        _isShowStatusBar = YES;
     }
     return self;
 }
 
-- (BOOL)prefersStatusBarHidden { return YES; }
+- (BOOL)prefersStatusBarHidden {
+    return !_isShowStatusBar;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)setStatusBarBackgroundColor:(UIColor *)color {
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
+}
 
 #define EXPECTED_IJKPLAYER_VERSION (1 << 16) & 0xFF) | 
 - (void)viewDidLoad
@@ -76,7 +116,7 @@
     [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:YES];
 
     IJKFFOptions *options = [IJKFFOptions optionsByDefault];
-    [options setOptionIntValue:1 forKey:@"videotoolbox" ofCategory:kIJKFFOptionCategoryPlayer]; // add by lipeng
+    [options setOptionIntValue:1 forKey:@"videotoolbox" ofCategory:kIJKFFOptionCategoryPlayer];
 
     self.player = [[IJKFFMoviePlayerController alloc] initWithContentURL:self.url withOptions:options];
     self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -85,6 +125,8 @@
     self.player.shouldAutoplay = YES;
 
     self.view.autoresizesSubviews = YES;
+    
+    self.mediaControl.delegate = self;
     self.mediaControl.frame = self.view.bounds;
     [self.view addSubview:self.player.view];
     [self.view addSubview:self.mediaControl];
@@ -94,7 +136,7 @@
     [self setupUserInteraction];
 
     _originalVolume = [[AVAudioSession sharedInstance] outputVolume]; // can't get volume via applicationMusicPlayer
-    [[MPMusicPlayerController applicationMusicPlayer] setVolume:0.01]; // 0 ~ 1.0f
+    [[MPMusicPlayerController applicationMusicPlayer] setVolume:0.05]; // 0 ~ 1.0f
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -108,18 +150,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[MPMusicPlayerController applicationMusicPlayer] setVolume:_originalVolume];
-
-//    [UIDevice setOrientation:UIInterfaceOrientationPortrait];
 }
-//
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-//{
-//    return UIInterfaceOrientationLandscapeLeft;
-//}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    [UIDevice setOrientation:UIInterfaceOrientationLandscapeLeft];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -132,9 +166,7 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-//    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
     return UIInterfaceOrientationIsPortrait(toInterfaceOrientation);
-//    return YES;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
@@ -152,6 +184,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)mediaControlDidHide
+{
+    _isShowStatusBar = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 #pragma mark IBAction
@@ -187,6 +225,20 @@
     NSLog(@"%s", __FUNCTION__);
     [self.player pause];
     [self.mediaControl refreshMediaControl];
+}
+
+- (IBAction)onClickFastforward:(id)sender
+{
+    NSLog(@"%s", __func__);
+    const CGFloat ff = 30;
+    self.player.currentPlaybackTime += ff;
+}
+
+- (IBAction)onClickFastbackward:(id)sender
+{
+    NSLog(@"%s", __func__);
+    const CGFloat ff = -30;
+    self.player.currentPlaybackTime += ff;
 }
 
 - (IBAction)didSliderTouchDown
@@ -354,20 +406,7 @@
     _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     _tapGestureRecognizer.delegate = self;
     _tapGestureRecognizer.numberOfTapsRequired = 1;
-/*
-    _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
-    
-    [_tapGestureRecognizer requireGestureRecognizerToFail: _doubleTapGestureRecognizer];
-    
-    [view addGestureRecognizer:_doubleTapGestureRecognizer];
-    [view addGestureRecognizer:_tapGestureRecognizer];
-*/
-    //    _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    //    _panGestureRecognizer.enabled = NO;
-    //
-    //    [view addGestureRecognizer:_panGestureRecognizer];
-    // add by lipeng
+
     _swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft)];
     _swipeLeftGestureRecognizer.numberOfTouchesRequired = 1;
     _swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -402,21 +441,13 @@
         if (sender == _tapGestureRecognizer) {
             NSLog(@"%s", __func__);
             if ([self.mediaControl.overlayPanel isHidden]) {
+                _isShowStatusBar = YES;
                 [self.mediaControl showNoFade];
+                [self setNeedsStatusBarAppearanceUpdate];
             } else {
                 [self.mediaControl fadeOut];
             }
-
-/*
-        } else if (sender == _doubleTapGestureRecognizer) {
             
-            UIView *frameView = [self frameView];
-            
-            if (frameView.contentMode == UIViewContentModeScaleAspectFit)
-                frameView.contentMode = UIViewContentModeScaleAspectFill;
-            else
-                frameView.contentMode = UIViewContentModeScaleAspectFit;
-  */
         }
     }
 }
@@ -424,14 +455,14 @@
 - (void)handleSwipeLeft
 {
     NSLog(@"%s", __func__);
-    const CGFloat ff = 10;
+    const CGFloat ff = 15;
     self.player.currentPlaybackTime += ff;
 }
 
 - (void)handleSwipeRight
 {
     NSLog(@"%s", __func__);
-    const CGFloat ff = -10;
+    const CGFloat ff = -15;
     self.player.currentPlaybackTime += ff;
 }
 
@@ -452,14 +483,14 @@
 - (void)handleDoubleSwipeLeft
 {
     NSLog(@"%s", __func__);
-    const CGFloat ff = 30;
+    const CGFloat ff = 60;
     self.player.currentPlaybackTime += ff;
 }
 
 - (void)handleDoubleSwipeRight
 {
     NSLog(@"%s", __func__);
-    const CGFloat ff = -30;
+    const CGFloat ff = -60;
     self.player.currentPlaybackTime += ff;
 }
 

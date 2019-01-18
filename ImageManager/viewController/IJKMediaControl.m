@@ -72,6 +72,9 @@
     self.overlayPanel.hidden = YES;
     [self.overlayPanel setAlpha:1];
     [self cancelDelayedHide];
+    if (self.delegate) {
+        [self.delegate mediaControlDidHide];
+    }
 }
 
 - (void)cancelDelayedHide

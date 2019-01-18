@@ -18,6 +18,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol IJKMediaPlayback;
+@protocol IJKMediaControlDelegate <NSObject>
+- (void)mediaControlDidHide;
+@end
 #define kBottomPanelTag 8899
 @interface IJKMediaControl : UIControl
 
@@ -30,6 +33,7 @@
 - (void)continueDragMediaSlider;
 
 @property(nonatomic,weak) id<IJKMediaPlayback> delegatePlayer;
+@property(nonatomic,weak) id<IJKMediaControlDelegate> delegate;
 
 @property(nonatomic,strong) IBOutlet UIView *overlayPanel;
 @property(nonatomic,strong) IBOutlet UIView *topPanel;
