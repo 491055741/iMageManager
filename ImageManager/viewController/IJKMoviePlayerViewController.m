@@ -57,7 +57,7 @@ typedef NS_ENUM(NSUInteger, Direction) {
 @property (nonatomic, assign) float originalVolume;
 @property (nonatomic, assign) BOOL isShowStatusBar;
 @property (assign, nonatomic) Direction direction;  // pan gesture direction
-@property (assign, nonatomic) CGFloat sumTime;      // ??
+@property (assign, nonatomic) CGFloat sumTime;      // 临时保存当前播放时间秒数
 
 @end
 
@@ -85,18 +85,32 @@ typedef NS_ENUM(NSUInteger, Direction) {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self setStatusBarBackgroundColor:UIColor.blackColor];
-        _isShowStatusBar = YES;
+//        [self setStatusBarBackgroundColor:UIColor.blackColor];
+//        self.isShowStatusBar = YES;
     }
     return self;
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return !_isShowStatusBar;
+- (void)setIsShowStatusBar:(BOOL)isShow {
+    _isShowStatusBar = isShow;
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    statusBar.hidden = !isShow;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle{
+- (BOOL)prefersStatusBarHidden {
+    return YES;//!_isShowStatusBar;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationNone;
+}
+
+- (BOOL)prefersHomeIndicatorAutoHidden {
+    return YES;
 }
 
 - (void)setStatusBarBackgroundColor:(UIColor *)color {
@@ -186,7 +200,7 @@ typedef NS_ENUM(NSUInteger, Direction) {
 
 - (void)mediaControlDidHide
 {
-    _isShowStatusBar = NO;
+    self.isShowStatusBar = NO;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -383,7 +397,7 @@ typedef NS_ENUM(NSUInteger, Direction) {
         if (sender == _tapGestureRecognizer) {
             NSLog(@"%s", __func__);
             if ([self.mediaControl.overlayPanel isHidden]) {
-                _isShowStatusBar = YES;
+                self.isShowStatusBar = YES;
                 [self.mediaControl showNoFade];
                 [self setNeedsStatusBarAppearanceUpdate];
             } else {

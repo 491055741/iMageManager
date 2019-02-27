@@ -1064,6 +1064,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cloudless.imagemanager-hd";
 				PRODUCT_NAME = "ImageManager-iPad";
 				PROVISIONING_PROFILE = "";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
 				WRAPPER_EXTENSION = app;
@@ -1090,6 +1091,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cloudless.imagemanager-hd";
 				PRODUCT_NAME = "ImageManager-iPad";
 				PROVISIONING_PROFILE = "";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
 				WRAPPER_EXTENSION = app;
@@ -1174,6 +1176,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cloudless.imagemanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1199,6 +1202,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cloudless.imagemanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
 				WRAPPER_EXTENSION = app;
 			};

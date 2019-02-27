@@ -97,8 +97,20 @@
     [self refreshMediaControl];
 }
 
+- (NSString *)getSysTime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    NSDate *datenow = [NSDate date];
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+//    NSLog(@"currentTimeString =  %@",currentTimeString);
+    return currentTimeString;
+}
+
 - (void)refreshMediaControl
 {
+    self.timeLabel.text = [self getSysTime];
+    
     // duration
     NSTimeInterval duration = self.delegatePlayer.duration;
     NSInteger intDuration = duration + 0.5;

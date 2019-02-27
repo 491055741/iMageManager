@@ -124,6 +124,10 @@
     }
 }
 
+- (BOOL)prefersHomeIndicatorAutoHidden {
+    return YES;
+}
+
 - (void)showPic
 {
     NSInteger idx = _currentIndex;

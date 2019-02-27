@@ -38,12 +38,13 @@
 @property(nonatomic,strong) IBOutlet UIView *overlayPanel;
 @property(nonatomic,strong) IBOutlet UIView *topPanel;
 @property(nonatomic,strong) IBOutlet UIView *bottomPanel;
+@property(nonatomic,strong) IBOutlet UILabel *timeLabel;        // 当前系统时间
 @property(nonatomic,strong) IBOutlet UILabel *titleLabel;
 @property(nonatomic,strong) IBOutlet UIButton *playButton;
 @property(nonatomic,strong) IBOutlet UIButton *pauseButton;
 
-@property(nonatomic,strong) IBOutlet UILabel *currentTimeLabel;
-@property(nonatomic,strong) IBOutlet UILabel *totalDurationLabel;
+@property(nonatomic,strong) IBOutlet UILabel *currentTimeLabel; // 当前播放时间
+@property(nonatomic,strong) IBOutlet UILabel *totalDurationLabel; // 视频总时长
 @property(nonatomic,strong) IBOutlet UISlider *mediaProgressSlider;
 
 
