@@ -20,6 +20,11 @@
 #import "UIDevice+Ext.h"
 #import <AVFoundation/AVFoundation.h>
 
+typedef NS_ENUM(NSUInteger, Direction) {
+    DirectionLeftOrRight,//左右手势
+    DirectionUpOrDown,//上下手势
+    DirectionNone//没有手势
+};
 
 @interface IJKVideoViewController() <UIGestureRecognizerDelegate, IJKMediaControlDelegate>
 
@@ -46,16 +51,13 @@
 
 @property(nonatomic,strong) IBOutlet IJKMediaControl *mediaControl;
 
-@property (nonatomic, strong) UITapGestureRecognizer   *tapGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeUpGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDownGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDoubleLeftGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDoubleRightGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, assign) float originalVolume;
 @property (nonatomic, assign) BOOL isShowStatusBar;
-
+@property (assign, nonatomic) Direction direction;  // pan gesture direction
+@property (assign, nonatomic) CGFloat sumTime;      // ??
 
 @end
 
@@ -142,8 +144,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self installMovieNotificationObservers];
-
     [self.player prepareToPlay];
 }
 
@@ -162,7 +162,6 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 
     [self.player shutdown];
-    [self removeMovieNotificationObservers];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
@@ -172,7 +171,6 @@
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskLandscape;
-//    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotate
@@ -271,168 +269,112 @@
     [self.mediaControl continueDragMediaSlider];
 }
 
-- (void)loadStateDidChange:(NSNotification*)notification
-{
-    //    MPMovieLoadStateUnknown        = 0,
-    //    MPMovieLoadStatePlayable       = 1 << 0,
-    //    MPMovieLoadStatePlaythroughOK  = 1 << 1, // Playback will be automatically started in this state when shouldAutoplay is YES
-    //    MPMovieLoadStateStalled        = 1 << 2, // Playback will be automatically paused in this state, if started
-
-    IJKMPMovieLoadState loadState = _player.loadState;
-
-    if ((loadState & IJKMPMovieLoadStatePlaythroughOK) != 0) {
-        NSLog(@"loadStateDidChange: IJKMPMovieLoadStatePlaythroughOK: %d\n", (int)loadState);
-    } else if ((loadState & IJKMPMovieLoadStateStalled) != 0) {
-        NSLog(@"loadStateDidChange: IJKMPMovieLoadStateStalled: %d\n", (int)loadState);
-    } else {
-        NSLog(@"loadStateDidChange: ???: %d\n", (int)loadState);
-    }
-}
-
-- (void)moviePlayBackDidFinish:(NSNotification*)notification
-{
-    //    MPMovieFinishReasonPlaybackEnded,
-    //    MPMovieFinishReasonPlaybackError,
-    //    MPMovieFinishReasonUserExited
-    int reason = [[[notification userInfo] valueForKey:IJKMPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue];
-
-    switch (reason)
-    {
-        case IJKMPMovieFinishReasonPlaybackEnded:
-            NSLog(@"playbackStateDidChange: IJKMPMovieFinishReasonPlaybackEnded: %d\n", reason);
-            break;
-
-        case IJKMPMovieFinishReasonUserExited:
-            NSLog(@"playbackStateDidChange: IJKMPMovieFinishReasonUserExited: %d\n", reason);
-            break;
-
-        case IJKMPMovieFinishReasonPlaybackError:
-            NSLog(@"playbackStateDidChange: IJKMPMovieFinishReasonPlaybackError: %d\n", reason);
-            break;
-
-        default:
-            NSLog(@"playbackPlayBackDidFinish: ???: %d\n", reason);
-            break;
-    }
-}
-
-- (void)mediaIsPreparedToPlayDidChange:(NSNotification*)notification
-{
-    NSLog(@"mediaIsPreparedToPlayDidChange\n");
-}
-
-- (void)moviePlayBackStateDidChange:(NSNotification*)notification
-{
-    //    MPMoviePlaybackStateStopped,
-    //    MPMoviePlaybackStatePlaying,
-    //    MPMoviePlaybackStatePaused,
-    //    MPMoviePlaybackStateInterrupted,
-    //    MPMoviePlaybackStateSeekingForward,
-    //    MPMoviePlaybackStateSeekingBackward
-
-    switch (_player.playbackState)
-    {
-        case IJKMPMoviePlaybackStateStopped: {
-            NSLog(@"IJKMPMoviePlayBackStateDidChange %d: stoped", (int)_player.playbackState);
-            break;
-        }
-        case IJKMPMoviePlaybackStatePlaying: {
-            NSLog(@"IJKMPMoviePlayBackStateDidChange %d: playing", (int)_player.playbackState);
-            break;
-        }
-        case IJKMPMoviePlaybackStatePaused: {
-            NSLog(@"IJKMPMoviePlayBackStateDidChange %d: paused", (int)_player.playbackState);
-            break;
-        }
-        case IJKMPMoviePlaybackStateInterrupted: {
-            NSLog(@"IJKMPMoviePlayBackStateDidChange %d: interrupted", (int)_player.playbackState);
-            break;
-        }
-        case IJKMPMoviePlaybackStateSeekingForward:
-        case IJKMPMoviePlaybackStateSeekingBackward: {
-            NSLog(@"IJKMPMoviePlayBackStateDidChange %d: seeking", (int)_player.playbackState);
-            break;
-        }
-        default: {
-            NSLog(@"IJKMPMoviePlayBackStateDidChange %d: unknown", (int)_player.playbackState);
-            break;
-        }
-    }
-}
-
-#pragma mark Install Movie Notifications
-
-/* Register observers for the various movie object notifications. */
--(void)installMovieNotificationObservers
-{
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadStateDidChange:)
-                                                 name:IJKMPMoviePlayerLoadStateDidChangeNotification
-                                               object:_player];
-
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(moviePlayBackDidFinish:)
-                                                 name:IJKMPMoviePlayerPlaybackDidFinishNotification
-                                               object:_player];
-
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(mediaIsPreparedToPlayDidChange:)
-                                                 name:IJKMPMediaPlaybackIsPreparedToPlayDidChangeNotification
-                                               object:_player];
-
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(moviePlayBackStateDidChange:)
-                                                 name:IJKMPMoviePlayerPlaybackStateDidChangeNotification
-                                               object:_player];
-}
-
-#pragma mark Remove Movie Notification Handlers
-
-/* Remove the movie notification observers from the movie object. */
--(void)removeMovieNotificationObservers
-{
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:IJKMPMoviePlayerLoadStateDidChangeNotification object:_player];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:IJKMPMoviePlayerPlaybackDidFinishNotification object:_player];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:IJKMPMediaPlaybackIsPreparedToPlayDidChangeNotification object:_player];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:IJKMPMoviePlayerPlaybackStateDidChangeNotification object:_player];
-}
-
-// add by lipeng
 - (void)setupUserInteraction
 {
     UIView * view = [self view];
     view.userInteractionEnabled = YES;
 
+    // single tap to show controller
     _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     _tapGestureRecognizer.delegate = self;
     _tapGestureRecognizer.numberOfTapsRequired = 1;
 
-    _swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft)];
-    _swipeLeftGestureRecognizer.numberOfTouchesRequired = 1;
-    _swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    _swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRight)];
-    _swipeRightGestureRecognizer.numberOfTouchesRequired = 1;
-    _swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    _swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUp)];
-    _swipeUpGestureRecognizer.numberOfTouchesRequired = 1;
-    _swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    _swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown)];
-    _swipeDownGestureRecognizer.numberOfTouchesRequired = 1;
-    _swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    _swipeDoubleLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleSwipeLeft)];
-    _swipeDoubleLeftGestureRecognizer.numberOfTouchesRequired = 2;
-    _swipeDoubleLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    _swipeDoubleRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleSwipeRight)];
-    _swipeDoubleRightGestureRecognizer.numberOfTouchesRequired = 2;
-    _swipeDoubleRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    // double tap to exit
+    _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickDone:)];
+    _doubleTapGestureRecognizer.delegate = self;
+    _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+
+    _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
 
     [view addGestureRecognizer:_tapGestureRecognizer];
-    [view addGestureRecognizer:_swipeLeftGestureRecognizer];
-    [view addGestureRecognizer:_swipeRightGestureRecognizer];
-    [view addGestureRecognizer:_swipeUpGestureRecognizer];
-    [view addGestureRecognizer:_swipeDownGestureRecognizer];
-    [view addGestureRecognizer:_swipeDoubleLeftGestureRecognizer];
-    [view addGestureRecognizer:_swipeDoubleRightGestureRecognizer];
+    [view addGestureRecognizer:_doubleTapGestureRecognizer];
+    [view addGestureRecognizer:_panGestureRecognizer];
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)pan
+{
+    // 获取当前页面手指触摸的点
+    // CGPoint locationPoint = [pan locationInView:self.view];
+    // 移动速率，表示手势的快慢
+    CGPoint veloctyPoint = [pan velocityInView:self.view];
+
+    // 判断是垂直移动还是水平移动
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan:{ // 开始移动
+            // 使用绝对值来判断移动的方向
+            CGFloat x = fabs(veloctyPoint.x);
+            CGFloat y = fabs(veloctyPoint.y);
+            if (x > y) { // 水平移动
+                self.direction = DirectionLeftOrRight;
+                // 记录滑动时播放器的时间
+                self.sumTime  = self.player.currentPlaybackTime;
+                // 暂停视频播放
+                [self.player pause];
+            } else if (x < y){ // 垂直移动
+                // 音量
+                self.direction = DirectionUpOrDown;
+            }
+            break;
+        }
+        case UIGestureRecognizerStateChanged: // 正在移动
+        {
+            switch (self.direction) {//通过手势变量来判断是什么操作
+                case DirectionUpOrDown://上下滑动
+                {
+                    [self verticalMoved:veloctyPoint.y]; // 垂直移动方法只要y方向的值
+                    break;
+                }
+                case DirectionLeftOrRight:
+                {
+                    [self horizontalMoved:veloctyPoint.x]; // 水平移动的方法只要x方向的值
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
+            
+        }
+        case UIGestureRecognizerStateEnded:{ // 移动停止
+            switch (self.direction) {
+                case DirectionUpOrDown: // 垂直
+                {
+                    break;
+                }
+                case DirectionLeftOrRight: //水平
+                {
+                    self.player.currentPlaybackTime = self.sumTime;
+                    [self.player play];
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        default:
+            break;
+    }
+}
+
+- (void)horizontalMoved:(CGFloat)value
+{
+    // 播放进度控制
+    NSLog(@"%s %f",__FUNCTION__, value);
+    self.sumTime += value/100;
+    self.mediaControl.mediaProgressSlider.value = self.sumTime;
+}
+
+- (void)verticalMoved:(CGFloat)value
+{
+    // 音量控制
+    CGFloat volumeChangeValue = value/10000;
+    NSLog(@"Volume change: %f", volumeChangeValue);
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    if (fabsf(musicPlayer.volume - volumeChangeValue) < 0.03) {
+        musicPlayer.volume = 0;
+    } else {
+        musicPlayer.volume -= volumeChangeValue; // from 0 to 1.0
+    }
 }
 
 - (void)handleTap: (UITapGestureRecognizer *) sender
@@ -447,52 +389,10 @@
             } else {
                 [self.mediaControl fadeOut];
             }
-            
         }
     }
 }
 
-- (void)handleSwipeLeft
-{
-    NSLog(@"%s", __func__);
-    const CGFloat ff = 15;
-    self.player.currentPlaybackTime += ff;
-}
-
-- (void)handleSwipeRight
-{
-    NSLog(@"%s", __func__);
-    const CGFloat ff = -15;
-    self.player.currentPlaybackTime += ff;
-}
-
-- (void)handleSwipeUp
-{
-    NSLog(@"%s", __func__);
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
-    musicPlayer.volume += 0.05; // from 0 to 1.0. Mute when begin playing.
-}
-
-- (void)handleSwipeDown
-{
-    NSLog(@"%s", __func__);
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
-    musicPlayer.volume -= 0.05; // from 0 to 1.0. Mute when begin playing.
-}
-
-- (void)handleDoubleSwipeLeft
-{
-    NSLog(@"%s", __func__);
-    const CGFloat ff = 60;
-    self.player.currentPlaybackTime += ff;
-}
-
-- (void)handleDoubleSwipeRight
-{
-    NSLog(@"%s", __func__);
-    const CGFloat ff = -60;
-    self.player.currentPlaybackTime += ff;
-}
 
 #pragma mark--
 #pragma mark--UIGestureRecognizerDelegate
