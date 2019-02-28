@@ -222,11 +222,11 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 
         ijkmp_ios_set_glview(_mediaPlayer, _glView);
         ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
-#ifdef DEBUG
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
-#else
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
-#endif
+//#ifdef DEBUG
+//        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
+//#else
+//        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
+//#endif
         // init audio sink
         [[IJKAudioKit sharedInstance] setupAudioSession];
 
@@ -985,7 +985,7 @@ inline static void fillMetaInternal(NSMutableDictionary *meta, IjkMediaMeta *raw
                                     int64_t fps_den = ijkmeta_get_int64_l(streamRawMeta, IJKM_KEY_FPS_DEN, 0);
                                     if (fps_num > 0 && fps_den > 0) {
                                         _fpsInMeta = ((CGFloat)(fps_num)) / fps_den;
-                                        NSLog(@"fps in meta %f\n", _fpsInMeta);
+//                                        NSLog(@"fps in meta %f\n", _fpsInMeta);
                                     }
                                 }
 

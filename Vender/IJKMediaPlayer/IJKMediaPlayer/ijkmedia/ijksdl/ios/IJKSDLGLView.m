@@ -349,7 +349,7 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
 
     if (![self tryLockGLActive]) {
         if (0 == (_tryLockErrorCount % 100)) {
-            NSLog(@"IJKSDLGLView:display: unable to tryLock GL active: %d\n", _tryLockErrorCount);
+//            NSLog(@"IJKSDLGLView:display: unable to tryLock GL active: %d\n", _tryLockErrorCount);
         }
         _tryLockErrorCount++;
         return;
@@ -371,9 +371,9 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
 {
     if (![self setupRenderer:overlay]) {
         if (!overlay && !_renderer) {
-            NSLog(@"IJKSDLGLView: setupDisplay not ready\n");
+//            NSLog(@"IJKSDLGLView: setupDisplay not ready\n");
         } else {
-            NSLog(@"IJKSDLGLView: setupDisplay failed\n");
+//            NSLog(@"IJKSDLGLView: setupDisplay failed\n");
         }
         return;
     }
@@ -381,7 +381,7 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     [[self eaglLayer] setContentsScale:_scaleFactor];
 
     if (_isRenderBufferInvalidated) {
-        NSLog(@"IJKSDLGLView: renderbufferStorage fromDrawable\n");
+//        NSLog(@"IJKSDLGLView: renderbufferStorage fromDrawable\n");
         _isRenderBufferInvalidated = NO;
 
         glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
