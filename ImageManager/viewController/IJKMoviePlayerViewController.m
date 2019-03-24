@@ -353,7 +353,7 @@ typedef NS_ENUM(NSUInteger, Direction) {
 - (void)verticalMoved:(CGFloat)value
 {
     // 音量控制
-    CGFloat volumeChangeValue = value/10000;
+    CGFloat volumeChangeValue = value/20000;
     NSLog(@"Volume change: %f", volumeChangeValue);
     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
     if (fabsf(musicPlayer.volume - volumeChangeValue) < 0.03) {
