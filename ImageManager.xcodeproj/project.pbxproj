@@ -66,6 +66,7 @@
 		E8A98ACD21F212F1003A15CC /* fastforwardBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A98AC721F212F0003A15CC /* fastforwardBtn@2x.png */; };
 		E8A98ACE21F212F1003A15CC /* fastbackwardBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A98ACB21F212F1003A15CC /* fastbackwardBtn@2x.png */; };
 		E8A98ACF21F212F1003A15CC /* fastbackwardBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A98ACB21F212F1003A15CC /* fastbackwardBtn@2x.png */; };
+		E8AA5F03243222B100E93C72 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AA5EFF243222B100E93C72 /* CoreServices.framework */; };
 		E8AC3FDA1F41DE8800D11F84 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F714751EC23544002CC462 /* VideoToolbox.framework */; };
 		E8AC3FDB1F41DE9400D11F84 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F714731EC23532002CC462 /* MobileCoreServices.framework */; };
 		E8AC3FDC1F41DEA700D11F84 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E89F0D051EC1F0C800930E42 /* libbz2.1.0.tbd */; };
@@ -153,7 +154,6 @@
 		E8F7146E1EC23504002CC462 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F7146D1EC23504002CC462 /* CoreMedia.framework */; };
 		E8F714701EC2350E002CC462 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F7146F1EC2350E002CC462 /* CoreVideo.framework */; };
 		E8F714721EC2351C002CC462 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F714711EC2351C002CC462 /* libbz2.tbd */; };
-		E8F714741EC23532002CC462 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F714731EC23532002CC462 /* MobileCoreServices.framework */; };
 		E8F714761EC23544002CC462 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F714751EC23544002CC462 /* VideoToolbox.framework */; };
 		E8F714B61EC426D9002CC462 /* pauseBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8F714B41EC426D9002CC462 /* pauseBtn@2x.png */; };
 		E8F714B71EC426D9002CC462 /* playBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8F714B51EC426D9002CC462 /* playBtn@2x.png */; };
@@ -313,6 +313,7 @@
 		E89F0D1D1EC1F17500930E42 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		E8A98AC721F212F0003A15CC /* fastforwardBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fastforwardBtn@2x.png"; sourceTree = "<group>"; };
 		E8A98ACB21F212F1003A15CC /* fastbackwardBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fastbackwardBtn@2x.png"; sourceTree = "<group>"; };
+		E8AA5EFF243222B100E93C72 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		E8AC3FE51F41DF1900D11F84 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		E8B60F9917C71CFA00ABE472 /* UIImage+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Ext.h"; sourceTree = "<group>"; };
 		E8B60F9A17C71CFA00ABE472 /* UIImage+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Ext.m"; sourceTree = "<group>"; };
@@ -425,13 +426,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8F714761EC23544002CC462 /* VideoToolbox.framework in Frameworks */,
-				E8F714741EC23532002CC462 /* MobileCoreServices.framework in Frameworks */,
 				E8F714721EC2351C002CC462 /* libbz2.tbd in Frameworks */,
 				E8F714701EC2350E002CC462 /* CoreVideo.framework in Frameworks */,
 				E8F7146E1EC23504002CC462 /* CoreMedia.framework in Frameworks */,
 				E8F7146C1EC234E9002CC462 /* AVFoundation.framework in Frameworks */,
 				E8F714681EC23438002CC462 /* IJKMediaFramework.framework in Frameworks */,
 				E89F0D1E1EC1F17500930E42 /* libicucore.tbd in Frameworks */,
+				E8AA5F03243222B100E93C72 /* CoreServices.framework in Frameworks */,
 				E89F0D1C1EC1F16800930E42 /* libz.tbd in Frameworks */,
 				E89F0D1A1EC1F15700930E42 /* libiconv.2.4.0.tbd in Frameworks */,
 				E87179731A67FCAC007320E7 /* LocalAuthentication.framework in Frameworks */,
@@ -701,6 +702,7 @@
 		E8FE05841730A40D00B6A39B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8AA5EFF243222B100E93C72 /* CoreServices.framework */,
 				E887632621BAD21B00C022B6 /* libc++.tbd */,
 				E8AC3FE51F41DF1900D11F84 /* libiconv.tbd */,
 				E8F714751EC23544002CC462 /* VideoToolbox.framework */,
@@ -804,10 +806,10 @@
 				ORGANIZATIONNAME = "li peng";
 				TargetAttributes = {
 					E8F6FA2D17B4812C00702A14 = {
-						DevelopmentTeam = BYQP4NZ6V2;
+						DevelopmentTeam = W9XMQS8C6H;
 					};
 					E8FE05811730A40D00B6A39B = {
-						DevelopmentTeam = BYQP4NZ6V2;
+						DevelopmentTeam = W9XMQS8C6H;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -817,6 +819,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = E8FE05791730A40C00B6A39B;
@@ -1046,7 +1049,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BYQP4NZ6V2;
+				DEVELOPMENT_TEAM = W9XMQS8C6H;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vender/GCDWebServer",
@@ -1067,6 +1070,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
+				VALIDATE_WORKSPACE = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1077,7 +1081,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BYQP4NZ6V2;
+				DEVELOPMENT_TEAM = W9XMQS8C6H;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vender/GCDWebServer",
@@ -1094,6 +1098,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
+				VALIDATE_WORKSPACE = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1162,7 +1167,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BYQP4NZ6V2;
+				DEVELOPMENT_TEAM = W9XMQS8C6H;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1172,12 +1177,13 @@
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Vender/ffmpeg/include";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cloudless.imagemanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
+				VALIDATE_WORKSPACE = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1188,7 +1194,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BYQP4NZ6V2;
+				DEVELOPMENT_TEAM = W9XMQS8C6H;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1198,12 +1204,13 @@
 				GCC_PREFIX_HEADER = "ImageManager/ImageManager-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Vender/ffmpeg/include";
 				INFOPLIST_FILE = "ImageManager/ImageManager-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cloudless.imagemanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Vender/IJKMediaPlayer $(PROJECT_DIR)/Vender/GCDWebServer";
+				VALIDATE_WORKSPACE = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
